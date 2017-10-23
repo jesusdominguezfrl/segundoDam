@@ -34,7 +34,7 @@ class DatosReader implements XMLReader {
     public DatosReader() {
 
     }
-    //métodos transformer
+    //métodos para el transformer
 
     @Override
     public void parse(InputSource input) throws IOException, SAXException {
