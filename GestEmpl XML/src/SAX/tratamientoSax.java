@@ -45,13 +45,9 @@ public class tratamientoSax {
     
     public void importarXMLSAX(File f){
          try {
-             System.out.println("llego1");
             XMLReader reader = XMLReaderFactory.createXMLReader();
-             System.out.println("llego2");
             reader.setContentHandler(new GestionContenido());
-             System.out.println("llego3");
             reader.parse(new InputSource(new FileInputStream(/*empleadosXMLSAX.getName()*/f)));
-             System.out.println("llego4");
             
         } catch (Exception e) {
             System.out.println("Excepcion en lectura sax" + e.getMessage());
@@ -63,7 +59,6 @@ public class tratamientoSax {
         XMLReader datosLectura= new DatosReader();
         InputSource datosSource = m;
         try {
-            System.out.println("llego");
             Source source = new SAXSource(datosLectura,datosSource);
             Result resultado = new StreamResult(empleadosXMLSAX);
             Transformer transformer =TransformerFactory.newInstance().newTransformer();
