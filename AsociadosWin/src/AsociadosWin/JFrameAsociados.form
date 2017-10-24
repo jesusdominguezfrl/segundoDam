@@ -319,13 +319,13 @@
                   <Group type="102" attributes="0">
                       <EmptySpace pref="8" max="32767" attributes="0"/>
                       <Component id="jCheckBoxTodos" linkSize="4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="1" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jCheckBoxAlumnos" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="1" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jCheckBoxProfesores" linkSize="4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="3" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jCheckBoxPadres" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="3" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jCheckBoxPersonalNoDocente" linkSize="4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   </Group>

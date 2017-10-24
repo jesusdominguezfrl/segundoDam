@@ -6,9 +6,12 @@
 package AsociadosWin;
 
 import Asociados.*;
+import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javafx.scene.control.CheckBox;
 import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
 import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -26,9 +29,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
         initComponents();
         iniciarAsociados();
         cargarListaAsociado();
-        jListListaAsociados.addListSelectionListener(new gestorLista());
-        jButtonEliminarAsociado.addMouseListener(new gestorEliminarEmpleado());
-        jButtonVerAsociados.addMouseListener(new gestorVerDatos());
+        iniciarMisComponentes();
 
     }
     // <editor-fold defaultstate="collapsed" desc="Mis variables"> 
@@ -79,21 +80,56 @@ public class JFrameAsociados extends javax.swing.JFrame {
 
     private class gestorVerDatos implements MouseListener {
 
+        private JCheckBox[] arrayCheckBox;
+        Component[] componentesjPanelTipoAsociado;
+
+        public gestorVerDatos() {
+            arrayCheckBox = new JCheckBox[jPanelTipoAsociados.getComponentCount()];
+            componentesjPanelTipoAsociado = new Component[jPanelTipoAsociados.getComponentCount()];
+            componentesjPanelTipoAsociado = jPanelTipoAsociados.getComponents();
+            for (int i = 0; i < componentesjPanelTipoAsociado.length; i++) {
+                if (componentesjPanelTipoAsociado[i] instanceof JCheckBox) {
+                    arrayCheckBox[i] = (JCheckBox) componentesjPanelTipoAsociado[i];
+                }
+            }
+        }//Fin constructor que inicia el aray de nombres y el array de CheckBox
+
+        public JCheckBox[] getArrayCheckBox() {
+            return arrayCheckBox;
+        }
+
         @Override
         public void mouseClicked(MouseEvent e) {
+            jTextAreaMuestraAsociados.setEnabled(true);
 
             Asociado objAsociado;
-            String textoMostrar="";
-            for (int i = 0; i < Asociado.listaAsociados.getSize(); i++) {
-                System.out.println(i);
-                objAsociado = (Asociado) Asociado.listaAsociados.getElementAt(i);
-                textoMostrar = textoMostrar + objAsociado.verDatos() + "\n" + objAsociado.email()
-                        + "\t" + objAsociado.verCuota()
-                        + "\n--------------------------------------------------------------------------\n";
+            String textoMostrar = "";
+            for (int i = 0; i < arrayCheckBox.length; i++) {
 
+                if (jCheckBoxTodos.isSelected()) {
+                    for (int j = 0; j < Asociado.listaAsociados.getSize(); j++) {
+                        objAsociado = (Asociado) Asociado.listaAsociados.getElementAt(j);
+                        if ((objAsociado.getClass().getSimpleName()).equals(arrayCheckBox[i].getName())) {
+                            textoMostrar = textoMostrar + objAsociado.verDatos() + "\n" + objAsociado.email()
+                                    + "\t" + objAsociado.verCuota()
+                                    + "\n--------------------------------------------------------------------------\n";
+                        }
+                    }
+                } else if (arrayCheckBox[i].isSelected()) {
+                    for (int k = 0; k < Asociado.listaAsociados.getSize(); k++) {
+                        objAsociado = (Asociado) Asociado.listaAsociados.getElementAt(k);
+                        if ((objAsociado.getClass().getSimpleName()).equals(arrayCheckBox[i].getName())) {
+                            textoMostrar = textoMostrar + objAsociado.verDatos() + "\n" + objAsociado.email()
+                                    + "\t" + objAsociado.verCuota()
+                                    + "\n--------------------------------------------------------------------------\n";
+                        }
+                    }
+                }
+
+                if (!"".equals(textoMostrar)) {
+                    jTextAreaMuestraAsociados.setText(textoMostrar);
+                }
             }
-            if(!"".equals(textoMostrar))
-                jTextAreaMuestraAsociados.setText(textoMostrar);
 
         }
 
@@ -119,7 +155,46 @@ public class JFrameAsociados extends javax.swing.JFrame {
 
     }
 
+    private class gestorCheckBox implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+            jCheckBoxTodos.setSelected(jCheckBoxProfesores.isSelected() && jCheckBoxPersonalNoDocente.isSelected() && jCheckBoxPadres.isSelected() && jCheckBoxAlumnos.isSelected());
+            if (jCheckBoxTodos.isSelected()) {
+                jCheckBoxProfesores.setSelected(false);
+                jCheckBoxPersonalNoDocente.setSelected(false);
+                jCheckBoxPadres.setSelected(false);
+                jCheckBoxAlumnos.setSelected(false);
+            }
+            jButtonVerAsociados.setEnabled(jCheckBoxTodos.isSelected() || jCheckBoxProfesores.isSelected() || jCheckBoxPersonalNoDocente.isSelected() || jCheckBoxPadres.isSelected() || jCheckBoxAlumnos.isSelected());
+            jTextAreaMuestraAsociados.setEnabled(false);
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+    }
+
     //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="Metodos">
     private void jListListaAsociadosValueChanged(ListSelectionEvent e) {
         if (jListListaAsociados.getSelectedIndex() != -1) {
             Asociado asociadoSeleccionado = (Asociado) Asociado.listaAsociados.getElementAt(jListListaAsociados.getSelectedIndex());
@@ -128,32 +203,73 @@ public class JFrameAsociados extends javax.swing.JFrame {
             jTextFieldNIF.setText(asociadoSeleccionado.getNIF());
             jTextFieldCuota.setText(String.valueOf(asociadoSeleccionado.verCuota()));
         }
+
     }
 
     public void cargarListaAsociado() {
         jListListaAsociados.setModel(Asociado.listaAsociados);
+
+    }
+
+    public void CheckBoxVisibilidad() {
+        gestorVerDatos gVD = new gestorVerDatos();
+        for (int i = 0; i < gVD.getArrayCheckBox().length; i++) {
+            if (!"Todos".equals(gVD.getArrayCheckBox()[i].getName())) {
+                for (int j = 0; j < Asociado.listaAsociados.getSize(); j++) {
+                    if (Asociado.listaAsociados.get(j).getClass().getSimpleName().equals(gVD.getArrayCheckBox()[i].getName())) {
+                        jCheckBoxTodos.setVisible(true);
+                        gVD.getArrayCheckBox()[i].setVisible(true);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void iniciarMisComponentes() {
+        //gestorVerDatos gestionVerDatos = new gestorVerDatos();
+        jCheckBoxTodos.setName("Todos");
+        jCheckBoxAlumnos.setName("Alumno");
+        jCheckBoxPadres.setName("PadreMadre");
+        jCheckBoxPersonalNoDocente.setName("PersonaNoDocente");
+        jCheckBoxProfesores.setName("Profesor");
+        jButtonVerAsociados.setEnabled(false);
+        jTextAreaMuestraAsociados.setText("Elige un empleado para ver sus datos.\nElige un tipo para ver los asociados");
+        jListListaAsociados.addListSelectionListener(new gestorLista());
+        jButtonEliminarAsociado.addMouseListener(new gestorEliminarEmpleado());
+        jButtonVerAsociados.addMouseListener(new gestorVerDatos());
+        // jCheckBoxTodos.addMouseListener(new gestorCheckBox());
+        for (int i = 0; i < jPanelTipoAsociados.getComponentCount(); i++) {
+            Component c = jPanelTipoAsociados.getComponent(i);
+            if (c instanceof JCheckBox) {
+                c.setVisible(false);
+                c.addMouseListener(new gestorCheckBox());
+            }
+        }
+        CheckBoxVisibilidad();
     }
 
     public void iniciarAsociados() {
-        new Alumno("Luis", "Fredes Almiron", "29556636S", true, Alumno.Curso.ESO1);
-        new Alumno("Noemi", "Alonso Rodriguez", "2568987M", false, Alumno.Curso.BACH2);
-        new Alumno("Ramiro", "Alvarez Ortiz", "2569822J", true, Alumno.Curso.ESO1);
-        new Alumno("Carmelo", "Alpuy Casas", "3659823X", true, Alumno.Curso.ESO1);
-        new PadreMadre("Gregorio", "Martirena Marton", "12345678K");
-        new PadreMadre("Julia", "Mateos Rosso", "68995632K");
         new PadreMadre("Silvia", "Diez Gonzalez", "12345678K");
-        new PadreMadre("Nelson", "Velazquez Silvera", "89632152K");
-        new PersonaNoDocente("MABEL", "HUELMO HUELMO", "4217910S", "Parada");
         new PersonaNoDocente("SANTIAGO CESAR", "SANTOS BILINSKI", "1241385", "Mecanico");
-        new PersonaNoDocente("JOSE EDGARDO", "RUFFINI PEREZ", "3269524W", "Carpintero");
+        new PadreMadre("Gregorio", "Martirena Marton", "12345678K");
+        new Alumno("Noemi", "Alonso Rodriguez", "2568987M", false, Alumno.Curso.BACH2);
+        new PadreMadre("Julia", "Mateos Rosso", "68995632K");
         new PersonaNoDocente("GUMER", "FIGUEROA PEREZ", "1727741E", "Psicologa");
-        new Profesor("GRACIELA MARIA", "PONGIBOVE PICERNO ", "3454292J", "informatica");
-        new Profesor("SERGIO ROMÁN", "MARTINEZ PINI", "3819952I", "Lengua");
-        new Profesor("CLAUDIO", "PIRIZ CAZULO", "1004410X", "Dibujo");
-        new Profesor("DANIEL", "MARTINEZ PLADA", "3983559L", "matematicas");
+//        new Profesor("CLAUDIO", "PIRIZ CAZULO", "1004410X", "Dibujo");
+//        new Profesor("SERGIO ROMÁN", "MARTINEZ PINI", "3819952I", "Lengua");
+        new Alumno("Ramiro", "Alvarez Ortiz", "2569822J", true, Alumno.Curso.FP2);
+        new PersonaNoDocente("MABEL", "HUELMO HUELMO", "4217910S", "Parada");
+        new Alumno("Luis", "Fredes Almiron", "29556636S", true, Alumno.Curso.ESO4);
+        new Alumno("Carmelo", "Alpuy Casas", "3659823X", true, Alumno.Curso.ESO2);
+//        new Profesor("GRACIELA MARIA", "PONGIBOVE PICERNO ", "3454292J", "informatica");
+        new PadreMadre("Nelson", "Velazquez Silvera", "89632152K");
+//        new Profesor("DANIEL", "MARTINEZ PLADA", "3983559L", "matematicas");
+        new PersonaNoDocente("JOSE EDGARDO", "RUFFINI PEREZ", "3269524W", "Carpintero");
 
     }
 
+    //</editor-fold>
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
