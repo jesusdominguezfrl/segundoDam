@@ -44,6 +44,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             jListListaAsociadosValueChanged(e);
+            jButtonEliminarAsociado.setEnabled(jListListaAsociados.getSelectedIndex()>=0);
         }
     }
 
@@ -159,13 +160,21 @@ public class JFrameAsociados extends javax.swing.JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-
-            jCheckBoxTodos.setSelected(jCheckBoxProfesores.isSelected() && jCheckBoxPersonalNoDocente.isSelected() && jCheckBoxPadres.isSelected() && jCheckBoxAlumnos.isSelected());
-            if (jCheckBoxTodos.isSelected()) {
+            JCheckBox desencadenadorEvento = (JCheckBox) e.getComponent();
+            if (jCheckBoxTodos.getName().equals(desencadenadorEvento.getName())) {
                 jCheckBoxProfesores.setSelected(false);
                 jCheckBoxPersonalNoDocente.setSelected(false);
                 jCheckBoxPadres.setSelected(false);
                 jCheckBoxAlumnos.setSelected(false);
+            } else {
+                // jCheckBoxTodos.setSelected(false);
+                jCheckBoxTodos.setSelected(jCheckBoxProfesores.isSelected() && jCheckBoxPersonalNoDocente.isSelected() && jCheckBoxPadres.isSelected() && jCheckBoxAlumnos.isSelected());
+                if (jCheckBoxTodos.isSelected()) {
+                    jCheckBoxProfesores.setSelected(false);
+                    jCheckBoxPersonalNoDocente.setSelected(false);
+                    jCheckBoxPadres.setSelected(false);
+                    jCheckBoxAlumnos.setSelected(false);
+                }
             }
             jButtonVerAsociados.setEnabled(jCheckBoxTodos.isSelected() || jCheckBoxProfesores.isSelected() || jCheckBoxPersonalNoDocente.isSelected() || jCheckBoxPadres.isSelected() || jCheckBoxAlumnos.isSelected());
             jTextAreaMuestraAsociados.setEnabled(false);
@@ -194,6 +203,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Metodos">
     private void jListListaAsociadosValueChanged(ListSelectionEvent e) {
         if (jListListaAsociados.getSelectedIndex() != -1) {
@@ -233,6 +243,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
         jCheckBoxPadres.setName("PadreMadre");
         jCheckBoxPersonalNoDocente.setName("PersonaNoDocente");
         jCheckBoxProfesores.setName("Profesor");
+        jButtonEliminarAsociado.setEnabled(false);
         jButtonVerAsociados.setEnabled(false);
         jTextAreaMuestraAsociados.setText("Elige un empleado para ver sus datos.\nElige un tipo para ver los asociados");
         jListListaAsociados.addListSelectionListener(new gestorLista());
@@ -256,7 +267,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
         new Alumno("Noemi", "Alonso Rodriguez", "2568987M", false, Alumno.Curso.BACH2);
         new PadreMadre("Julia", "Mateos Rosso", "68995632K");
         new PersonaNoDocente("GUMER", "FIGUEROA PEREZ", "1727741E", "Psicologa");
-//        new Profesor("CLAUDIO", "PIRIZ CAZULO", "1004410X", "Dibujo");
+        new Profesor("CLAUDIO", "PIRIZ CAZULO", "1004410X", "Dibujo");
 //        new Profesor("SERGIO ROMÁN", "MARTINEZ PINI", "3819952I", "Lengua");
         new Alumno("Ramiro", "Alvarez Ortiz", "2569822J", true, Alumno.Curso.FP2);
         new PersonaNoDocente("MABEL", "HUELMO HUELMO", "4217910S", "Parada");
@@ -270,6 +281,8 @@ public class JFrameAsociados extends javax.swing.JFrame {
     }
 
     //</editor-fold>
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
