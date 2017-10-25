@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import javafx.scene.control.CheckBox;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
+import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -33,17 +34,15 @@ public class JFrameAsociados extends javax.swing.JFrame {
 
     }
     // <editor-fold defaultstate="collapsed" desc="Mis variables"> 
-    private boolean todos;
-    private boolean Alumnos;
-//    //private boolean asd;
-    // </ editor-fold>
 
+    // </ editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Clases Listener">
     private class gestorLista implements ListSelectionListener {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
             jListListaAsociadosValueChanged(e);
+            jButtonEliminarAsociado.setEnabled(jListListaAsociados.getSelectedIndex()>= 0);
         }
     }
 
@@ -53,7 +52,6 @@ public class JFrameAsociados extends javax.swing.JFrame {
         public void mouseClicked(MouseEvent e) {
             Object indice = Asociado.listaAsociados.getElementAt(jListListaAsociados.getSelectedIndex());
             Asociado.listaAsociados.removeElement(indice);
-            //cargarListaAsociado();
         }
 
         @Override
@@ -159,13 +157,15 @@ public class JFrameAsociados extends javax.swing.JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-
-            jCheckBoxTodos.setSelected(jCheckBoxProfesores.isSelected() && jCheckBoxPersonalNoDocente.isSelected() && jCheckBoxPadres.isSelected() && jCheckBoxAlumnos.isSelected());
+            if (!jCheckBoxTodos.getName().equals(e.getComponent().getName())) {
+                jCheckBoxTodos.setSelected(false);
+                jCheckBoxTodos.setSelected(jCheckBoxProfesores.isSelected() && jCheckBoxPersonalNoDocente.isSelected() && jCheckBoxPadres.isSelected() && jCheckBoxAlumnos.isSelected());
+            }
             if (jCheckBoxTodos.isSelected()) {
-                jCheckBoxProfesores.setSelected(false);
-                jCheckBoxPersonalNoDocente.setSelected(false);
-                jCheckBoxPadres.setSelected(false);
-                jCheckBoxAlumnos.setSelected(false);
+                    jCheckBoxProfesores.setSelected(false);
+                    jCheckBoxPersonalNoDocente.setSelected(false);
+                    jCheckBoxPadres.setSelected(false);
+                    jCheckBoxAlumnos.setSelected(false);
             }
             jButtonVerAsociados.setEnabled(jCheckBoxTodos.isSelected() || jCheckBoxProfesores.isSelected() || jCheckBoxPersonalNoDocente.isSelected() || jCheckBoxPadres.isSelected() || jCheckBoxAlumnos.isSelected());
             jTextAreaMuestraAsociados.setEnabled(false);
@@ -219,6 +219,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
                     if (Asociado.listaAsociados.get(j).getClass().getSimpleName().equals(gVD.getArrayCheckBox()[i].getName())) {
                         jCheckBoxTodos.setVisible(true);
                         gVD.getArrayCheckBox()[i].setVisible(true);
+                        gVD.getArrayCheckBox()[i].setSelected(!gVD.getArrayCheckBox()[i].isVisible());
                         break;
                     }
                 }
@@ -233,6 +234,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
         jCheckBoxPadres.setName("PadreMadre");
         jCheckBoxPersonalNoDocente.setName("PersonaNoDocente");
         jCheckBoxProfesores.setName("Profesor");
+        jButtonEliminarAsociado.setEnabled(false);
         jButtonVerAsociados.setEnabled(false);
         jTextAreaMuestraAsociados.setText("Elige un empleado para ver sus datos.\nElige un tipo para ver los asociados");
         jListListaAsociados.addListSelectionListener(new gestorLista());
@@ -262,7 +264,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
         new PersonaNoDocente("MABEL", "HUELMO HUELMO", "4217910S", "Parada");
         new Alumno("Luis", "Fredes Almiron", "29556636S", true, Alumno.Curso.ESO4);
         new Alumno("Carmelo", "Alpuy Casas", "3659823X", true, Alumno.Curso.ESO2);
-//        new Profesor("GRACIELA MARIA", "PONGIBOVE PICERNO ", "3454292J", "informatica");
+        new Profesor("GRACIELA MARIA", "PONGIBOVE PICERNO ", "3454292J", "informatica");
         new PadreMadre("Nelson", "Velazquez Silvera", "89632152K");
 //        new Profesor("DANIEL", "MARTINEZ PLADA", "3983559L", "matematicas");
         new PersonaNoDocente("JOSE EDGARDO", "RUFFINI PEREZ", "3269524W", "Carpintero");
