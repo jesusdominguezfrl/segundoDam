@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import javafx.scene.control.CheckBox;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
@@ -31,11 +32,9 @@ public class JFrameAsociados extends javax.swing.JFrame {
         iniciarAsociados();
         cargarListaAsociado();
         iniciarMisComponentes();
-
     }
-    // <editor-fold defaultstate="collapsed" desc="Mis variables"> 
-
-    // </ editor-fold>
+    
+    
     // <editor-fold defaultstate="collapsed" desc="Clases Listener">
     private class gestorLista implements ListSelectionListener {
 
@@ -192,8 +191,10 @@ public class JFrameAsociados extends javax.swing.JFrame {
         }
 
     }
+    
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Metodos">
     private void jListListaAsociadosValueChanged(ListSelectionEvent e) {
         if (jListListaAsociados.getSelectedIndex() != -1) {
@@ -219,7 +220,6 @@ public class JFrameAsociados extends javax.swing.JFrame {
                     if (Asociado.listaAsociados.get(j).getClass().getSimpleName().equals(gVD.getArrayCheckBox()[i].getName())) {
                         jCheckBoxTodos.setVisible(true);
                         gVD.getArrayCheckBox()[i].setVisible(true);
-                        gVD.getArrayCheckBox()[i].setSelected(!gVD.getArrayCheckBox()[i].isVisible());
                         break;
                     }
                 }
@@ -272,6 +272,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
     }
 
     //</editor-fold>
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
