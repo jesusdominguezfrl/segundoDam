@@ -9,12 +9,10 @@ import Asociados.*;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javafx.scene.control.CheckBox;
-import javax.swing.DefaultListModel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -32,16 +30,22 @@ public class JFrameAsociados extends javax.swing.JFrame {
         iniciarAsociados();
         cargarListaAsociado();
         iniciarMisComponentes();
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                cerrarAplicacion();
+            }
+        });
     }
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="Clases Listener">
     private class gestorLista implements ListSelectionListener {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
             jListListaAsociadosValueChanged(e);
-            jButtonEliminarAsociado.setEnabled(jListListaAsociados.getSelectedIndex()>=0);
+            jButtonEliminarAsociado.setEnabled(jListListaAsociados.getSelectedIndex() >= 0);
         }
     }
 
@@ -154,20 +158,38 @@ public class JFrameAsociados extends javax.swing.JFrame {
 
     private class gestorCheckBox implements MouseListener {
 
+        private JCheckBox[] arrayCheckBox;
+
         @Override
         public void mouseClicked(MouseEvent e) {
+            boolean checkBoxTodos = true;
             if (!jCheckBoxTodos.getName().equals(e.getComponent().getName())) {
                 jCheckBoxTodos.setSelected(false);
-                jCheckBoxTodos.setSelected(jCheckBoxProfesores.isSelected() && jCheckBoxPersonalNoDocente.isSelected() && jCheckBoxPadres.isSelected() && jCheckBoxAlumnos.isSelected());
+                for (int i = 0; i < arrayCheckBox.length; i++) {
+                    if (arrayCheckBox[i] != jCheckBoxTodos && arrayCheckBox[i].isVisible()) {
+                        checkBoxTodos = checkBoxTodos && arrayCheckBox[i].isSelected();
+                    }
+                }
+                jCheckBoxTodos.setSelected(checkBoxTodos);
             }
             if (jCheckBoxTodos.isSelected()) {
-                    jCheckBoxProfesores.setSelected(false);
-                    jCheckBoxPersonalNoDocente.setSelected(false);
-                    jCheckBoxPadres.setSelected(false);
-                    jCheckBoxAlumnos.setSelected(false);
+                for (int i = 0; i < arrayCheckBox.length; i++) {
+                    if (arrayCheckBox[i] != jCheckBoxTodos) {
+                        arrayCheckBox[i].setSelected(false || !arrayCheckBox[i].isVisible());
+                    }
+                }
             }
-            jButtonVerAsociados.setEnabled(jCheckBoxTodos.isSelected() || jCheckBoxProfesores.isSelected() || jCheckBoxPersonalNoDocente.isSelected() || jCheckBoxPadres.isSelected() || jCheckBoxAlumnos.isSelected());
+            boolean botonVerAsociados = false;
+            for (int i = 0; i < arrayCheckBox.length; i++) {
+                botonVerAsociados = botonVerAsociados || (arrayCheckBox[i].isSelected() && arrayCheckBox[i].isVisible());
+            }
+            jButtonVerAsociados.setEnabled(botonVerAsociados);
             jTextAreaMuestraAsociados.setEnabled(false);
+        }
+
+        public gestorCheckBox() {
+            gestorVerDatos gVD = new gestorVerDatos();
+            arrayCheckBox = gVD.getArrayCheckBox();
         }
 
         @Override
@@ -191,7 +213,6 @@ public class JFrameAsociados extends javax.swing.JFrame {
         }
 
     }
-    
 
     //</editor-fold>
     
@@ -207,12 +228,21 @@ public class JFrameAsociados extends javax.swing.JFrame {
 
     }
 
-    public void cargarListaAsociado() {
+    private void cerrarAplicacion() {
+        String botones[] = new String[]{"Cerrar", "Cancelar"};
+        int respuesta = JOptionPane.showOptionDialog(this, "¿Quiere cerrar la aplicacion", "Terminar Aplicacion", 0, 0, null, botones, this);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+
+    }
+
+    private void cargarListaAsociado() {
         jListListaAsociados.setModel(Asociado.listaAsociados);
 
     }
 
-    public void CheckBoxVisibilidad() {
+    private void CheckBoxVisibilidad() {
         gestorVerDatos gVD = new gestorVerDatos();
         for (int i = 0; i < gVD.getArrayCheckBox().length; i++) {
             if (!"Todos".equals(gVD.getArrayCheckBox()[i].getName())) {
@@ -224,10 +254,11 @@ public class JFrameAsociados extends javax.swing.JFrame {
                     }
                 }
             }
+            gVD.getArrayCheckBox()[i].setSelected(!gVD.getArrayCheckBox()[i].isVisible());
         }
     }
 
-    public void iniciarMisComponentes() {
+    private void iniciarMisComponentes() {
         //gestorVerDatos gestionVerDatos = new gestorVerDatos();
         jCheckBoxTodos.setName("Todos");
         jCheckBoxAlumnos.setName("Alumno");
@@ -251,20 +282,20 @@ public class JFrameAsociados extends javax.swing.JFrame {
         CheckBoxVisibilidad();
     }
 
-    public void iniciarAsociados() {
+    private void iniciarAsociados() {
         new PadreMadre("Silvia", "Diez Gonzalez", "12345678K");
         new PersonaNoDocente("SANTIAGO CESAR", "SANTOS BILINSKI", "1241385", "Mecanico");
         new PadreMadre("Gregorio", "Martirena Marton", "12345678K");
-        new Alumno("Noemi", "Alonso Rodriguez", "2568987M", false, Alumno.Curso.BACH2);
+//        new Alumno("Noemi", "Alonso Rodriguez", "2568987M", true, Alumno.Curso.BACH2);
         new PadreMadre("Julia", "Mateos Rosso", "68995632K");
         new PersonaNoDocente("GUMER", "FIGUEROA PEREZ", "1727741E", "Psicologa");
-        new Profesor("CLAUDIO", "PIRIZ CAZULO", "1004410X", "Dibujo");
+        //    new Profesor("CLAUDIO", "PIRIZ CAZULO", "1004410X", "Dibujo");
 //        new Profesor("SERGIO ROMÁN", "MARTINEZ PINI", "3819952I", "Lengua");
-        new Alumno("Ramiro", "Alvarez Ortiz", "2569822J", true, Alumno.Curso.FP2);
+//        new Alumno("Ramiro", "Alvarez Ortiz", "2569822J", false, Alumno.Curso.FP2);
         new PersonaNoDocente("MABEL", "HUELMO HUELMO", "4217910S", "Parada");
-        new Alumno("Luis", "Fredes Almiron", "29556636S", true, Alumno.Curso.ESO4);
+        new Alumno("Luis", "Fredes Almiron", "29556636S", false, Alumno.Curso.ESO4);
         new Alumno("Carmelo", "Alpuy Casas", "3659823X", true, Alumno.Curso.ESO2);
-        new Profesor("GRACIELA MARIA", "PONGIBOVE PICERNO ", "3454292J", "informatica");
+        //  new Profesor("GRACIELA MARIA", "PONGIBOVE PICERNO ", "3454292J", "informatica");
         new PadreMadre("Nelson", "Velazquez Silvera", "89632152K");
 //        new Profesor("DANIEL", "MARTINEZ PLADA", "3983559L", "matematicas");
         new PersonaNoDocente("JOSE EDGARDO", "RUFFINI PEREZ", "3269524W", "Carpintero");
@@ -272,7 +303,6 @@ public class JFrameAsociados extends javax.swing.JFrame {
     }
 
     //</editor-fold>
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -448,13 +478,13 @@ public class JFrameAsociados extends javax.swing.JFrame {
             .addGroup(jPanelTipoAsociadosLayout.createSequentialGroup()
                 .addContainerGap(8, Short.MAX_VALUE)
                 .addComponent(jCheckBoxTodos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jCheckBoxAlumnos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jCheckBoxProfesores)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jCheckBoxPadres)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jCheckBoxPersonalNoDocente)
                 .addGap(9, 9, 9))
         );
