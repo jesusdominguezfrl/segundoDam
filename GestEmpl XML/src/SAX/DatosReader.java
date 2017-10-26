@@ -27,12 +27,14 @@ import org.xml.sax.helpers.AttributesImpl;
  */
 class DatosReader implements XMLReader {
 
+    private Modelo  m;
+    
     private ContentHandler handler;
 
     private final AttributesImpl atts = new AttributesImpl();
 
-    public DatosReader() {
-
+    public DatosReader(Modelo m) {
+       this.m=m;
     }
     //métodos para el transformer
 
@@ -40,20 +42,15 @@ class DatosReader implements XMLReader {
     public void parse(InputSource input) throws IOException, SAXException {
 
         try {
-
-            //Modelo source = (Modelo) input;
-           //List<Empleado> empleadosaqui = source.getEmpleados();
-
             //Guardado de datos.
             handler.startDocument();
             handler.startElement("", "empleados", "empleados", atts);
-            for (Empleado empl : Modelo.empleados) {
+            for (Empleado empl : m.getEmpleados()) {
                 handler.startElement("", "empleado", "empleado", atts);
 
                 handler.startElement("", "id", "id", atts);
                 char[] id = String.valueOf(empl.getId()).toCharArray();
                 handler.characters(id, 0, id.length);
-                
                 handler.endElement("", "id", "id");
 
                 handler.startElement("", "nombre", "nombre", atts);

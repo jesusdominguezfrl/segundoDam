@@ -11,8 +11,6 @@ import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
@@ -28,11 +26,9 @@ import org.xml.sax.helpers.XMLReaderFactory;
 public class tratamientoSax {
     
     private File empleadosXMLSAX;
-    private Modelo m;
     
     public tratamientoSax(){
         this.empleadosXMLSAX= new File("EmpleadosXMLSAX.xml");
-        this.m= new Modelo();
     }
 
     public File getEmpleadosXMLSAX() {
@@ -43,7 +39,8 @@ public class tratamientoSax {
         this.empleadosXMLSAX = empleadosXMLSAX;
     }
     
-    public void importarXMLSAX(File f){
+    public void importarXMLSAX(File f, Modelo m){
+        //m.getEmpleados().clear();
          try {
             XMLReader reader = XMLReaderFactory.createXMLReader();
             reader.setContentHandler(new GestionContenido());
@@ -55,8 +52,9 @@ public class tratamientoSax {
         }
     }
     
-    public void exportarXMLSAX(File f){
-        XMLReader datosLectura= new DatosReader();
+    public void exportarXMLSAX(File f, Modelo m){
+        System.out.println(m.getEmpleados().size());
+        XMLReader datosLectura= new DatosReader(m);
         InputSource datosSource = m;
         try {
             Source source = new SAXSource(datosLectura,datosSource);

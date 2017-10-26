@@ -6,6 +6,7 @@
 package SAX;
 
 import entidades.Empleado;
+import java.util.ArrayList;
 import modelo.Modelo;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -18,15 +19,21 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class GestionContenido extends DefaultHandler {
 
+    private Modelo m;
     private String nombreEtiqueta;
     private String valores;
     Empleado empl;
     
+    public GestionContenido(){
+        m=new Modelo();
+    }
     
     @Override
     public void startDocument() throws SAXException {
         System.out.println("\nPrincipio del documento XML\n\n\tLeyendo contenido.... ");
-        Modelo.empleados.clear();
+        
+//        Modelo.empleados.clear();
+
     }
 
     @Override
@@ -71,7 +78,8 @@ public class GestionContenido extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String name) throws SAXException {
         if("empleado".equals(localName)){
-            Modelo.empleados.add(empl);
+            //m.getEmpleados().add(empl);
+            m.getEmpleados().add(empl);
         }
     }
 }

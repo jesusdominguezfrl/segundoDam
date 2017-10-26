@@ -87,19 +87,19 @@ public class Vista {
     }
     
     public void importarDOM() throws ParserConfigurationException, SAXException, IOException{
-        td.importarXMLDOM(td.getEmpleadosXMLDOM());
+        td.importarXMLDOM(td.getEmpleadosXMLDOM(),m);
     }
     
     public void exportarDOM() throws ParserConfigurationException {
-        td.exportarXMLDOM(td.getEmpleadosXMLDOM());
+        td.exportarXMLDOM(td.getEmpleadosXMLDOM(),m);
     }
 
     public void importarSAX() {
-       ts.importarXMLSAX(ts.getEmpleadosXMLSAX());
+       ts.importarXMLSAX(ts.getEmpleadosXMLSAX(),m);
     }
     
     public void exportarSAX(){
-        ts.exportarXMLSAX(ts.getEmpleadosXMLSAX());
+        ts.exportarXMLSAX(ts.getEmpleadosXMLSAX(), m);
     }
 
     

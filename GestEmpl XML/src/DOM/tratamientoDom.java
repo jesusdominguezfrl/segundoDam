@@ -8,6 +8,7 @@ package DOM;
 import entidades.Empleado;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -46,9 +47,10 @@ public class tratamientoDom {
         this.empleadosXMLDOM = empleadosXMLDOM;
     }
 
-    public void importarXMLDOM(File f) throws ParserConfigurationException, SAXException, IOException {
+    public void importarXMLDOM(File f, Modelo m) throws ParserConfigurationException, SAXException, IOException {
         
-            Modelo.empleados.clear();
+            //Modelo.empleados.clear();
+            m.getEmpleados().clear();
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = /*(Document)*/ builder.parse(f);
@@ -61,21 +63,23 @@ public class tratamientoDom {
             for (int i = 0; i < listaempleados.getLength(); i++) {
                 Node empleado = listaempleados.item(i);
                 if (empleado.getNodeType() == Node.ELEMENT_NODE) {
-                    //Element elemento = (Element) empleado;
-                   Modelo.empleados.add(new Empleado((Element) empleado));
-                    
+                    ////Element elemento = (Element) empleado;
+                   //Modelo.empleados.add(new Empleado((Element) empleado));
+                    m.getEmpleados().add(new Empleado((Element)empleado));
                 }
             }
+            
     }
     
-    public void exportarXMLDOM(File f) throws ParserConfigurationException {
+    public void exportarXMLDOM(File f, Modelo m) throws ParserConfigurationException {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             DOMImplementation implementation = builder.getDOMImplementation();
             Document document = implementation.createDocument(null, "empleados", null);
         try {
             document.setXmlVersion("1.0");
-            for (Empleado e : Modelo.empleados) {
+        //    for (Empleado e : Modelo.empleados) {
+            for (Empleado e : m.getEmpleados()) {
                 //Empleado
                 Element raiz = document.createElement("empleado");
                 document.getDocumentElement().appendChild(raiz);
