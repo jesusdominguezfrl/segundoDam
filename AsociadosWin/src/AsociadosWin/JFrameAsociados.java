@@ -40,6 +40,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
     }
 
     // <editor-fold defaultstate="collapsed" desc="Clases Listener">
+    
     private class gestorLista implements ListSelectionListener {
 
         @Override
@@ -55,6 +56,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
         public void mouseClicked(MouseEvent e) {
             Object indice = Asociado.listaAsociados.getElementAt(jListListaAsociados.getSelectedIndex());
             Asociado.listaAsociados.removeElement(indice);
+            CheckBoxVisibilidad();
         }
 
         @Override
@@ -243,6 +245,13 @@ public class JFrameAsociados extends javax.swing.JFrame {
     }
 
     private void CheckBoxVisibilidad() {
+        for (int i = 0; i < jPanelTipoAsociados.getComponentCount(); i++) {
+            Component c = jPanelTipoAsociados.getComponent(i);
+            if (c instanceof JCheckBox) {
+                c.setVisible(false);
+                c.addMouseListener(new gestorCheckBox());
+            }
+        }
         gestorVerDatos gVD = new gestorVerDatos();
         for (int i = 0; i < gVD.getArrayCheckBox().length; i++) {
             if (!"Todos".equals(gVD.getArrayCheckBox()[i].getName())) {
@@ -272,13 +281,13 @@ public class JFrameAsociados extends javax.swing.JFrame {
         jButtonEliminarAsociado.addMouseListener(new gestorEliminarEmpleado());
         jButtonVerAsociados.addMouseListener(new gestorVerDatos());
         // jCheckBoxTodos.addMouseListener(new gestorCheckBox());
-        for (int i = 0; i < jPanelTipoAsociados.getComponentCount(); i++) {
-            Component c = jPanelTipoAsociados.getComponent(i);
-            if (c instanceof JCheckBox) {
-                c.setVisible(false);
-                c.addMouseListener(new gestorCheckBox());
-            }
-        }
+//        for (int i = 0; i < jPanelTipoAsociados.getComponentCount(); i++) {
+//            Component c = jPanelTipoAsociados.getComponent(i);
+//            if (c instanceof JCheckBox) {
+//                c.setVisible(false);
+//                c.addMouseListener(new gestorCheckBox());
+//            }
+//        }
         CheckBoxVisibilidad();
     }
 
@@ -303,6 +312,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
     }
 
     //</editor-fold>
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -462,12 +472,12 @@ public class JFrameAsociados extends javax.swing.JFrame {
             jPanelTipoAsociadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTipoAsociadosLayout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addGroup(jPanelTipoAsociadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBoxPersonalNoDocente)
-                    .addComponent(jCheckBoxPadres)
-                    .addComponent(jCheckBoxTodos)
-                    .addComponent(jCheckBoxAlumnos)
-                    .addComponent(jCheckBoxProfesores))
+                .addGroup(jPanelTipoAsociadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jCheckBoxAlumnos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBoxPersonalNoDocente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBoxPadres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBoxProfesores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBoxTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
 
@@ -476,20 +486,18 @@ public class JFrameAsociados extends javax.swing.JFrame {
         jPanelTipoAsociadosLayout.setVerticalGroup(
             jPanelTipoAsociadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTipoAsociadosLayout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
-                .addComponent(jCheckBoxTodos)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jCheckBoxAlumnos)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jCheckBoxProfesores)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jCheckBoxPadres)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jCheckBoxPersonalNoDocente)
-                .addGap(9, 9, 9))
+                .addContainerGap()
+                .addComponent(jCheckBoxTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBoxAlumnos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBoxProfesores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBoxPadres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBoxPersonalNoDocente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(22, 22, 22))
         );
-
-        jPanelTipoAsociadosLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jCheckBoxPersonalNoDocente, jCheckBoxProfesores, jCheckBoxTodos});
 
         jButtonVerAsociados.setText("Ver Asociados");
 
@@ -499,23 +507,23 @@ public class JFrameAsociados extends javax.swing.JFrame {
             jPanelInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInformesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelTipoAsociados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonVerAsociados, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanelTipoAsociados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonVerAsociados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelInformesLayout.setVerticalGroup(
             jPanelInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInformesLayout.createSequentialGroup()
+            .addGroup(jPanelInformesLayout.createSequentialGroup()
                 .addGroup(jPanelInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelInformesLayout.createSequentialGroup()
                         .addComponent(jPanelTipoAsociados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonVerAsociados, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
