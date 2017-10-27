@@ -6,10 +6,8 @@
 package SAX;
 
 import entidades.Empleado;
-import java.util.ArrayList;
 import modelo.Modelo;
 import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -24,8 +22,8 @@ public class GestionContenido extends DefaultHandler {
     private String valores;
     Empleado empl;
     
-    public GestionContenido(){
-        m=new Modelo();
+    public GestionContenido(Modelo m){
+        this.m=m;
     }
     
     @Override

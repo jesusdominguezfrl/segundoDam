@@ -43,7 +43,7 @@ public class tratamientoSax {
         //m.getEmpleados().clear();
          try {
             XMLReader reader = XMLReaderFactory.createXMLReader();
-            reader.setContentHandler(new GestionContenido());
+            reader.setContentHandler(new GestionContenido(m));
             reader.parse(new InputSource(new FileInputStream(/*empleadosXMLSAX.getName()*/f)));
             
         } catch (Exception e) {

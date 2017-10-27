@@ -7,8 +7,6 @@ package SAX;
 
 import entidades.Empleado;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import modelo.Modelo;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
