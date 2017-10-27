@@ -57,6 +57,7 @@ public class JFrameAsociados extends javax.swing.JFrame {
             Object indice = Asociado.listaAsociados.getElementAt(jListListaAsociados.getSelectedIndex());
             Asociado.listaAsociados.removeElement(indice);
             CheckBoxVisibilidad();
+            jButtonVerAsociados.setEnabled(false);
         }
 
         @Override
