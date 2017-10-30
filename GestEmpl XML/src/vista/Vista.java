@@ -8,15 +8,11 @@ package vista;
 import DOM.tratamientoDom;
 import SAX.tratamientoSax;
 import entidades.Empleado;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
+import XStream.tratamientoXStreams;
+import java.io.FileNotFoundException;
 
 import modelo.Modelo;
 import org.xml.sax.SAXException;
@@ -31,11 +27,13 @@ public class Vista {
     Modelo m;
     tratamientoDom td;
     tratamientoSax ts;
+    tratamientoXStreams tXS;
 
-    public Vista(Modelo m, tratamientoDom td, tratamientoSax ts) {
+    public Vista(Modelo m, tratamientoDom td, tratamientoSax ts,tratamientoXStreams tXS) {
         this.m = m;
         this.td= td;
         this.ts=ts;
+        this.tXS=tXS;
     }
 
     public void cargar_aleatorios() {
@@ -100,6 +98,14 @@ public class Vista {
     
     public void exportarSAX(){
         ts.exportarXMLSAX(ts.getEmpleadosXMLSAX(), m);
+    }
+
+    public void importarXStream() throws FileNotFoundException {
+        tXS.importarXMLXStream(tXS.getEmpleadosXMLXStream(), m);
+    }
+
+    public void exportarXStream() throws FileNotFoundException {
+        tXS.exportarXMLXStream(tXS.getEmpleadosXMLXStream(),m);
     }
 
     

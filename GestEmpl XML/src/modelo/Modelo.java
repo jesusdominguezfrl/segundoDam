@@ -24,7 +24,7 @@ import org.xml.sax.InputSource;
  */
 public class Modelo extends InputSource implements Serializable  {
 
-    public static  ArrayList<Empleado> empleados;
+    private static ArrayList<Empleado> empleados;
     private File empleadosDelimitado;
     private File empleadosEncolumnado;
     private File empleadosBinario;

@@ -7,6 +7,7 @@ package gestempl;
 
 import DOM.tratamientoDom;
 import SAX.tratamientoSax;
+import XStream.tratamientoXStreams;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
@@ -28,13 +29,14 @@ public class GestEmpl {
         Modelo m = new Modelo();
         tratamientoDom td= new tratamientoDom();
         tratamientoSax ts = new tratamientoSax();
-        Vista v = new Vista(m, td,ts);
+        tratamientoXStreams tXS = new tratamientoXStreams();
+        Vista v = new Vista(m, td,ts,tXS);
         boolean salir = false;
         Scanner sc = new Scanner(System.in);
         String menu = "\nInicio: \n\t01 Mostrar empleados\n\t02 Generar aleatorios\n\t03 Alta de empleado\n"
                 + "Ficheros texto: \n\t11 Escribir delimitado\n\t12 Escribir encolumnado\n\t13 Leer delimitado\n \t14 Leer encolumnado\n"
                 + "Ficheros binarios: \n\t15 Exportar binario\n\t16 Importar binario\n\t17 Exportar objeto\n\t18 Importar objeto\n"
-                 + "Ficheros XML: \n\t19 Importar DOM.\n\t20 Importar SAX\n\t21 Exportar DOM\n\t22 Exportar SAX\n"
+                 + "Ficheros XML: \n\t19 Importar DOM.\n\t20 Importar SAX\n\t21 Importar XStream\n\t22 Exportar DOM\n\t23 Exportar SAX\n\t24 Esportar XStream"
                 + "Salir\n\n"
                 + "Escriba una opción: ";
         String opcion;
@@ -99,12 +101,20 @@ public class GestEmpl {
                     v.importarSAX();
                     break;
                 case "21":
+                case "importar XStream":
+                    v.importarXStream();
+                    break;
+                case "22":
                 case "exportar DOM":
                     v.exportarDOM();
                     break;
-                case "22":
+                case "23":
                 case "exportar SAX":
                     v.exportarSAX();
+                    break;
+                case "24":
+                case "exportar XStream":
+                    v.exportarXStream();
                     break;
                 
                 case "salir":
