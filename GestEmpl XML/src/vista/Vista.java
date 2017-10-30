@@ -12,7 +12,10 @@ import java.io.IOException;
 import java.util.Scanner;
 import javax.xml.parsers.ParserConfigurationException;
 import XStream.tratamientoXStreams;
+import estiloXsl.tratamientoEstilosXSL;
 import java.io.FileNotFoundException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import modelo.Modelo;
 import org.xml.sax.SAXException;
@@ -28,12 +31,14 @@ public class Vista {
     tratamientoDom td;
     tratamientoSax ts;
     tratamientoXStreams tXS;
+    tratamientoEstilosXSL teXSL;
 
-    public Vista(Modelo m, tratamientoDom td, tratamientoSax ts,tratamientoXStreams tXS) {
+    public Vista(Modelo m, tratamientoDom td, tratamientoSax ts,tratamientoXStreams tXS, tratamientoEstilosXSL teXSL) {
         this.m = m;
         this.td= td;
         this.ts=ts;
         this.tXS=tXS;
+        this.teXSL=teXSL;
     }
 
     public void cargar_aleatorios() {
@@ -106,6 +111,10 @@ public class Vista {
 
     public void exportarXStream() throws FileNotFoundException {
         tXS.exportarXMLXStream(tXS.getEmpleadosXMLXStream(),m);
+    }
+
+    public void crearFHTML() throws FileNotFoundException, TransformerException, TransformerConfigurationException, IOException {
+        teXSL.crearFicheroHTML(teXSL.getPaginaHTML());
     }
 
     

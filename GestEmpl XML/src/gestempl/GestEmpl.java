@@ -8,6 +8,7 @@ package gestempl;
 import DOM.tratamientoDom;
 import SAX.tratamientoSax;
 import XStream.tratamientoXStreams;
+import estiloXsl.tratamientoEstilosXSL;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
@@ -30,13 +31,15 @@ public class GestEmpl {
         tratamientoDom td= new tratamientoDom();
         tratamientoSax ts = new tratamientoSax();
         tratamientoXStreams tXS = new tratamientoXStreams();
-        Vista v = new Vista(m, td,ts,tXS);
+        tratamientoEstilosXSL teXSL = new tratamientoEstilosXSL();
+        Vista v = new Vista(m, td,ts,tXS,teXSL);
         boolean salir = false;
         Scanner sc = new Scanner(System.in);
         String menu = "\nInicio: \n\t01 Mostrar empleados\n\t02 Generar aleatorios\n\t03 Alta de empleado\n"
                 + "Ficheros texto: \n\t11 Escribir delimitado\n\t12 Escribir encolumnado\n\t13 Leer delimitado\n \t14 Leer encolumnado\n"
                 + "Ficheros binarios: \n\t15 Exportar binario\n\t16 Importar binario\n\t17 Exportar objeto\n\t18 Importar objeto\n"
-                 + "Ficheros XML: \n\t19 Importar DOM.\n\t20 Importar SAX\n\t21 Importar XStream\n\t22 Exportar DOM\n\t23 Exportar SAX\n\t24 Esportar XStream"
+                 + "Ficheros XML: \n\t19 Importar DOM.\n\t20 Importar SAX\n\t21 Importar XStream\n\t22 Exportar DOM\n\t23 Exportar SAX\n\t24 Esportar XStream\n"
+                +"Fichero HTML5: \n\t25 Crear fichero HTML."
                 + "Salir\n\n"
                 + "Escriba una opción: ";
         String opcion;
@@ -115,6 +118,10 @@ public class GestEmpl {
                 case "24":
                 case "exportar XStream":
                     v.exportarXStream();
+                    break;
+                case "25":
+                case "Crear HTML":
+                    v.crearFHTML();
                     break;
                 
                 case "salir":
