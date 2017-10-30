@@ -5,8 +5,12 @@
  */
 package XStream;
 
+
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
+import com.thoughtworks.xstream.security.NoTypePermission;
 import entidades.Empleado;
+import gestempl.GestEmpl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,6 +18,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Modelo;
+import vista.Vista;
 
 /**
  *
@@ -36,21 +41,24 @@ public class tratamientoXStreams {
 
     public void importarXMLXStream(File f, Modelo m) throws FileNotFoundException {
         XStream xstream = new XStream();
+        xstream.addPermission(NoTypePermission.NONE);
+        xstream.allowTypeHierarchy(Empleado.class);
+        xstream.allowTypeHierarchy(List.class);
         xstream.alias("empleados", List.class);
         xstream.alias("empleado", Empleado.class);
         System.out.println("shbalñkjf");
-        xstream.addImplicitCollection(Modelo.class,"empleados");
+       xstream.addImplicitCollection(Modelo.class,"empleados");
         System.out.println("No llego");
         m.setEmpleados((ArrayList<Empleado>)xstream.fromXML(new FileInputStream(f)));
-        
     }
+
 
     public void exportarXMLXStream(File f, Modelo m) throws FileNotFoundException {
         if(!m.getEmpleados().isEmpty()){
             XStream xstream = new XStream();
             xstream.alias("empleados", List.class);
             xstream.alias("empleado", Empleado.class);
-            //xstream.addImplicitCollection(Modelo.class, "empleados");
+            xstream.addImplicitCollection(Modelo.class, "empleados");
             xstream.toXML(m.getEmpleados(), new FileOutputStream(f));
         }else{
             System.out.println("\nNo hay empleados para guardar");
