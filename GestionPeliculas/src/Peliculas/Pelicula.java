@@ -44,7 +44,7 @@ public class Pelicula {
     private Genero genero;
     private int año;
     private int edadRecomendada;
-    public static DefaultListModel peliculas;
+    public static DefaultListModel<Pelicula> peliculas = new DefaultListModel<>();
 
     public Pelicula(String titulo, String director, Genero genero, int año, int edadRecomendada) {
         this.titulo = titulo;
@@ -55,26 +55,18 @@ public class Pelicula {
         peliculas.addElement(this);
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
     public Genero getGenero() {
         return genero;
     }
-
-    public int getAño() {
-        return año;
-    }
-
-    public int getEdadRecomendada() {
-        return edadRecomendada;
+    
+    @Override
+    public String toString(){
+        return titulo;
     }
     
+    public String verDatos() {
+        return "Director: "+ director+ "\nGenero: "+ genero+ "\nAño: "+ año+ "\nEdad Recomendada: "+edadRecomendada;
+    }
     
     
     

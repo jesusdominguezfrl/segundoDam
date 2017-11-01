@@ -8,8 +8,19 @@ package GestioPeliculasWin;
 import Peliculas.*;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.JToggleButton;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -23,27 +34,138 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
     public JFrameGestorPeliculas() {
         initComponents();
         this.setMinimumSize(new Dimension(900, 550));
-        cargarRadioButtons();
+        iniciarMisComponentes();
     }
-    
-    private void cargarRadioButtons(){
-        ButtonGroup botonesGrupos = new ButtonGroup();
+    ButtonGroup botonesGrupo = new ButtonGroup();
+    DefaultListModel salidaPantalla = new DefaultListModel();
+
+    private void iniciarMisComponentes() {
+        cargarPeliculas();
+        cargarRadioButtons();
+        cargarLista();
+        jButtonBuscarPelicula.setEnabled(false);
+        jListListado.addMouseListener(new gestorLista());
+        //jButtonBuscarPelicula.addActionListener(new gestorBotonBuscar());
+
+    }
+
+    private void cargarRadioButtons() {
         jPanelGeneros.setLayout(new FlowLayout(0));
-        int cont=0;
+        int cont = 0;
         for (int i = 0; i < Pelicula.Genero.values().length; i++) {
-            JRadioButton rBT= new JRadioButton();
+            JRadioButton rBT = new JRadioButton();
             rBT.setText(Pelicula.Genero.values()[i].toString());
-            rBT.setPreferredSize(new Dimension(jPanelGeneros.getWidth()+100,30));
+            rBT.addActionListener(new gestorRadioButtons());
+            rBT.setPreferredSize(new Dimension(jPanelGeneros.getWidth() + 100, 30));
             cont++;
-            jPanelGeneros.setPreferredSize(new Dimension(jPanelGeneros.getWidth(),30*cont));
+            jPanelGeneros.setPreferredSize(new Dimension(jPanelGeneros.getWidth(), 30 * cont));
             jPanelGeneros.add(rBT);
-            botonesGrupos.add(rBT);
+            botonesGrupo.add(rBT);
         }
     }
-    
-    
-    
-    
+
+    private void cargarLista() {
+        if (!Pelicula.peliculas.isEmpty() && salidaPantalla.isEmpty()) {
+            for (int i = 0; i < Pelicula.peliculas.size(); i++) {
+                Pelicula p = (Pelicula) Pelicula.peliculas.get(i);
+                salidaPantalla.addElement(p);
+                //System.out.println(p.getTitulo());
+            }
+            jListListado.setModel(salidaPantalla);
+        }
+    }
+
+    private void cargarPeliculas() {
+        new Pelicula("House of the Witch", "Director", Pelicula.Genero.TERROR, 2017, 18);
+        new Pelicula("Worry Dolls", "Director", Pelicula.Genero.TERROR, 2016, 18);
+        new Pelicula("The last Days", "Director", Pelicula.Genero.ACCION, 2013, 13);
+        new Pelicula("Pandemic", "Director", Pelicula.Genero.ACCION, 2017, 12);
+        new Pelicula("Nacida para ganar", "Director", Pelicula.Genero.COMEDIA, 2016, 10);
+        new Pelicula("Despido Procedente", "Director", Pelicula.Genero.COMEDIA, 2017, 18);
+        new Pelicula("Happy Death Day", "Director", Pelicula.Genero.INTRIGA, 2011, 18);
+        new Pelicula("Numb", "Director", Pelicula.Genero.INTRIGA, 2017, 15);
+        new Pelicula("Plan de escape", "Director", Pelicula.Genero.THRILLER, 2013, 18);
+        new Pelicula("Worry Dolss", "Director", Pelicula.Genero.THRILLER, 2016, 18);
+        new Pelicula("El hilo Rojo", "Director", Pelicula.Genero.ROMANTICA, 2017, 18);
+        new Pelicula("Amar", "Director", Pelicula.Genero.ROMANTICA, 2017, 18);
+        new Pelicula("El duelo", "Director", Pelicula.Genero.NOVELA, 2016, 18);
+        new Pelicula("Django", "Director", Pelicula.Genero.NOVELA, 2012, 18);
+    }
+
+    private class gestorLista implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (jListListado.getSelectedIndex() != -1) {
+                for (int i = 0; i < Pelicula.peliculas.size(); i++) {
+                    Pelicula p = Pelicula.peliculas.get(i);
+                    if (salidaPantalla.get(jListListado.getSelectedIndex()).toString().equals(p.toString())) {
+                        JOptionPane.showMessageDialog(rootPane, p.verDatos(), p.toString(), JOptionPane.INFORMATION_MESSAGE);
+
+                    }
+                }
+                jListListado.setSelectedValue(null, rootPaneCheckingEnabled);
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+    }
+
+    private class gestorBotonBuscar implements ActionListener {
+
+        private ActionEvent eventoRadioButton;
+
+        private gestorBotonBuscar(ActionEvent e) {
+            this.eventoRadioButton = e;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            salidaPantalla.clear();
+
+            for (int i = 0; i < Pelicula.peliculas.size(); i++) {
+                Pelicula p = (Pelicula) Pelicula.peliculas.get(i);
+                if (p.getGenero().toString().equals(eventoRadioButton.getActionCommand())) {
+                    salidaPantalla.addElement(p);
+                }
+            }
+            jListListado.setEnabled(true);
+            jButtonBuscarPelicula.removeActionListener(this);
+            jButtonBuscarPelicula.setEnabled(false);
+        }
+
+    }
+
+    private class gestorRadioButtons implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            jListListado.setEnabled(false);
+            jListListado.clearSelection();
+            jButtonBuscarPelicula.addActionListener(new gestorBotonBuscar(e));
+            jButtonBuscarPelicula.setEnabled(true);
+
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
