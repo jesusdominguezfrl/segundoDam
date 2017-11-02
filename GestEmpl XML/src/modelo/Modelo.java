@@ -13,16 +13,17 @@ import org.xml.sax.InputSource;
  *
  * @author Jc
  */
+@XmlRootElement(name = "empleados")
 
-@XmlRootElement (name ="empleados")
+public class Modelo extends InputSource implements Serializable {
 
-public class Modelo extends InputSource implements Serializable  {
-    private  ArrayList<Empleado> empleados;
+    private ArrayList<Empleado> empleados;
     private File empleadosDelimitado;
     private File empleadosEncolumnado;
     private File empleadosBinario;
     private File empleadosObjeto;
 
+   
     public Modelo() {
         this.empleadosDelimitado = new File("empleados.del");
         this.empleadosEncolumnado = new File("empleados.encol");
@@ -30,32 +31,28 @@ public class Modelo extends InputSource implements Serializable  {
         this.empleadosObjeto = new File("empleados.obj");
         empleados = new ArrayList<>();
     }
-    
-    
+
 
     public void mostrarEmpleados() {
-        for (Empleado e: empleados){
+        for (Empleado e : empleados) {
             System.out.println(e.toEncFormat());
         }
         // Fácil usando el método de Empleado toEncFormat()
-       
+
     }
 
     public void generarAleatorios(int n) {
         Empleado nuevoaleatorio;
         for (int i = 0; i < n; i++) {
-           nuevoaleatorio= new Empleado();
-           nuevoaleatorio.emp_aleatorio();
+            nuevoaleatorio = new Empleado();
+            nuevoaleatorio.emp_aleatorio();
             empleados.add(nuevoaleatorio);
         }
         // Fácil usando el método de Empleado emp_aleatorio()
-        
+
     }
-    
 
-
-    
-    @XmlElement (name="empleado")
+    @XmlElement(name = "empleado")
     public ArrayList<Empleado> getEmpleados() {
         return empleados;
     }
@@ -63,15 +60,15 @@ public class Modelo extends InputSource implements Serializable  {
     public void setEmpleados(ArrayList<Empleado> empleados) {
         this.empleados = empleados;
     }
-
+@XmlTransient
     public File getEmpleadosDelimitado() {
         return empleadosDelimitado;
     }
-
+@XmlTransient
     public File getEmpleadosEncolumnado() {
         return empleadosEncolumnado;
     }
-
+@XmlTransient
     public File getEmpleadosObjeto() {
         return empleadosObjeto;
     }
@@ -79,11 +76,11 @@ public class Modelo extends InputSource implements Serializable  {
     public void setEmpleadosObjeto(File empleadosObjeto) {
         this.empleadosObjeto = empleadosObjeto;
     }
-   
+
     public void setEmpleadosEncolumnado(File empleadosEncolumnado) {
         this.empleadosEncolumnado = empleadosEncolumnado;
     }
-
+@XmlTransient
     public File getEmpleadosBinario() {
         return empleadosBinario;
     }
@@ -104,25 +101,24 @@ public class Modelo extends InputSource implements Serializable  {
     public void exportDelTo(File f, String delim) {
         List<String> lista = new ArrayList<>();
         try {
-            for(Empleado e: empleados){
+            for (Empleado e : empleados) {
                 lista.add(e.toDelimitedString(delim));
             }
             Files.write(f.toPath(), lista, Charset.forName("UTF-8"));
         } catch (Exception e) {
             System.out.println("Error al exportar a fichero Delimitado");
         }
-        
+
         //Completar usando toDelimitedString() de Empleado
         // y Files.write()
-        
     }
 
     public void importDelFrom(File f, String delim) throws IOException {
         List<String> empleadosEnDelimitado = null;
         try {
-            empleadosEnDelimitado=Files.readAllLines(f.toPath());
-            for (int i = 0; i <empleadosEnDelimitado.size(); i++) {
-                empleados.add(new Empleado (empleadosEnDelimitado.get(i),delim));
+            empleadosEnDelimitado = Files.readAllLines(f.toPath());
+            for (int i = 0; i < empleadosEnDelimitado.size(); i++) {
+                empleados.add(new Empleado(empleadosEnDelimitado.get(i), delim));
             }
         } catch (Exception e) {
             System.out.println("Error al importar desde Delimitado");
@@ -130,40 +126,39 @@ public class Modelo extends InputSource implements Serializable  {
         //COMPLETAROK
         //Completar usando empleadosEnDelimitado() de Empleado
         // y Files.readAllLines()
-       
+
     }
 
     public void exportEncTo(File f, int longis[]) {
         ArrayList<String> lineas = new ArrayList<>();
         List<String> lista = new ArrayList<>();
         try {
-            for(Empleado e: empleados){
+            for (Empleado e : empleados) {
                 lista.add(e.toColumnadoString(longis));
             }
             Files.write(f.toPath(), lista, Charset.forName("UTF-8"));
         } catch (Exception e) {
             System.out.println("Error al exportar a fichero Encolumnado");
         }
-        
+
         //Completar usando toColumnadodString() de Empleado
         // y Files.write()
-        
     }
 
     public void importarEncFrom(File f, int longis[]) {
         List<String> lista = null;
         try {
-            lista= Files.readAllLines(f.toPath());
+            lista = Files.readAllLines(f.toPath());
             for (int i = 0; i < lista.size(); i++) {
-                empleados.add(new Empleado(lista.get(i),longis));
+                empleados.add(new Empleado(lista.get(i), longis));
             }
-          } catch (Exception e) {
-              System.out.println("Error al Importar desde encolumnado");
+        } catch (Exception e) {
+            System.out.println("Error al Importar desde encolumnado");
         }
         //COMPLETAROK
         //Completar usando un constructor de Empleado
         // y Files.readAllLines()
-        
+
     }
 
     public void saveEmpleados(File f) {
@@ -244,6 +239,6 @@ public class Modelo extends InputSource implements Serializable  {
                 System.err.println(ex.toString());
                 System.exit(1);
             }
+        }
     }
-}
 }

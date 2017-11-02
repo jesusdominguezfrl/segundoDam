@@ -2,111 +2,44 @@
 <empleados>
     <empleado>
         <id>0</id>
-        <nombre>Paz</nombre>
-        <apell1>Gil</apell1>
-        <apell2>Pérez</apell2>
-        <salario>2000.0</salario>
+        <nombre>Gael</nombre>
+        <apell1>Wayne</apell1>
+        <apell2>Martín</apell2>
+        <salario>1200.0</salario>
     </empleado>
     <empleado>
         <id>1</id>
-        <nombre>Mario</nombre>
-        <apell1>Iglesias</apell1>
-        <apell2>Martín</apell2>
-        <salario>2000.0</salario>
+        <nombre>Juan</nombre>
+        <apell1>García</apell1>
+        <apell2>Sánchez</apell2>
+        <salario>1600.0</salario>
     </empleado>
     <empleado>
         <id>2</id>
-        <nombre>Ricardo</nombre>
-        <apell1>Iglesias</apell1>
-        <apell2>Castro</apell2>
-        <salario>2000.0</salario>
+        <nombre>Carlos</nombre>
+        <apell1>Sánchez</apell1>
+        <apell2>Wayne</apell2>
+        <salario>1600.0</salario>
     </empleado>
     <empleado>
         <id>3</id>
-        <nombre>Juan</nombre>
-        <apell1>Cano</apell1>
-        <apell2>Lane</apell2>
-        <salario>900.0</salario>
+        <nombre>Rosa</nombre>
+        <apell1>Pérez</apell1>
+        <apell2>Iglesias</apell2>
+        <salario>1600.0</salario>
     </empleado>
     <empleado>
         <id>4</id>
-        <nombre>Clara</nombre>
+        <nombre>Laura</nombre>
         <apell1>Cano</apell1>
-        <apell2>Wayne</apell2>
-        <salario>2000.0</salario>
-    </empleado>
-    <empleado>
-        <id>5</id>
-        <nombre>Juan</nombre>
-        <apell1>Castro</apell1>
-        <apell2>Pérez</apell2>
-        <salario>3000.0</salario>
-    </empleado>
-    <empleado>
-        <id>6</id>
-        <nombre>Paz</nombre>
-        <apell1>Gil</apell1>
-        <apell2>Cano</apell2>
-        <salario>1200.0</salario>
-    </empleado>
-    <empleado>
-        <id>7</id>
-        <nombre>Ana</nombre>
-        <apell1>Iglesias</apell1>
-        <apell2>García</apell2>
+        <apell2>Iglesias</apell2>
         <salario>1800.0</salario>
     </empleado>
     <empleado>
-        <id>8</id>
-        <nombre>Ana</nombre>
-        <apell1>García</apell1>
-        <apell2>Martín</apell2>
-        <salario>1200.0</salario>
-    </empleado>
-    <empleado>
-        <id>9</id>
-        <nombre>Carlos</nombre>
-        <apell1>Castro</apell1>
-        <apell2>Castro</apell2>
-        <salario>2000.0</salario>
-    </empleado>
-    <empleado>
-        <id>10</id>
+        <id>5</id>
         <nombre>Paz</nombre>
-        <apell1>Gil</apell1>
-        <apell2>Gil</apell2>
-        <salario>1200.0</salario>
-    </empleado>
-    <empleado>
-        <id>11</id>
-        <nombre>Ana</nombre>
-        <apell1>Wayne</apell1>
-        <apell2>García</apell2>
-        <salario>2000.0</salario>
-    </empleado>
-    <empleado>
-        <id>12</id>
-        <nombre>Paz</nombre>
-        <apell1>Pérez</apell1>
-        <apell2>Iglesias</apell2>
-        <salario>2200.0</salario>
-    </empleado>
-    <empleado>
-        <id>13</id>
-        <nombre>Ricardo</nombre>
-        <apell1>García</apell1>
-        <apell2>Martín</apell2>
-        <salario>900.0</salario>
-    </empleado>
-    <empleado>
-        <id>14</id>
-        <nombre>Paz</nombre>
-        <apell1>Pérez</apell1>
-        <apell2>Lane</apell2>
+        <apell1>Cano</apell1>
+        <apell2>Wayne</apell2>
         <salario>3000.0</salario>
     </empleado>
-    <empleadosBinario>empleados.bin</empleadosBinario>
-    <empleadosDelimitado>empleados.del</empleadosDelimitado>
-    <empleadosEncolumnado>empleados.encol</empleadosEncolumnado>
-    <empleadosObjeto>empleados.obj</empleadosObjeto>
 </empleados>
