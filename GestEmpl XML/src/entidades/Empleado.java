@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Random;
 import java.util.Scanner;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -145,6 +144,7 @@ public class Empleado implements Serializable{
     /**
      * @return the apell2
      */
+    @XmlElement(name="apell2")
     public String getApell2() {
         return apell2;
     }
@@ -152,7 +152,6 @@ public class Empleado implements Serializable{
     /**
      * @param apell2 the apell2 to set
      */
-    @XmlElement(name="apell2")
     public void setApell2(String apell2) {
         this.apell2 = apell2;
     }
