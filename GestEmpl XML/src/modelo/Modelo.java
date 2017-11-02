@@ -1,29 +1,22 @@
 package modelo;
 
 import entidades.Empleado;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.*;
 import org.xml.sax.InputSource;
 
 /**
  *
  * @author Jc
  */
-public class Modelo extends InputSource implements Serializable  {
 
+@XmlRootElement (namespace = "Entidades")
+
+public class Modelo extends InputSource implements Serializable  {
     private  ArrayList<Empleado> empleados;
     private File empleadosDelimitado;
     private File empleadosEncolumnado;
@@ -37,6 +30,8 @@ public class Modelo extends InputSource implements Serializable  {
         this.empleadosObjeto = new File("empleados.obj");
         empleados = new ArrayList<>();
     }
+    
+    
 
     public void mostrarEmpleados() {
         for (Empleado e: empleados){
@@ -58,6 +53,8 @@ public class Modelo extends InputSource implements Serializable  {
     }
     
 
+    @XmlElementWrapper (name= "empleados")
+    @XmlElement (name="empleado")
     public ArrayList<Empleado> getEmpleados() {
         return empleados;
     }

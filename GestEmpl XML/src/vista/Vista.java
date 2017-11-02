@@ -6,6 +6,7 @@
 package vista;
 
 import DOM.tratamientoDom;
+import JAXB.tratamientoJAXB;
 import SAX.tratamientoSax;
 import entidades.Empleado;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import XStream.tratamientoXStreams;
 import estiloXsl.tratamientoEstilosXSL;
 import java.io.FileNotFoundException;
+import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
@@ -32,13 +34,15 @@ public class Vista {
     tratamientoSax ts;
     tratamientoXStreams tXS;
     tratamientoEstilosXSL teXSL;
+    tratamientoJAXB tJAXB;
 
-    public Vista(Modelo m, tratamientoDom td, tratamientoSax ts,tratamientoXStreams tXS, tratamientoEstilosXSL teXSL) {
+    public Vista(Modelo m, tratamientoDom td, tratamientoSax ts,tratamientoXStreams tXS, tratamientoEstilosXSL teXSL, tratamientoJAXB tJAXB) {
         this.m = m;
         this.td= td;
         this.ts=ts;
         this.tXS=tXS;
         this.teXSL=teXSL;
+        this.tJAXB=tJAXB;
     }
 
     public void cargar_aleatorios() {
@@ -115,6 +119,14 @@ public class Vista {
 
     public void crearFHTML() throws FileNotFoundException, TransformerException, TransformerConfigurationException, IOException {
         teXSL.crearFicheroHTML(teXSL.getPaginaHTML());
+    }
+
+    public void importarJAXB() {
+        tJAXB.importarFicheroJAXB(tJAXB.getEmpleadosXMLXJAXB(),m);
+    }
+
+    public void exportarJAXB() throws JAXBException {
+        tJAXB.exportarFicheroJAXB(tJAXB.getEmpleadosXMLXJAXB(),m); //To change body of generated methods, choose Tools | Templates.
     }
 
     

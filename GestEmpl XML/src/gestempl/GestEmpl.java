@@ -8,11 +8,14 @@ package gestempl;
 import DOM.tratamientoDom;
 import SAX.tratamientoSax;
 import XStream.tratamientoXStreams;
+import JAXB.tratamientoJAXB;
 import estiloXsl.tratamientoEstilosXSL;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import modelo.Modelo;
 import org.xml.sax.SAXException;
 import vista.Vista;
@@ -26,20 +29,21 @@ public class GestEmpl {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws ParseException, IOException, ParserConfigurationException, SAXException {
+    public static void main(String[] args) throws ParseException, IOException, ParserConfigurationException, SAXException, FileNotFoundException, TransformerException {
         Modelo m = new Modelo();
         tratamientoDom td= new tratamientoDom();
         tratamientoSax ts = new tratamientoSax();
         tratamientoXStreams tXS = new tratamientoXStreams();
+        tratamientoJAXB tJAXB = new tratamientoJAXB();
         tratamientoEstilosXSL teXSL = new tratamientoEstilosXSL();
-        Vista v = new Vista(m, td,ts,tXS,teXSL);
+        Vista v = new Vista(m, td,ts,tXS,teXSL,tJAXB);
         boolean salir = false;
         Scanner sc = new Scanner(System.in);
         String menu = "\nInicio: \n\t01 Mostrar empleados\n\t02 Generar aleatorios\n\t03 Alta de empleado\n"
                 + "Ficheros texto: \n\t11 Escribir delimitado\n\t12 Escribir encolumnado\n\t13 Leer delimitado\n \t14 Leer encolumnado\n"
                 + "Ficheros binarios: \n\t15 Exportar binario\n\t16 Importar binario\n\t17 Exportar objeto\n\t18 Importar objeto\n"
-                 + "Ficheros XML: \n\t19 Importar DOM.\n\t20 Importar SAX\n\t21 Importar XStream\n\t22 Exportar DOM\n\t23 Exportar SAX\n\t24 Esportar XStream\n"
-                +"Fichero HTML5: \n\t25 Crear fichero HTML."
+                 + "Ficheros XML: \n\t19 Importar DOM.\n\t20 Importar SAX\n\t21 Importar XStream\n\t22 Importar JAXB\n\t23 Exportar DOM\n\t24 Exportar SAX\n\t25 Esportar XStream\n\t26 Exportar JAXB "
+                +"\nFichero HTML5: \n\t27 Crear fichero HTML."
                 + "Salir\n\n"
                 + "Escriba una opción: ";
         String opcion;
@@ -108,18 +112,26 @@ public class GestEmpl {
                     v.importarXStream();
                     break;
                 case "22":
+                case "importar JAXB":
+                    v.importarJAXB();
+                    break;
+                case "23":
                 case "exportar DOM":
                     v.exportarDOM();
                     break;
-                case "23":
+                case "24":
                 case "exportar SAX":
                     v.exportarSAX();
                     break;
-                case "24":
+                case "25":
                 case "exportar XStream":
                     v.exportarXStream();
                     break;
-                case "25":
+                case "26":
+                case "exportar JAXB":
+                    v.exportarJAXB();
+                    break;
+                case "27":
                 case "Crear HTML":
                     v.crearFHTML();
                     break;

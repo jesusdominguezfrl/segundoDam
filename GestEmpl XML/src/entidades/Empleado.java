@@ -6,12 +6,11 @@
 package entidades;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -20,6 +19,8 @@ import org.w3c.dom.NodeList;
  *
  * @author jc
  */
+    //@XmlRootElement(namespace = "empleados")
+    @XmlType (propOrder ={"id","nombre","apell1","apell2","salario"})
 public class Empleado implements Serializable{
 
     private int id;
@@ -94,6 +95,7 @@ public class Empleado implements Serializable{
         setApell2(s.substring(longis[0]+longis[1]+longis[2], longis[0]+longis[1]+longis[2]+longis[3]-1));
         setSalario(Float.valueOf(s.substring(longis[0]+longis[1]+longis[2]+longis[3], longis[0]+longis[1]+longis[2]+longis[3]+longis[4]-1).trim().replaceAll(",", ".")));
     }   
+    //@XmlElement (name="empleado")
         
     /**
      * @return the id
@@ -165,7 +167,6 @@ public class Empleado implements Serializable{
         this.salario = salario;
     }
 
-    @Override
     public String toString() {
         return "Empleado{" + "id=" + id + ", nombre=" + nombre + ", apell1=" + apell1 + ", apell2=" + apell2 + ", salario=" + salario + '}';
     }
