@@ -19,7 +19,7 @@ import org.w3c.dom.NodeList;
  *
  * @author jc
  */
-    //@XmlRootElement(namespace = "empleados")
+    //@XmlRootElement(name = "empleado")
     @XmlType (propOrder ={"id","nombre","apell1","apell2","salario"})
 public class Empleado implements Serializable{
 
@@ -100,6 +100,7 @@ public class Empleado implements Serializable{
     /**
      * @return the id
      */
+    @XmlElement(name="id")
     public int getId() {
         return id;
     }
@@ -114,6 +115,7 @@ public class Empleado implements Serializable{
     /**
      * @return the nombre
      */
+    @XmlElement(name="nombre")
     public String getNombre() {
         return nombre;
     }
@@ -128,6 +130,7 @@ public class Empleado implements Serializable{
     /**
      * @return the apell1
      */
+    @XmlElement(name="apell1")
     public String getApell1() {
         return apell1;
     }
@@ -149,6 +152,7 @@ public class Empleado implements Serializable{
     /**
      * @param apell2 the apell2 to set
      */
+    @XmlElement(name="apell2")
     public void setApell2(String apell2) {
         this.apell2 = apell2;
     }
@@ -156,6 +160,7 @@ public class Empleado implements Serializable{
     /**
      * @return the salario
      */
+    @XmlElement(name="salario")
     public float getSalario() {
         return salario;
     }

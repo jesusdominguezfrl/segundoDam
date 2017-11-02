@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
+import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import modelo.Modelo;
@@ -29,7 +30,7 @@ public class GestEmpl {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws ParseException, IOException, ParserConfigurationException, SAXException, FileNotFoundException, TransformerException {
+    public static void main(String[] args) throws ParseException, IOException, ParserConfigurationException, SAXException, FileNotFoundException, TransformerException, JAXBException {
         Modelo m = new Modelo();
         tratamientoDom td= new tratamientoDom();
         tratamientoSax ts = new tratamientoSax();

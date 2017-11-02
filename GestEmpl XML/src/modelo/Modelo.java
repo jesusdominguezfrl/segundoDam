@@ -14,7 +14,7 @@ import org.xml.sax.InputSource;
  * @author Jc
  */
 
-@XmlRootElement (namespace = "Entidades")
+@XmlRootElement (name ="empleados")
 
 public class Modelo extends InputSource implements Serializable  {
     private  ArrayList<Empleado> empleados;
@@ -53,7 +53,8 @@ public class Modelo extends InputSource implements Serializable  {
     }
     
 
-    @XmlElementWrapper (name= "empleados")
+
+    
     @XmlElement (name="empleado")
     public ArrayList<Empleado> getEmpleados() {
         return empleados;

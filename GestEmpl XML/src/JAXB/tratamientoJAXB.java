@@ -10,6 +10,7 @@ import java.io.File;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import modelo.Modelo;
 
 /**
@@ -18,7 +19,7 @@ import modelo.Modelo;
  */
 public class tratamientoJAXB {
     
-    Modelo m; 
+   Modelo m;
     
     private File empleadosXMLXJAXB;
     
@@ -30,15 +31,19 @@ public class tratamientoJAXB {
         return empleadosXMLXJAXB;
     }
 
-    public void importarFicheroJAXB(File f, Modelo m) {
-
+    public void importarFicheroJAXB(File f, Modelo m) throws JAXBException {
+                JAXBContext jaxbContext= JAXBContext.newInstance(Modelo.class);
+                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+               Modelo  mol = (Modelo) unmarshaller.unmarshal(f);
+               m.setEmpleados(mol.getEmpleados());
+                
     }
 
     public void exportarFicheroJAXB(File f, Modelo m) throws JAXBException {
         JAXBContext jaxbContext= JAXBContext.newInstance(Modelo.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
-        jaxbMarshaller.marshal(Empleado.class, f);
+        jaxbMarshaller.marshal(m, f);
    
     
     }

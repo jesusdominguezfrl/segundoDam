@@ -121,7 +121,7 @@ public class Vista {
         teXSL.crearFicheroHTML(teXSL.getPaginaHTML());
     }
 
-    public void importarJAXB() {
+    public void importarJAXB() throws JAXBException {
         tJAXB.importarFicheroJAXB(tJAXB.getEmpleadosXMLXJAXB(),m);
     }
 
