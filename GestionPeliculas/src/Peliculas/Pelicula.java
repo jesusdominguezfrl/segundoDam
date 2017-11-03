@@ -5,7 +5,6 @@
  */
 package Peliculas;
 
-import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
 import javax.swing.DefaultListModel;
 
 /**
@@ -19,10 +18,10 @@ public class Pelicula {
         INTRIGA,
         TERROR,
         COMEDIA,
-        COMEDIA1 ("Comedia Española"),
-        COMEDIA2 ("Comedia Italiana"),
-        COMEDIA3 ("Comedia Latina"),
-        COMEDIA4 ("Comedia USA"),
+//        COMEDIA1 ("Comedia Española"),
+//        COMEDIA2 ("Comedia Italiana"),
+//        COMEDIA3 ("Comedia Latina"),
+//        COMEDIA4 ("Comedia USA"),
         NOVELA,
         THRILLER,
         ROMANTICA;
