@@ -7,10 +7,8 @@ package XStream;
 
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.security.AnyTypePermission;
 import com.thoughtworks.xstream.security.NoTypePermission;
 import entidades.Empleado;
-import gestempl.GestEmpl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,7 +16,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Modelo;
-import vista.Vista;
 
 /**
  *

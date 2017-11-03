@@ -123,7 +123,7 @@ public class Modelo extends InputSource implements Serializable {
         } catch (Exception e) {
             System.out.println("Error al importar desde Delimitado");
         }
-        //COMPLETAROK
+        
         //Completar usando empleadosEnDelimitado() de Empleado
         // y Files.readAllLines()
 
