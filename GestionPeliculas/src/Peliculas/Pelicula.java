@@ -33,6 +33,7 @@ public class Pelicula {
         private Genero(String tx){
             this.texto=tx;
         }
+        
         @Override
         public String toString(){
             return texto;
