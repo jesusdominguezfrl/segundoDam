@@ -45,7 +45,7 @@ public class GestEmpl {
                 + "Ficheros binarios: \n\t15 Exportar binario\n\t16 Importar binario\n\t17 Exportar objeto\n\t18 Importar objeto\n"
                  + "Ficheros XML: \n\t19 Importar DOM.\n\t20 Importar SAX\n\t21 Importar XStream\n\t22 Importar JAXB\n\t23 Exportar DOM\n\t24 Exportar SAX\n\t25 Esportar XStream\n\t26 Exportar JAXB "
                 +"\nFichero HTML5: \n\t27 Crear fichero HTML."
-                + "Salir\n\n"
+                + "\nSalir\n\n"
                 + "Escriba una opción: ";
         String opcion;
         do {

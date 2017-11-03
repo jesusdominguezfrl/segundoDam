@@ -46,9 +46,7 @@ public class tratamientoXStreams {
         xstream.allowTypeHierarchy(List.class);
         xstream.alias("empleados", List.class);
         xstream.alias("empleado", Empleado.class);
-        System.out.println("shbalñkjf");
-       xstream.addImplicitCollection(Modelo.class,"empleados");
-        System.out.println("No llego");
+        xstream.addImplicitCollection(Modelo.class,"empleados");
         m.setEmpleados((ArrayList<Empleado>)xstream.fromXML(new FileInputStream(f)));
     }
 

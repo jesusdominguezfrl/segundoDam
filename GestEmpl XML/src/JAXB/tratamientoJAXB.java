@@ -5,7 +5,6 @@
  */
 package JAXB;
 
-import entidades.Empleado;
 import java.io.File;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -32,10 +31,10 @@ public class tratamientoJAXB {
     }
 
     public void importarFicheroJAXB(File f, Modelo m) throws JAXBException {
-                JAXBContext jaxbContext= JAXBContext.newInstance(Modelo.class);
-                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-               Modelo  mol = (Modelo) unmarshaller.unmarshal(f);
-               m.setEmpleados(mol.getEmpleados());
+        JAXBContext jaxbContext= JAXBContext.newInstance(Modelo.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        Modelo  mol = (Modelo) unmarshaller.unmarshal(f);
+        m.setEmpleados(mol.getEmpleados());
                 
     }
 
