@@ -9,7 +9,6 @@ import Peliculas.Pelicula;
 import Peliculas.Pelicula.Genero;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -31,8 +30,10 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
      */
     public JFrameGestorPeliculas() {
         initComponents();
+        this.setMinimumSize(new Dimension(900, (Genero.values().length*34)+125));
         iniciarMisComponentes();
-        this.setMinimumSize(new Dimension(900, jPanelGeneros.getHeight()+500));
+        System.out.println(Genero.values().length);
+        System.out.println(this.getHeight());
     }
     ButtonGroup botonesGrupo = new ButtonGroup();
     DefaultListModel salidaPantalla = new DefaultListModel();
@@ -48,21 +49,21 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
     }
 
     private void cargarRadioButtons() {
-        //jPanelGeneros.setLayout(new FlowLayout(0));
-        jPanelGeneros.setPreferredSize(new Dimension(300,  Genero.values().length*39));
-        jPanelGeneros.setMinimumSize(new Dimension(300,30*Genero.values().length*39));
+        jPanelGeneros.setPreferredSize(new Dimension(300,this.getHeight()-115) /*(Genero.values().length * 36)+12)*/);
+        jPanelGeneros.setMinimumSize(new Dimension(300, this.getHeight()-115));
         System.out.println(jPanelGeneros.getHeight());
         for (int i = 0; i < Genero.values().length; i++) {
             JRadioButton rBT = new JRadioButton();
             rBT.setText(Genero.values()[i].toString());
             rBT.addActionListener(new gestorRadioButtons());
-            rBT.setPreferredSize(new Dimension(300, 30));
-            rBT.setBorder(new LineBorder(Color.BLACK,1));
+            rBT.setPreferredSize(new Dimension(200, 28));
+            rBT.setBorder(new LineBorder(Color.BLACK, 1));
             rBT.setBorderPainted(true);
             jPanelGeneros.add(rBT);
             botonesGrupo.add(rBT);
         }
-        
+        System.out.println(this.getHeight());
+
     }
 
     private void cargarLista() {
@@ -105,7 +106,7 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
 
                     }
                 }
-                jListListado.setSelectedValue(null, rootPaneCheckingEnabled);
+                jListListado.clearSelection();
             }
         }
 
@@ -207,14 +208,13 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelGeneros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanelGeneros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonBuscarPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(66, 66, 66))
+                        .addComponent(jButtonBuscarPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(19, 19, 19))
         );
 
         pack();
