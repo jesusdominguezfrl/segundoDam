@@ -20,7 +20,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- *
+ *  Clase que gestiona el transformer para laexportacion del fichero XML
  * @author Jesus
  */
 class DatosReader implements XMLReader {
@@ -30,14 +30,27 @@ class DatosReader implements XMLReader {
     private ContentHandler handler;
 
     private final AttributesImpl atts = new AttributesImpl();
-
+    
+    //<editor-fold defaultstate="collapsed" desc="Constructor">
+    
+    /**
+     * Constructor con un parametro que inicia el Objeto Modelo de la clase a partir del parameto Modelo pasado como argumento
+     * @param m (Modelo) Objeto de la clase modelo.
+     */
     public DatosReader(Modelo m) {
        this.m=m;
     }
-    //métodos para el transformer
 
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Metodos para el Transformer">
+    
+    /**
+     * Conversion de cada objeto a estructura xml con sus atributos.
+     * @param input 
+     */
     @Override
-    public void parse(InputSource input) throws IOException, SAXException {
+    public void parse(InputSource input)  {
 
         try {
             //Guardado de datos.
@@ -154,4 +167,6 @@ class DatosReader implements XMLReader {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    //</editor-fold>
+    
 }

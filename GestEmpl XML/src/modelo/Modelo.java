@@ -10,20 +10,25 @@ import javax.xml.bind.annotation.*;
 import org.xml.sax.InputSource;
 
 /**
+ * Clase que contiene los datos (MODELO-vista-controlador)
  *
  * @author Jc
  */
-@XmlRootElement(name = "empleados")
+@XmlRootElement(name = "empleados") //Anotacionpara tratamiento JAXB (Definicion de la raiz del documento XML)
 
 public class Modelo extends InputSource implements Serializable {
 
-    private ArrayList<Empleado> empleados;
-    private File empleadosDelimitado;
-    private File empleadosEncolumnado;
-    private File empleadosBinario;
-    private File empleadosObjeto;
+    private ArrayList<Empleado> empleados;  //Coleccion de empleados 
+    private File empleadosDelimitado;              //FicheroDelimitado
+    private File empleadosEncolumnado;        //FicheroEncolumnado
+    private File empleadosBinario;                   //FicheroBinario
+    private File empleadosObjeto;                   //FicheroObjetos
 
-   
+    //<editor-fold defaultstate="collapsed" desc="Constructor">
+    /**
+     * Constructor sin parametros, inicializa los ficheros y el arraylist que
+     * contendra la coleccion de empleados
+     */
     public Modelo() {
         this.empleadosDelimitado = new File("empleados.del");
         this.empleadosEncolumnado = new File("empleados.encol");
@@ -32,7 +37,12 @@ public class Modelo extends InputSource implements Serializable {
         empleados = new ArrayList<>();
     }
 
-
+//</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Metodos" >
+    /**
+     * Muestra los empleados por pantalla de forma organizada y encolumnada.
+     */
     public void mostrarEmpleados() {
         for (Empleado e : empleados) {
             System.out.println(e.toEncFormat());
@@ -41,6 +51,12 @@ public class Modelo extends InputSource implements Serializable {
 
     }
 
+    /**
+     * Genera empleados aleatorios y los añade a la coleccion.
+     *
+     * @param n (int) Numero de empleados que se quieren generar pedido al
+     * usuario
+     */
     public void generarAleatorios(int n) {
         Empleado nuevoaleatorio;
         for (int i = 0; i < n; i++) {
@@ -52,52 +68,112 @@ public class Modelo extends InputSource implements Serializable {
 
     }
 
-    @XmlElement(name = "empleado")
-    public ArrayList<Empleado> getEmpleados() {
-        return empleados;
-    }
-
-    public void setEmpleados(ArrayList<Empleado> empleados) {
-        this.empleados = empleados;
-    }
-@XmlTransient
-    public File getEmpleadosDelimitado() {
-        return empleadosDelimitado;
-    }
-@XmlTransient
-    public File getEmpleadosEncolumnado() {
-        return empleadosEncolumnado;
-    }
-@XmlTransient
-    public File getEmpleadosObjeto() {
-        return empleadosObjeto;
-    }
-
-    public void setEmpleadosObjeto(File empleadosObjeto) {
-        this.empleadosObjeto = empleadosObjeto;
-    }
-
-    public void setEmpleadosEncolumnado(File empleadosEncolumnado) {
-        this.empleadosEncolumnado = empleadosEncolumnado;
-    }
-@XmlTransient
-    public File getEmpleadosBinario() {
-        return empleadosBinario;
-    }
-
-    public void setEmpleadosBinario(File empleadosBinario) {
-        this.empleadosBinario = empleadosBinario;
-    }
-
-    public void setEmpleadosDelimitado(File empleadosDelimitado) {
-        this.empleadosDelimitado = empleadosDelimitado;
-    }
-
     @Override
     public String toString() {
         return "Modelo{" + "empleados=" + empleados + '}';
     }
 
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Getter  y Setter">
+    /**
+     *
+     * @return empleados (ArrayList) coleccion de objetos de tipo Empleado
+     */
+    @XmlElement(name = "empleado")  //Anotacion tratamiento JAXB ( Elemento repetitivo) 
+    public ArrayList<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    /**
+     *
+     * @param empleados
+     */
+    public void setEmpleados(ArrayList<Empleado> empleados) {
+        this.empleados = empleados;
+    }
+
+    /**
+     *
+     * @return empleadosDelimitado (File) fichero inicializado de empleados
+     * Delimitado
+     */
+    @XmlTransient  //Anotacion tratamiento JAXB (Evita que el parametro se cargue en el XML.)
+    public File getEmpleadosDelimitado() {
+        return empleadosDelimitado;
+    }
+
+    /**
+     *
+     * @return empleadosEncolumnado (File) fichero inicializado de empleados
+     * Encolumnado.
+     */
+    @XmlTransient  //Anotacion tratamiento JAXB (Evita que el parametro se cargue en el XML.)
+    public File getEmpleadosEncolumnado() {
+        return empleadosEncolumnado;
+    }
+
+    /**
+     *
+     * @return empleadosObjeto (File) fichero inicializado de empleados Objeto
+     */
+    @XmlTransient  //Anotacion tratamiento JAXB (Evita que el parametro se cargue en el XML.)
+    public File getEmpleadosObjeto() {
+        return empleadosObjeto;
+    }
+
+    /**
+     *
+     * @return empleadosBinario (File) fichero inicializado de empleados Binario
+     */
+    @XmlTransient  //Anotacion tratamiento JAXB (Evita que el parametro se cargue en el XML.)
+    public File getEmpleadosBinario() {
+        return empleadosBinario;
+    }
+
+    /**
+     *
+     * @param empleadosObjeto
+     */
+    public void setEmpleadosObjeto(File empleadosObjeto) {
+        this.empleadosObjeto = empleadosObjeto;
+    }
+
+    /**
+     *
+     * @param empleadosEncolumnado
+     */
+    public void setEmpleadosEncolumnado(File empleadosEncolumnado) {
+        this.empleadosEncolumnado = empleadosEncolumnado;
+    }
+
+    /**
+     *
+     * @param empleadosBinario
+     */
+    public void setEmpleadosBinario(File empleadosBinario) {
+        this.empleadosBinario = empleadosBinario;
+    }
+
+    /**
+     *
+     * @param empleadosDelimitado
+     */
+    public void setEmpleadosDelimitado(File empleadosDelimitado) {
+        this.empleadosDelimitado = empleadosDelimitado;
+    }
+
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="RW ficheros Delimitados">
+    /**
+     * Crea un fichero Delimitado a partir de los datos de la coleccion de
+     * empleados.
+     *
+     * @param f (File) Fichero que se quiere formar
+     * @param delim (String) Contiene el valor del delimitador que se quiere
+     * usar
+     */
     public void exportDelTo(File f, String delim) {
         List<String> lista = new ArrayList<>();
         try {
@@ -105,46 +181,73 @@ public class Modelo extends InputSource implements Serializable {
                 lista.add(e.toDelimitedString(delim));
             }
             Files.write(f.toPath(), lista, Charset.forName("UTF-8"));
-        } catch (Exception e) {
-            System.out.println("Error al exportar a fichero Delimitado");
+        } catch (Exception ex) {
+            System.err.println("No fue posible escribir el archivo " + f.getName());
+            System.err.println(ex.toString());
         }
-
         //Completar usando toDelimitedString() de Empleado
         // y Files.write()
     }
 
-    public void importDelFrom(File f, String delim) throws IOException {
+    /**
+     * Carga en la coleccion de empleados los datos existentes en un fichero
+     * Delimitado
+     *
+     * @param f (File) Fichero del cual se quieren cargar los datos
+     * @param delim (String) Cadena con el caracter o caracteres delimitadores
+     * del fichero.
+     * @throws IOException
+     */
+    public void importDelFrom(File f, String delim) {
         List<String> empleadosEnDelimitado = null;
         try {
             empleadosEnDelimitado = Files.readAllLines(f.toPath());
             for (int i = 0; i < empleadosEnDelimitado.size(); i++) {
                 empleados.add(new Empleado(empleadosEnDelimitado.get(i), delim));
             }
-        } catch (Exception e) {
-            System.out.println("Error al importar desde Delimitado");
-        }
-        
+        } catch (IOException ex) {
+                System.err.println("No fue posible leer " + f.getName() + ", saliendo.");
+                System.err.println(ex.toString());
+                System.exit(1);
+            }
         //Completar usando empleadosEnDelimitado() de Empleado
         // y Files.readAllLines()
-
     }
 
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="RW ficheros Encolumnados">
+    /**
+     * Crea un fichero Encolumnado a partir de los datos de la coleccion de
+     * empleados.
+     *
+     * @param f (File) Fichero que se quiere formar.
+     * @param longis (int[]) Contiene en las posiciones relativas a las columnas
+     * el tamaño de cada una de ellas.
+     */
     public void exportEncTo(File f, int longis[]) {
-        ArrayList<String> lineas = new ArrayList<>();
+        //ArrayList<String> lineas = new ArrayList<>();
         List<String> lista = new ArrayList<>();
         try {
             for (Empleado e : empleados) {
                 lista.add(e.toColumnadoString(longis));
             }
             Files.write(f.toPath(), lista, Charset.forName("UTF-8"));
-        } catch (Exception e) {
-            System.out.println("Error al exportar a fichero Encolumnado");
+        } catch (Exception ex) {
+            System.err.println("No fue posible escribir el archivo " + f.getName());
+            System.err.println(ex.toString());
         }
-
         //Completar usando toColumnadodString() de Empleado
         // y Files.write()
     }
 
+    /**
+     * Carga los datos de un fichero en la coleccion de empleados.
+     *
+     * @param f (File) Fichero del cual se quieren cargar los datos.
+     * @param longis (int[]) longitud de las columnas, coincidencia entre
+     * posicion y columna
+     */
     public void importarEncFrom(File f, int longis[]) {
         List<String> lista = null;
         try {
@@ -152,20 +255,28 @@ public class Modelo extends InputSource implements Serializable {
             for (int i = 0; i < lista.size(); i++) {
                 empleados.add(new Empleado(lista.get(i), longis));
             }
-        } catch (Exception e) {
-            System.out.println("Error al Importar desde encolumnado");
+        } catch (IOException ex) {
+            System.err.println("No fue posible leer " + f.getName() + ", saliendo.");
+            System.err.println(ex.toString());
+            System.exit(1);
         }
-        //COMPLETAROK
         //Completar usando un constructor de Empleado
         // y Files.readAllLines()
-
     }
 
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="RW ficheros Binarios">
+    /**
+     * Crea un fichero Binario con los empleados cargados en la coleccion.
+     *
+     * @param f (File) Fichero en el cual se quieren escribir los datos.
+     */
     public void saveEmpleados(File f) {
+        DataOutputStream dos;
+        BufferedOutputStream bos;
+        FileOutputStream fos;
         try {
-            DataOutputStream dos;
-            BufferedOutputStream bos;
-            FileOutputStream fos;
             fos = new FileOutputStream(f);
             bos = new BufferedOutputStream(fos);
             dos = new DataOutputStream(bos);
@@ -179,15 +290,22 @@ public class Modelo extends InputSource implements Serializable {
             }
             dos.close();
         } catch (Exception ex) {
-            System.err.println("No fue posible crear " + f.getName());
+            System.err.println("No fue posible escribir el archivo " + f.getName());
+            System.err.println(ex.toString());
         }
     }
 
+    /**
+     * Carga los datos almacenados en un fichero Binario en la coleccion de
+     * empleados
+     *
+     * @param f (File) Fichero que contienen los datos que se quieren cagar.
+     */
     public void readEmpleados(File f) {
+        DataInputStream dis;
+        BufferedInputStream bis;
+        FileInputStream fis;
         try {
-            DataInputStream dis;
-            BufferedInputStream bis;
-            FileInputStream fis;
             fis = new FileInputStream(f);
             bis = new BufferedInputStream(fis);
             dis = new DataInputStream(bis);
@@ -202,11 +320,22 @@ public class Modelo extends InputSource implements Serializable {
                 this.getEmpleados().add(empl);
             }
             dis.close();
-        } catch (Exception ex) {
-            System.err.println("No fue posible leer " + f.getName());
+        } catch (IOException ex) {
+            System.err.println("No fue posible leer " + f.getName() + ", saliendo.");
+            System.err.println(ex.toString());
+            System.exit(1);
         }
     }
 
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="RW ficheros Objetos">
+    /**
+     * Crea un fichero de Objetos a partir de la coleccion de objetos de
+     * empleados.
+     *
+     * @param f (File) Fichero en el que se quieren almacenar los datos.
+     */
     public void saveEmpleadosAsObject(File f) {
         try {
             ObjectOutputStream oos;
@@ -223,6 +352,12 @@ public class Modelo extends InputSource implements Serializable {
         }
     }
 
+    /**
+     * Carga los datos almacenados en un Fichero de Objetos en la coleccion de
+     * empleados.
+     *
+     * @param f (File) Fichero que contiene los datos que se quieren cargar.
+     */
     public void readAEmpleadosAsObject(File f) {
         ObjectInputStream ois;
         BufferedInputStream bis;
@@ -241,4 +376,7 @@ public class Modelo extends InputSource implements Serializable {
             }
         }
     }
-}
+
+    //</editor-fold>
+    
+}//Fin Class Modelo 

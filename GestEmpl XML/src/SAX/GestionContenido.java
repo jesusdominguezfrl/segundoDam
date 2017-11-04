@@ -12,7 +12,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- *
+ * Clase que gestiona el inicio contenido y cierre de las etiquetas XML
  * @author Jesus
  */
 public class GestionContenido extends DefaultHandler {
@@ -22,24 +22,46 @@ public class GestionContenido extends DefaultHandler {
     private String valores;
     Empleado empl;
     
+    //<editor-fold defaultstate="collapsed" desc="Constructor">
+    
+    /**
+     * Constructor con un parametro que inicia el Objeto Modelo de la clase a partir del parameto Modelo pasado como argumento
+     * @param m (Modelo) Objeto de la clase modelo.
+     */
     public GestionContenido(Modelo m){
         this.m=m;
     }
     
+    //</editor-fold>
+    
+   //<editor-fold defaultstate="collapsed" desc="Metodos Abstractos DefaultHandler">
+
+    /**
+     * Detecta el inicio del documento XML.
+     * @throws SAXException 
+     */
     @Override
     public void startDocument() throws SAXException {
         System.out.println("\nPrincipio del documento XML\n\n\tLeyendo contenido.... ");
-        
-//        Modelo.empleados.clear();
-
     }
 
+    /**
+     * Detecta el final del documento XML.
+     * @throws SAXException 
+     */
     @Override
     public void endDocument() throws SAXException {
         System.out.println("\nFin del documento XML");
     }
 
-    //Detecta el inicio de una etiqueta (con la etiqueta empleado se crea un empleado nuevo
+    /**
+     *Detecta el inicio de una etiqueta (con la etiqueta empleado se crea un empleado nuevo
+     * @param uri 
+     * @param localName (String) Contiene el nombre de la etiqueta
+     * @param name 
+     * @param attributes 
+     * @throws SAXException 
+     */
     @Override
     public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
         nombreEtiqueta=localName;
@@ -48,7 +70,13 @@ public class GestionContenido extends DefaultHandler {
         }
     }
 
-    //Lee el contenido de la etiqueta con las etiquetas de atributos se le asigna cada valor a cada objeto
+    /**
+     * Lee el contenido de la etiqueta con las etiquetas de atributos se le asigna cada valor a cada objeto
+     * @param ch 
+     * @param start
+     * @param length
+     * @throws SAXException 
+     */
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         valores= String.valueOf(ch,start,length).trim();
@@ -72,12 +100,20 @@ public class GestionContenido extends DefaultHandler {
 
     }
 
-    //Detecta el cierre de la etiqueta. Con la etiqueta empleado de cierre tendriamos el objeto completo
+    /**
+     * Detecta el cierre de la etiqueta. Con la etiqueta empleado de cierre tendriamos el objeto completo
+     * @param uri
+     * @param localName (String) Contiene el nombre de la etiqueta
+     * @param name
+     * @throws SAXException 
+     */
     @Override
     public void endElement(String uri, String localName, String name) throws SAXException {
         if("empleado".equals(localName)){
-            //m.getEmpleados().add(empl);
             m.getEmpleados().add(empl);
         }
     }
+    
+    //</editor-fold>
+    
 }
