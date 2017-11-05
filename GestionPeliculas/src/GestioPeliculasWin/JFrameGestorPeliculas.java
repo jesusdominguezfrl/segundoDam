@@ -7,6 +7,7 @@ package GestioPeliculasWin;
 
 import Peliculas.Pelicula;
 import Peliculas.Pelicula.Genero;
+import static Peliculas.Pelicula.peliculas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -30,48 +31,57 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
      */
     public JFrameGestorPeliculas() {
         initComponents();
-        this.setMinimumSize(new Dimension(900, (Genero.values().length*34)+125));
+        this.setMinimumSize(new Dimension(900, (Genero.values().length * 36) + 125));
         iniciarMisComponentes();
-        System.out.println(Genero.values().length);
-        System.out.println(this.getHeight());
     }
+    
+    //<editor-fold defaultstate="collapsed" desc="Mis variables">
     ButtonGroup botonesGrupo = new ButtonGroup();
     DefaultListModel salidaPantalla = new DefaultListModel();
+    
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Metodos">
+    
+    
     private void iniciarMisComponentes() {
         cargarPeliculas();
         cargarRadioButtons();
         cargarLista();
         jButtonBuscarPelicula.setEnabled(false);
         jListListado.addMouseListener(new gestorLista());
-        //jButtonBuscarPelicula.addActionListener(new gestorBotonBuscar());
-
+        jButtonAñadirPelicula.addActionListener(new gestorAñadirPelicula());
     }
 
     private void cargarRadioButtons() {
-        jPanelGeneros.setPreferredSize(new Dimension(300,this.getHeight()-115) /*(Genero.values().length * 36)+12)*/);
-        jPanelGeneros.setMinimumSize(new Dimension(300, this.getHeight()-115));
-        System.out.println(jPanelGeneros.getHeight());
+        jPanelGeneros.setPreferredSize(new Dimension(300, this.getHeight() - 125));
+        jPanelGeneros.setMinimumSize(new Dimension(300, this.getHeight() - 125));
         for (int i = 0; i < Genero.values().length; i++) {
             JRadioButton rBT = new JRadioButton();
+            rBT.setEnabled(false);
             rBT.setText(Genero.values()[i].toString());
             rBT.addActionListener(new gestorRadioButtons());
-            rBT.setPreferredSize(new Dimension(200, 28));
-            rBT.setBorder(new LineBorder(Color.BLACK, 1));
-            rBT.setBorderPainted(true);
+            rBT.setPreferredSize(new Dimension(200, 30/*(this.getHeight()-173)/Genero.values().length*/));
+            for (int j = 0; j < peliculas.size(); j++) {
+                if (peliculas.get(j).getGenero() == Genero.values()[i]) {
+                    rBT.setEnabled(true);
+                    break;
+                }
+            }
+//            rBT.setBorder(new LineBorder(Color.BLACK, 1));
+//            rBT.setBorderPainted(true);
             jPanelGeneros.add(rBT);
             botonesGrupo.add(rBT);
         }
-        System.out.println(this.getHeight());
 
     }
 
     private void cargarLista() {
-        if (!Pelicula.peliculas.isEmpty() && salidaPantalla.isEmpty()) {
+        if (!Pelicula.peliculas.isEmpty()/* && salidaPantalla.isEmpty()*/) {
+            salidaPantalla.clear();
             for (int i = 0; i < Pelicula.peliculas.size(); i++) {
                 Pelicula p = (Pelicula) Pelicula.peliculas.get(i);
                 salidaPantalla.addElement(p);
-                //System.out.println(p.getTitulo());
             }
             jListListado.setModel(salidaPantalla);
         }
@@ -85,7 +95,7 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
         new Pelicula("The last Days", "Director", Pelicula.Genero.ACCION, 2013, 13);
         new Pelicula("Pandemic", "Director", Pelicula.Genero.ACCION, 2017, 12);
         new Pelicula("Worry Dolls", "Director", Pelicula.Genero.TERROR, 2016, 18);
-//        new Pelicula("Nacida para ganar", "Director", Pelicula.Genero.COMEDIA, 2016, 10);
+        new Pelicula("Nacida para ganar", "Director", Pelicula.Genero.COMEDIA, 2016, 10);
         new Pelicula("Happy Death Day", "Director", Pelicula.Genero.INTRIGA, 2011, 18);
         new Pelicula("Amar", "Director", Pelicula.Genero.ROMANTICA, 2017, 18);
         new Pelicula("El duelo", "Director", Pelicula.Genero.NOVELA, 2016, 18);
@@ -93,6 +103,12 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
 //        new Pelicula("Despido Procedente", "Director", Pelicula.Genero.COMEDIA, 2017, 18);
         new Pelicula("Worry Dolss", "Director", Pelicula.Genero.THRILLER, 2016, 18);
     }
+
+    //</editor-fold>
+        
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Clases Listener">
 
     private class gestorLista implements MouseListener {
 
@@ -103,13 +119,13 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
                     Pelicula p = Pelicula.peliculas.get(i);
                     if (salidaPantalla.get(jListListado.getSelectedIndex()).toString().equals(p.toString())) {
                         JOptionPane.showMessageDialog(rootPane, p.verDatos(), p.toString(), JOptionPane.INFORMATION_MESSAGE);
-
+                        break;
                     }
                 }
                 jListListado.clearSelection();
             }
         }
-
+        //<editor-fold defaultstate="collapsed" desc="Metodos No Usados">
         @Override
         public void mousePressed(MouseEvent e) {
             // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -129,6 +145,7 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
         public void mouseExited(MouseEvent e) {
             // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+        //</editor-fold>
 
     }
 
@@ -168,7 +185,20 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
 
         }
     }
+    
+    private class gestorAñadirPelicula implements ActionListener{
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JDialogAñadirPelicula añadirPelicula = new JDialogAñadirPelicula(null, true);
+            añadirPelicula.setVisible(true);
+            
+        }
+        
+    }
+
+    //</editor-fold>
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -182,6 +212,7 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
         jListListado = new javax.swing.JList<>();
         jButtonBuscarPelicula = new javax.swing.JButton();
         jPanelGeneros = new javax.swing.JPanel();
+        jButtonAñadirPelicula = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -191,6 +222,8 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
 
         jPanelGeneros.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Genero"));
 
+        jButtonAñadirPelicula.setText("Añadir Peliculas");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -198,12 +231,18 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonBuscarPelicula, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
-                    .addComponent(jPanelGeneros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelGeneros, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonAñadirPelicula)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonBuscarPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonAñadirPelicula, jButtonBuscarPelicula});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -213,9 +252,13 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelGeneros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonBuscarPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonAñadirPelicula)
+                            .addComponent(jButtonBuscarPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonAñadirPelicula, jButtonBuscarPelicula});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -256,6 +299,7 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAñadirPelicula;
     private javax.swing.JButton jButtonBuscarPelicula;
     private javax.swing.JList<String> jListListado;
     private javax.swing.JPanel jPanelGeneros;

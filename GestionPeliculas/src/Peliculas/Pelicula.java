@@ -27,16 +27,16 @@ public class Pelicula {
 //        adasdsad,
 //        dsadsadsada,
 //        asdasdasd,
-        adsasdasdasd,
-        dasdadsasdas,
-        adsdasdasd,
-        asadsadadsa,
-        asdadsa,
-        dsdadasda,
-        adasdasdas,
-        sdasdas,
-        asdasdsada,
-        sadsadasda,
+//        adsasdasdasd,
+//        dasdadsasdas,
+//        adsdasdasd,
+//        asadsadadsa,
+//        asdadsa,
+//        dsdadasda,
+//        adasdasdas,
+//        sdasdas,
+//        asdasdsada,
+//        sadsadasda,
         asdsadasdasd,
         asdsada,
         asdasdassdasa,
@@ -64,7 +64,7 @@ public class Pelicula {
     private Genero genero;
     private int año;
     private int edadRecomendada;
-    public static DefaultListModel<Pelicula> peliculas = new DefaultListModel<>();
+    public static DefaultListModel<Pelicula> peliculas = new DefaultListModel<Pelicula>();
 
     public Pelicula(String titulo, String director, Genero genero, int año, int edadRecomendada) {
         this.titulo = titulo;
