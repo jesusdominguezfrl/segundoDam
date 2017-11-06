@@ -11,12 +11,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.Enum;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
 
 /**
  *
@@ -45,6 +43,7 @@ public class JDialogAñadirPelicula extends javax.swing.JDialog {
         jButtonGuardaryNuevo.setEnabled(false);
         jButtonGuardarySalir.addActionListener(new guardarPelicula());
         jButtonGuardaryNuevo.addActionListener(new guardarPelicula());
+        jButtonSalir.addActionListener(new gestorSalir());
     }
 
     private void cargarComboBox() {

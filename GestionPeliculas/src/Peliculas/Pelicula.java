@@ -35,15 +35,8 @@ public class Pelicula {
 //        dsdadasda,
 //        adasdasdas,
 //        sdasdas,
-//        asdasdsada,
-//        sadsadasda,
-        asdsadasdasd,
-        asdsada,
-        asdasdassdasa,
-        aqqwewq,
-        qweqweqeqewq,
-        qweqeqeqeqewqweq,
-        q32423wada,
+//        qweqeqeqeqewqweq,
+//        q32423wada,
         ROMANTICA;
         
         private String texto;
