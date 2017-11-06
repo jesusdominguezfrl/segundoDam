@@ -47,7 +47,7 @@ public class tratamientoDom {
     
     //</editor-fold>
 
-     //<editor-fold defaultstate="collapsed" desc="Getter">
+    //<editor-fold defaultstate="collapsed" desc="Getter">
 
     /**
      * 

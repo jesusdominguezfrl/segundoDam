@@ -45,7 +45,7 @@ public class Empleado implements Serializable {
         this.id = identif++;
     }
 /**
- * Constrcutor con parametros para crear un objeto con todos los datos pasados como argumentos
+ * Constructor con parametros para crear un objeto con todos los datos pasados como argumentos
  * @param id (int) Numero identificador de empleado
  * @param nombre (String) Cadena con el nombre del empleado
  * @param apell1 (String) Cadena con el Apellido 1 del empleado
