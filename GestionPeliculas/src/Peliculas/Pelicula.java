@@ -25,16 +25,16 @@ public class Pelicula {
         NOVELA,
         THRILLER,
         adasdsad,
-        dsadsadsada,
-        asdasdasd,
-        adsasdasdasd,
-        dasdadsasdas,
-        adsdasdasd,
-        asadsadadsa,
-        asdadsa,
-        dsdadasda,
-        adasdasdas,
-        sdasdas,
+//        dsadsadsada,
+//        asdasdasd,
+//        adsasdasdasd,
+//        dasdadsasdas,
+//        adsdasdasd,
+//        asadsadadsa,
+//        asdadsa,
+//        dsdadasda,
+//        adasdasdas,
+//        sdasdas,
         qweqeqeqeqewqweq,
         q32423wada,
         ROMANTICA;
@@ -58,6 +58,12 @@ public class Pelicula {
     private int año;
     private int edadRecomendada;
     public static DefaultListModel<Pelicula> peliculas = new DefaultListModel<Pelicula>();
+    
+//    public DefaultListModel listaPeliculas (){
+//        DefaultListModel l = new DefaultListModel();
+//        copiar la lista
+//        return l;
+//    }
 
     public Pelicula(String titulo, String director, Genero genero, int año, int edadRecomendada) {
         this.titulo = titulo;

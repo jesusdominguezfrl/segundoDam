@@ -48,6 +48,7 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
     DefaultListModel salidaPantalla = new DefaultListModel();
 
 //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Metodos">
     
     private void resizing(){
@@ -69,8 +70,8 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
     }
 
     private void cargarRadioButtons() {
-        jPanelGeneros.setPreferredSize(new Dimension(300, this.getHeight() - 150));
-        jPanelGeneros.setMinimumSize(new Dimension(300, this.getHeight() - 150));
+//        jPanelGeneros.setPreferredSize(new Dimension(300, this.getHeight() - 150));
+//        jPanelGeneros.setMinimumSize(new Dimension(300, this.getHeight() - 150));
         for (int i = 0; i < Genero.values().length; i++) {
             JRadioButton rBT = new JRadioButton();
             rBT.setEnabled(false);
@@ -120,11 +121,13 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Clases Listener">
     private class gestorLista implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            //Pelicula p = (Pelicula)jListListado.get;
             if (jListListado.getSelectedIndex() != -1) {
                 for (int i = 0; i < Pelicula.peliculas.size(); i++) {
                     Pelicula p = Pelicula.peliculas.get(i);
@@ -242,19 +245,16 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelGeneros, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonAñadirPelicula)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonAñadirPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButtonBuscarPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonAñadirPelicula, jButtonBuscarPelicula});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -264,9 +264,9 @@ public class JFrameGestorPeliculas extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelGeneros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonAñadirPelicula)
-                            .addComponent(jButtonBuscarPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonBuscarPelicula, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                            .addComponent(jButtonAñadirPelicula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 

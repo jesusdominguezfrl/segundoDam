@@ -25,12 +25,12 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanelGeneros" min="-2" pref="308" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="jButtonAñadirPelicula" linkSize="2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButtonBuscarPelicula" linkSize="2" min="-2" pref="145" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jButtonAñadirPelicula" min="-2" pref="145" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jButtonBuscarPelicula" min="-2" pref="145" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -48,9 +48,9 @@
                   <Group type="102" attributes="0">
                       <Component id="jPanelGeneros" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButtonAñadirPelicula" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonBuscarPelicula" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jButtonBuscarPelicula" pref="31" max="32767" attributes="0"/>
+                          <Component id="jButtonAñadirPelicula" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
