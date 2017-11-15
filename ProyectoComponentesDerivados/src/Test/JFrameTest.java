@@ -6,9 +6,15 @@
 package Test;
 
 import Componentes.JCheckBoxEmpleado;
+import Componentes.JRadioButtonColor;
+import Componentes.JRadioButtonColor.Colores;
 import Empleados.Empleado;
 import Empleados.EmpleadoVendedorComision;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ButtonGroup;
 
 /**
  *
@@ -22,8 +28,37 @@ public class JFrameTest extends javax.swing.JFrame {
     public JFrameTest() {
         initComponents();
         initEmpleados();
+        initColores();
     }
 
+    gestorRBColores miGC = new gestorRBColores();
+
+    private void initColores() {
+//        Component [] rBT = jPanelRadioButtons.getComponents();
+//        for (Component c: rBT){
+//            JRadioButtonColor r = (JRadioButtonColor) c;
+//            r.addActionListener(miGC);
+//        }
+        ButtonGroup gRB= new ButtonGroup();
+        for(Colores col: Colores.values()){
+            JRadioButtonColor rBT = new JRadioButtonColor(col);
+            gRB.add(rBT);
+            jPanelRadioButtons.add(rBT);
+            rBT.addActionListener(miGC);
+        }
+    }
+    
+    private class gestorRBColores implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JRadioButtonColor jr= (JRadioButtonColor)e.getSource();
+            jPanelRadioButtons.setBackground(jr.getColorAsociado().getColor());
+
+
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,37 +68,20 @@ public class JFrameTest extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanelRadioButtons = new javax.swing.JPanel();
-        jRadioButtonColor1 = new Componentes.JRadioButtonColor();
         jPanelCheckBox = new javax.swing.JPanel();
         jPanelEmpleados = new javax.swing.JPanel();
         jLabelSalario = new javax.swing.JLabel();
         jTextFieldSalario = new javax.swing.JTextField();
         jButtonCalcular = new javax.swing.JButton();
         jPanelBotones = new javax.swing.JPanel();
+        jButtonResaltado1 = new Componentes.JButtonResaltado();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanelRadioButtons.setBorder(javax.swing.BorderFactory.createTitledBorder("RadioButtonsColores"));
-
-        jRadioButtonColor1.setColorAsociado(Componentes.JRadioButtonColor.Colores.WHITE);
-
-        javax.swing.GroupLayout jPanelRadioButtonsLayout = new javax.swing.GroupLayout(jPanelRadioButtons);
-        jPanelRadioButtons.setLayout(jPanelRadioButtonsLayout);
-        jPanelRadioButtonsLayout.setHorizontalGroup(
-            jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelRadioButtonsLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jRadioButtonColor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanelRadioButtonsLayout.setVerticalGroup(
-            jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelRadioButtonsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jRadioButtonColor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
-        );
+        jPanelRadioButtons.setLayout(new java.awt.GridLayout());
 
         jPanelCheckBox.setBorder(javax.swing.BorderFactory.createTitledBorder("CheckEmpleados"));
 
@@ -114,15 +132,23 @@ public class JFrameTest extends javax.swing.JFrame {
 
         jPanelBotones.setBorder(javax.swing.BorderFactory.createTitledBorder("Botones"));
 
+        jButtonResaltado1.setText("jButtonResaltado1");
+
         javax.swing.GroupLayout jPanelBotonesLayout = new javax.swing.GroupLayout(jPanelBotones);
         jPanelBotones.setLayout(jPanelBotonesLayout);
         jPanelBotonesLayout.setHorizontalGroup(
             jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanelBotonesLayout.createSequentialGroup()
+                .addGap(191, 191, 191)
+                .addComponent(jButtonResaltado1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelBotonesLayout.setVerticalGroup(
             jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 106, Short.MAX_VALUE)
+            .addGroup(jPanelBotonesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonResaltado1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -199,13 +225,14 @@ public class JFrameTest extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonCalcular;
+    private Componentes.JButtonResaltado jButtonResaltado1;
     private javax.swing.JLabel jLabelSalario;
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelCheckBox;
     private javax.swing.JPanel jPanelEmpleados;
     private javax.swing.JPanel jPanelRadioButtons;
-    private Componentes.JRadioButtonColor jRadioButtonColor1;
     private javax.swing.JTextField jTextFieldSalario;
     // End of variables declaration//GEN-END:variables
 

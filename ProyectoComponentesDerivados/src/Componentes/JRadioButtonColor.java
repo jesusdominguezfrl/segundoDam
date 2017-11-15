@@ -52,17 +52,27 @@ public class JRadioButtonColor extends JRadioButton{
     
     private Colores colorAsociado;
 
+    public JRadioButtonColor() {
+        setColorAsociado(Colores.WHITE);
+    }
+
     
-    
+    public JRadioButtonColor(Colores micolor) {
+        setColorAsociado(micolor);
+    }
+
     public Colores getColorAsociado() {
         return colorAsociado;
     }
 
     public void setColorAsociado(Colores colorAsociado) {
         this.colorAsociado = colorAsociado;
-        setText(colorAsociado.toString());
+        super.setText(colorAsociado.toString());
     }
     
+    public void setText(){
+        
+    }
     
     
 }
