@@ -1,6 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Flota;
 
-
+/**
+ *
+ * @author Jesus
+ */
 public class Furgoneta extends Vehiculo {
 
     public enum TiposFurgoneta{PASAJEROS, CARGA}
@@ -18,7 +26,7 @@ public class Furgoneta extends Vehiculo {
     
     @Override
     public String verDatosParticulares() {
-        return toString()+ ", Tipo: " + tipoFurgoneta;
+        return muestraDatos()+ "\nTipo: " + tipoFurgoneta;
     }
 
 }

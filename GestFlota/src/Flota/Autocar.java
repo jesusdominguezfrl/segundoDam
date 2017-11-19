@@ -1,6 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Flota;
 
-
+/**
+ *
+ * @author Jesus
+ */
 public class Autocar extends Vehiculo {
 
     private int numeroPasajeros;
@@ -13,11 +21,11 @@ public class Autocar extends Vehiculo {
 
     @Override
     public String toString() {
-        return "Autocar: "+super.toString();
+        return "Autocar: "+ super.toString();
     }
 
     @Override
     public String verDatosParticulares() {
-        return toString()+", Nº Pasajeros: " + numeroPasajeros;
+        return muestraDatos()+"\nNº Pasajeros: " + numeroPasajeros;
     }
 }

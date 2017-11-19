@@ -1,11 +1,11 @@
-diseño interfaz(sin consistencia)
+diseï¿½o interfaz(sin consistencia)
 Carga JList, Gestionar la seleccion.
-Diseño JCheckBoxDerivada (solo vehivulo)
-Definir FlowLayout al Panel. Añadir JCheckBoxDerivada al panel
+Diseï¿½o JCheckBoxDerivada (solo vehivulo)
+Definir FlowLayout al Panel. Aï¿½adir JCheckBoxDerivada al panel
 Funcionamiento "Quitar Todos"
-Funciona Pasar ITV Detectar si un vehiculo ya la ha pasado
-Funcionamiento "Limpiar ITV pasda"
-(CONSISTENCIA)Evitar añadir los vehiculos con la itv pasada
+//Funciona Pasar ITV Detectar si un vehiculo ya la ha pasado
+//Funcionamiento "Limpiar ITV pasda"
+(CONSISTENCIA)Evitar aï¿½adir los vehiculos con la itv pasada
 (CONSISTENCIA)Evitar duplicados n el panel
 Cambiar color del texto al seleccionar
 

@@ -6,6 +6,12 @@
 package WinFlota;
 
 import Flota.*;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  *
  * @author usuario
@@ -20,41 +26,127 @@ public class JFrameWinFlota extends javax.swing.JFrame {
         dataTest();
         initMyComponents();
     }
-    
-    
-    
-    //<editor-fold defaultstate="collapsed" desc="Test Data">
-        private void dataTest(){
-            new Autocar("2589 AAA", "123456abc", 1995 , 56);
-            new Autocar("3698 BBB", "789012qwe", 2000 , 32);
-            new Autocar("2589 CCC", "456321zxc", 2002 , 20);
-            new Motocicleta("1478 DDD", "987456rty", 2003, 125);
-            new Motocicleta("8526 FFF", "963214ooo", 2004, 100);
-            new Motocicleta("8963 GGG", "258963ghj", 2009, 50);
-            new Camion("1372 LFC", "456832frv", 2005, 5500);
-            new Camion("4563 MKO", "85236klñ", 2002, 9000);
-            new Camion("6892 HFG", "123546asd", 2009, 6500);
-            new Furgoneta("8569 GFL", "859631nji", 2014, Furgoneta.TiposFurgoneta.CARGA);
-            new Furgoneta("8361 LND", "384354sdf", 2012, Furgoneta.TiposFurgoneta.PASAJEROS);
-            new Furgoneta("4567 GHJ", "345678los", 1999, Furgoneta.TiposFurgoneta.CARGA);
-            new Turismo("2013 LOS", "365412pod", 2001, 5);
-            new Turismo("9875 DLS", "987832vbn", 2003, 2);
-            new Turismo("0563 JJJ", "254623mlk", 2016, 4);
-            
-            
-        }
-    //</editor-fold>
-        
-        
-    //<editor-fold defaultstate="collapsed" desc="Metodos">
-        
-        private void initMyComponents() {
-            jListListadoVehiculos.setModel(Vehiculo.vehiculosFlota());
-        }
-        
-    //</editor-fold>
-        
 
+    //<editor-fold defaultstate="collapsed" desc="Test Data">
+    private void dataTest() {
+        new Autocar("2589 AAA", "123456abc", 1995, 56);
+        new Autocar("3698 BBB", "789012qwe", 2000, 32);
+        new Autocar("2589 CCC", "456321zxc", 2002, 20);
+        new Motocicleta("1478 DDD", "987456rty", 2003, 125);
+        new Motocicleta("8526 FFF", "963214ooo", 2004, 100);
+        new Motocicleta("8963 GGG", "258963ghj", 2009, 50);
+        new Camion("1372 LFC", "456832frv", 2005, 5500);
+        new Camion("4563 MKO", "85236klñ", 2002, 9000);
+        new Camion("6892 HFG", "123546asd", 2009, 6500);
+        new Furgoneta("8569 GFL", "859631nji", 2014, Furgoneta.TiposFurgoneta.CARGA);
+        new Furgoneta("8361 LND", "384354sdf", 2012, Furgoneta.TiposFurgoneta.PASAJEROS);
+        new Furgoneta("4567 GHJ", "345678los", 1999, Furgoneta.TiposFurgoneta.CARGA);
+        new Turismo("2013 LOS", "365412pod", 2001, 5);
+        new Turismo("9875 DLS", "987832vbn", 2003, 2);
+        new Turismo("0563 JJJ", "254623mlk", 2016, 4);
+
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Metodos">
+    private void initMyComponents() {
+        jListListadoVehiculos.setModel(Vehiculo.vehiculosFlota());
+        jListListadoVehiculos.addListSelectionListener(new gestorListSelection());
+        jButtonAddPanel.addActionListener(new gestorBotonAñadirVehiculo());
+        jButtonQuitarTodos.addActionListener(new gestorEliminarTodo());
+        jButtonPasarITV.addActionListener(new gestorPasarITV());
+        jButtonLimpiarPasados.addActionListener(new gestorLimpiarITVPasada());
+    }
+
+    private void añadeComponente(Vehiculo vehiculo) {
+        if (!estaEnElPanel(vehiculo)) {
+            JCheckBoxVehiculo jCBVehiculo = new JCheckBoxVehiculo(vehiculo);
+            jPanelVehiculosITV.add(jCBVehiculo);
+            jPanelVehiculosITV.repaint();
+            jPanelVehiculosITV.revalidate();
+        }
+    }
+
+    private Boolean estaEnElPanel(Vehiculo v) {
+        Boolean esta = false;
+        Component[] componentesPanel = jPanelVehiculosITV.getComponents();
+        for (Component c : componentesPanel) {
+            JCheckBoxVehiculo jCBPanel = (JCheckBoxVehiculo) c;
+            if (jCBPanel.getVehiculo() == v) {
+                esta = true;
+            }
+        }
+        return esta;
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Clases Listenner">
+    private class gestorListSelection implements ListSelectionListener {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (jListListadoVehiculos.getSelectedIndex() != -1 && jListListadoVehiculos.getSelectedIndices().length < 2) {
+                Vehiculo v = (Vehiculo) Vehiculo.vehiculosFlota().get(jListListadoVehiculos.getSelectedIndex());
+                jTextAreaDatosVehiculos.setText(v.verDatosParticulares());
+            } else {
+                jTextAreaDatosVehiculos.setText("");
+            }
+        }
+    }
+
+    private class gestorBotonAñadirVehiculo implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            añadeComponente((Vehiculo) Vehiculo.vehiculosFlota().get(jListListadoVehiculos.getSelectedIndex()));
+        }
+
+    }
+
+    private class gestorEliminarTodo implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("asadada");
+            jPanelVehiculosITV.removeAll();
+            jPanelVehiculosITV.repaint();
+            jPanelVehiculosITV.revalidate();
+        }
+    }
+
+    private class gestorPasarITV implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Component[] componentesPanel = jPanelVehiculosITV.getComponents();
+            for (Component c : componentesPanel) {
+                JCheckBoxVehiculo jCBPanel = (JCheckBoxVehiculo) c;
+                if (jCBPanel.isSelected()) {
+                    jCBPanel.getVehiculo().pasaITV();
+                    jCBPanel.setEnabled(false);
+                }
+            }
+        }
+    }
+
+    private class gestorLimpiarITVPasada implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Component[] componentesPanel = jPanelVehiculosITV.getComponents();
+            for (Component c : componentesPanel) {
+                JCheckBoxVehiculo jCBPanel = (JCheckBoxVehiculo) c;
+                if (jCBPanel.getVehiculo().getITVPasada()) {
+                    jPanelVehiculosITV.remove(jCBPanel);
+                    jPanelVehiculosITV.repaint();
+                    jPanelVehiculosITV.revalidate();
+                }
+            }
+        }
+
+    }
+
+    //</editor-fold>
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,11 +173,6 @@ public class JFrameWinFlota extends javax.swing.JFrame {
         jLabelVFlota.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelVFlota.setText("Vehiculos de la Flota");
 
-        jListListadoVehiculos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jListListadoVehiculos);
 
         jTextAreaDatosVehiculos.setColumns(20);
@@ -95,17 +182,6 @@ public class JFrameWinFlota extends javax.swing.JFrame {
         jButtonPasarITV.setText("Pasar ITV Marcados");
 
         jPanelVehiculosITV.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Vehiculos para ITV"));
-
-        javax.swing.GroupLayout jPanelVehiculosITVLayout = new javax.swing.GroupLayout(jPanelVehiculosITV);
-        jPanelVehiculosITV.setLayout(jPanelVehiculosITVLayout);
-        jPanelVehiculosITVLayout.setHorizontalGroup(
-            jPanelVehiculosITVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 368, Short.MAX_VALUE)
-        );
-        jPanelVehiculosITVLayout.setVerticalGroup(
-            jPanelVehiculosITVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
 
         jButtonAddPanel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButtonAddPanel.setText("Añadir al Panel");
@@ -126,11 +202,11 @@ public class JFrameWinFlota extends javax.swing.JFrame {
                     .addComponent(jButtonAddPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
                     .addComponent(jScrollPane1)
-                    .addComponent(jLabelVFlota, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+                    .addComponent(jLabelVFlota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelVehiculosITV, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPasarITV, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelVehiculosITV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonLimpiarPasados, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
@@ -142,14 +218,12 @@ public class JFrameWinFlota extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelVFlota, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 20, Short.MAX_VALUE))
+                    .addComponent(jLabelVFlota, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPasarITV, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanelVehiculosITV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -216,5 +290,4 @@ public class JFrameWinFlota extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextAreaDatosVehiculos;
     // End of variables declaration//GEN-END:variables
 
-    
 }
