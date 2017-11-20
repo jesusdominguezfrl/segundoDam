@@ -7,6 +7,7 @@ package WinFlota;
 
 import Flota.*;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -49,6 +50,29 @@ public class JFrameWinFlota extends javax.swing.JFrame {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Metodos">
+    
+    private void consistencia(){
+        int vSeleccionados= jListListadoVehiculos.getSelectedIndices().length;
+        Vehiculo v;
+        JCheckBoxVehiculo jCBVehiculo;
+        jButtonAddPanel.setEnabled(false);
+        jButtonPasarITV.setEnabled(false);
+        if(jListListadoVehiculos.getSelectedIndex()!=-1){
+            v = (Vehiculo) Vehiculo.vehiculosFlota().getElementAt(jListListadoVehiculos.getSelectedIndex());
+            jButtonAddPanel.setEnabled(vSeleccionados<2&&vSeleccionados>0 && !estaEnElPanel(v));
+        }
+        for(int i=0; i<jPanelVehiculosITV.getComponents().length; i++){
+            jCBVehiculo = (JCheckBoxVehiculo) jPanelVehiculosITV.getComponents()[i];
+            if(jCBVehiculo.isSelected() /***************************&& jCBVehiculo.getVehiculo().getITVPasada()**************************/){
+                System.out.println("2131241");
+                jButtonPasarITV.setEnabled(true);
+                break;
+            }
+        }
+    }  
+    
+   
+    
     private void initMyComponents() {
         jListListadoVehiculos.setModel(Vehiculo.vehiculosFlota());
         jListListadoVehiculos.addListSelectionListener(new gestorListSelection());
@@ -56,15 +80,19 @@ public class JFrameWinFlota extends javax.swing.JFrame {
         jButtonQuitarTodos.addActionListener(new gestorEliminarTodo());
         jButtonPasarITV.addActionListener(new gestorPasarITV());
         jButtonLimpiarPasados.addActionListener(new gestorLimpiarITVPasada());
+        consistencia();
     }
 
     private void añadeComponente(Vehiculo vehiculo) {
         if (!estaEnElPanel(vehiculo)) {
             JCheckBoxVehiculo jCBVehiculo = new JCheckBoxVehiculo(vehiculo);
+            jCBVehiculo.addActionListener(new gestorChecBox());
+            jCBVehiculo.setPreferredSize(new Dimension((jPanelVehiculosITV.getWidth()/2)-10, 30));
             jPanelVehiculosITV.add(jCBVehiculo);
             jPanelVehiculosITV.repaint();
             jPanelVehiculosITV.revalidate();
         }
+        consistencia();
     }
 
     private Boolean estaEnElPanel(Vehiculo v) {
@@ -91,6 +119,7 @@ public class JFrameWinFlota extends javax.swing.JFrame {
             } else {
                 jTextAreaDatosVehiculos.setText("");
             }
+            consistencia();
         }
     }
 
@@ -107,7 +136,6 @@ public class JFrameWinFlota extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("asadada");
             jPanelVehiculosITV.removeAll();
             jPanelVehiculosITV.repaint();
             jPanelVehiculosITV.revalidate();
@@ -143,8 +171,18 @@ public class JFrameWinFlota extends javax.swing.JFrame {
                 }
             }
         }
-
     }
+    
+     private class gestorChecBox implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println(".fsdjkbsa");
+              consistencia();
+        }
+    }
+    
+   
 
     //</editor-fold>
     /**
@@ -182,6 +220,7 @@ public class JFrameWinFlota extends javax.swing.JFrame {
         jButtonPasarITV.setText("Pasar ITV Marcados");
 
         jPanelVehiculosITV.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Vehiculos para ITV"));
+        jPanelVehiculosITV.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jButtonAddPanel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButtonAddPanel.setText("Añadir al Panel");

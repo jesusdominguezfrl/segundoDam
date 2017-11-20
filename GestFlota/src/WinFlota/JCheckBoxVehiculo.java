@@ -6,6 +6,8 @@
 package WinFlota;
 
 import Flota.Vehiculo;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 
 /**
@@ -33,13 +35,20 @@ public class JCheckBoxVehiculo extends JCheckBox {
         if (this.vehiculo == null) {
             this.vehiculo = vehiculo;
             super.setText(vehiculo.toString());
-            this.setEnabled(!this.vehiculo.getITVPasada());
-            this.setSelected(this.vehiculo.getITVPasada());
+            super.setEnabled(!this.vehiculo.getITVPasada());
+            super.setSelected(this.vehiculo.getITVPasada());
         }
     }
 
     
     @Override
     public void setText(String texto){}
+    
+    @Override
+    public void setEnabled(boolean b){}
+    
+    @Override
+    public void setSelected(boolean b){}
 
+    
 }
