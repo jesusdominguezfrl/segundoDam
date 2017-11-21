@@ -52,23 +52,37 @@ public class JFrameWinFlota extends javax.swing.JFrame {
     //<editor-fold defaultstate="collapsed" desc="Metodos">
     
     private void consistencia(){
-        int vSeleccionados= jListListadoVehiculos.getSelectedIndices().length;
+        int vSeleccionados = jListListadoVehiculos.getSelectedIndices().length;
         Vehiculo v;
+        Component[] componentesPanel = jPanelVehiculosITV.getComponents();
         JCheckBoxVehiculo jCBVehiculo;
         jButtonAddPanel.setEnabled(false);
         jButtonPasarITV.setEnabled(false);
-        if(jListListadoVehiculos.getSelectedIndex()!=-1){
+        jButtonLimpiarPasados.setEnabled(false);
+        jButtonQuitarTodos.setEnabled(componentesPanel.length>0);
+        if (jListListadoVehiculos.getSelectedIndex() != -1) {
             v = (Vehiculo) Vehiculo.vehiculosFlota().getElementAt(jListListadoVehiculos.getSelectedIndex());
-            jButtonAddPanel.setEnabled(vSeleccionados<2&&vSeleccionados>0 && !estaEnElPanel(v));
+            jButtonAddPanel.setEnabled(vSeleccionados < 2 && vSeleccionados > 0 && !estaEnElPanel(v));
         }
-        for(int i=0; i<jPanelVehiculosITV.getComponents().length; i++){
-            jCBVehiculo = (JCheckBoxVehiculo) jPanelVehiculosITV.getComponents()[i];
-            if(jCBVehiculo.isSelected() /***************************&& jCBVehiculo.getVehiculo().getITVPasada()**************************/){
+        for (int i = 0; i < componentesPanel.length; i++) {
+            jCBVehiculo = (JCheckBoxVehiculo) componentesPanel[i];
+            if (jCBVehiculo.isSelected() /**
+                     * *************************&& jCBVehiculo.getVehiculo().getITVPasada()*************************
+                     */
+                    ) {
                 System.out.println("2131241");
                 jButtonPasarITV.setEnabled(true);
                 break;
             }
         }
+        for (int i = 0; i < componentesPanel.length; i++) {
+            jCBVehiculo = (JCheckBoxVehiculo) componentesPanel[i];
+            if (jCBVehiculo.getVehiculo().getITVPasada()) {
+                jButtonLimpiarPasados.setEnabled(true);
+                break;
+            }
+        }
+        
     }  
     
    
@@ -139,6 +153,7 @@ public class JFrameWinFlota extends javax.swing.JFrame {
             jPanelVehiculosITV.removeAll();
             jPanelVehiculosITV.repaint();
             jPanelVehiculosITV.revalidate();
+            consistencia();
         }
     }
 
@@ -146,12 +161,15 @@ public class JFrameWinFlota extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            System.out.println("asdasfad");
             Component[] componentesPanel = jPanelVehiculosITV.getComponents();
             for (Component c : componentesPanel) {
                 JCheckBoxVehiculo jCBPanel = (JCheckBoxVehiculo) c;
+                System.out.println("sout");
                 if (jCBPanel.isSelected()) {
                     jCBPanel.getVehiculo().pasaITV();
                     jCBPanel.setEnabled(false);
+                    System.out.println("213151651465");
                 }
             }
         }
@@ -170,6 +188,7 @@ public class JFrameWinFlota extends javax.swing.JFrame {
                     jPanelVehiculosITV.revalidate();
                 }
             }
+            consistencia();
         }
     }
     
