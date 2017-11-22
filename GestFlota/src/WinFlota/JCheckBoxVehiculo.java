@@ -42,13 +42,17 @@ public class JCheckBoxVehiculo extends JCheckBox {
     public void pasarITV(){
         vehiculo.pasaITV();
         this.setForeground(null);
-        this.setEnabled(false);
+        super.setEnabled(false);
     }
+    
+    @Override
+    public void setEnabled(boolean asd){}
 
     @Override
-    public void setText(String texto) {
-    }
+    public void setText(String texto) {}
 
+    
+    
     private class gestorColor implements MouseListener {
 
         @Override
