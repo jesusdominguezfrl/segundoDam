@@ -66,11 +66,7 @@ public class JFrameWinFlota extends javax.swing.JFrame {
         }
         for (int i = 0; i < componentesPanel.length; i++) {
             jCBVehiculo = (JCheckBoxVehiculo) componentesPanel[i];
-            if (jCBVehiculo.isSelected() /**
-                     * *************************&& jCBVehiculo.getVehiculo().getITVPasada()*************************
-                     */
-                    ) {
-                System.out.println("2131241");
+            if (jCBVehiculo.isSelected()) {
                 jButtonPasarITV.setEnabled(true);
                 break;
             }
@@ -165,13 +161,9 @@ public class JFrameWinFlota extends javax.swing.JFrame {
             Component[] componentesPanel = jPanelVehiculosITV.getComponents();
             for (Component c : componentesPanel) {
                 JCheckBoxVehiculo jCBPanel = (JCheckBoxVehiculo) c;
-                System.out.println("sout");
-                if (jCBPanel.isSelected()) {
-                    jCBPanel.getVehiculo().pasaITV();
-                    jCBPanel.setEnabled(false);
-                    System.out.println("213151651465");
-                }
+                if (jCBPanel.isSelected())jCBPanel.pasarITV();
             }
+            consistencia();
         }
     }
 
@@ -196,7 +188,6 @@ public class JFrameWinFlota extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println(".fsdjkbsa");
               consistencia();
         }
     }
@@ -269,7 +260,7 @@ public class JFrameWinFlota extends javax.swing.JFrame {
                         .addComponent(jButtonLimpiarPasados, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(jButtonQuitarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
