@@ -7,8 +7,6 @@ package WinFlota;
 
 import Flota.Vehiculo;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JCheckBox;
@@ -21,9 +19,6 @@ public class JCheckBoxVehiculo extends JCheckBox {
 
     private Vehiculo vehiculo;
     //private Boolean itvPasada;
-
-    public JCheckBoxVehiculo() {
-    }
 
     public JCheckBoxVehiculo(Vehiculo vehiculo) {
         setVehiculo(vehiculo);
@@ -43,11 +38,21 @@ public class JCheckBoxVehiculo extends JCheckBox {
             super.setSelected(this.vehiculo.getITVPasada());
         }
     }
+    
+    public void pasarITV(){
+        vehiculo.pasaITV();
+        this.setForeground(null);
+        super.setEnabled(false);
+    }
+    
+    @Override
+    public void setEnabled(boolean asd){}
 
     @Override
-    public void setText(String texto) {
-    }
+    public void setText(String texto) {}
 
+    
+    
     private class gestorColor implements MouseListener {
 
         @Override
