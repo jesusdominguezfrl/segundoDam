@@ -172,6 +172,7 @@ public class JFrameWinFlota extends javax.swing.JFrame {
                     System.out.println("213151651465");
                 }
             }
+            consistencia();
         }
     }
 
