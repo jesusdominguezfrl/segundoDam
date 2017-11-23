@@ -22,7 +22,7 @@ public class Empleado {
 
 
     Empleado(int nEM, String apell, String oficio, int dir, String fecha, float salario, float comision, int nDep) {
-        this.nEM = this.nEM;
+        this.nEM = nEM;
         this.apell = apell;
         this.oficio = oficio;
         this.dir = dir;

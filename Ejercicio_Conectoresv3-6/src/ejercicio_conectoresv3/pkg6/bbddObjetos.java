@@ -17,8 +17,13 @@ public class bbddObjetos {
     private static String BDEmpl = "ejemplo.yep";
     private static Scanner leer = new Scanner(System.in);
     private static ObjectContainer bd;
+    
+    private void borrarBD(){
+        bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), BDEmpl);
+        
+    }
 
-    protected static void crearBaseDatos() {
+    public static void crearBaseDatos() {
         bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), BDEmpl);
 
         Departamento dpto1 = new Departamento(10, "Contabilidad", "Sevilla");
@@ -67,15 +72,27 @@ public class bbddObjetos {
         if (todosEmpleados.isEmpty()) {
             System.out.println("No existen registros de Empleados.");
         } else {
-            System.out.printf("Hay %1 registros.", todosEmpleados.size());
-            while (todosEmpleados.hasNext()) {
-                Empleado e = todosEmpleados.next();
-                System.out.printf("Empleado: %1\nApellido: %2\nOficio: %3\ndir: %4\nFecha de alta: %5\nSalario: %6\nComisión: %7\nNúmero de departamento: %8",
-                        e.getnEM(), e.getApell(), e.getOficio(), e.getDir(), e.getFecha(), e.getSalario(), e.getComision(), e.getnDep());
-            }
+            System.out.printf("Hay %6d registros.\n\n\n"
+                    + "", todosEmpleados.size());
+            mostrarEmpleadoConFormato(todosEmpleados);
+//            while (todosEmpleados.hasNext()) {
+//                Empleado e = todosEmpleados.next();
+//                mostrarEmpleadoConFormato(e);
+//            }
         }
         bd.close();
     }
+    
+    private void mostrarEmpleadoConFormato(ObjectSet<Empleado> todosEmpleados){
+        while (todosEmpleados.hasNext()) {
+                Empleado e = todosEmpleados.next();
+                System.out.printf("%-6d%-15s%-15s%-5d%-15s%-10.2f%10.2f%-6d\n",e.getnEM(), e.getApell(), e.getOficio(), e.getDir(), e.getFecha(), e.getSalario(), e.getComision(), e.getnDep());
+            }
+
+    }
+    
+    
+    
 
     public void nuevoEmpleado() {
         int nEM, dir, nDep;
@@ -99,8 +116,14 @@ public class bbddObjetos {
         nDep = leer.nextInt();
 
         bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), BDEmpl);
-        Empleado nuevo = new Empleado(nEM, apellido, oficio, dir, fecha, salario, comision, nDep);
-        bd.store(nuevo);
+        Empleado e =new Empleado(nEM, null, null, 0, null, 0, 0, 0);
+        ObjectSet <Empleado> listaEmpleados = bd.queryByExample(e);
+        if(!listaEmpleados.isEmpty()){
+            System.out.println("Ya existe un empleado con ese nEm, no se puede añadir a la BBDD");
+        }else{
+            Empleado nuevo = new Empleado(nEM, apellido, oficio, dir, fecha, salario, comision, nDep);
+            bd.store(nuevo);
+        }
         bd.close();
     }
 
@@ -111,11 +134,10 @@ public class bbddObjetos {
         if (todosDepartamentos.isEmpty()) {
             System.out.println("No existen Departamentos.");
         } else {
-            System.out.printf("Hay %1 departamentos.", todosDepartamentos.size());
+            System.out.printf("Hay %3d departamentos.\n\n", todosDepartamentos.size());
             while (todosDepartamentos.hasNext()) {
                 Departamento dp = todosDepartamentos.next();
-                System.out.printf("Departamento No: %3d \nNombre: %20s \nLocalizacion: %20s", dp.getDept_no(), dp.getNombre(), dp.getNombre());
-
+                System.out.printf("%-3d%-20s%-20s\n", dp.getDept_no(), dp.getNombre(), dp.getLoc());
             }
         }
         bd.close();
@@ -127,7 +149,7 @@ public class bbddObjetos {
         ObjectSet<Departamento> todosDepartamentos;
         bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), BDEmpl);
         Empleado emp;
-        ObjectSet<Empleado> todosEmpleados = bd.queryByExample(emp);
+        ObjectSet<Empleado> todosEmpleados;
         do {            
             System.out.println("Consultas:\n\t 1-Apellido de todos los empleados del departamento de VENTAS\n\t2- Apellido de todos los empleados contratados entre 1980 y 1990\n\t3-Nombre de departamento y la suma de sus salarios\n\t0-Salir\n\nIntroduce una opcion: ");
             opcion=leer.nextInt();
@@ -136,7 +158,14 @@ public class bbddObjetos {
                     //Empleados departamento ventas.
                     dpto = new Departamento(0, "Ventas", null);
                     todosDepartamentos = bd.queryByExample(dpto);
-                    emp= new Empleado(0, null, null, 0, null, 0, 0, todosDepartamentos);
+                   // Departamento d= todosDepartamentos.next();
+                    emp= new Empleado(0, null, null, 0, null, 0, 0, todosDepartamentos.next().getDept_no());
+                    todosEmpleados= bd.queryByExample(emp);
+                    while (todosEmpleados.hasNext()){
+                        Empleado e = todosEmpleados.next();
+                        System.out.println(e.getApell());
+                    }
+//mostrarEmpleadoConFormato(todosEmpleados);
                     break;
                 case 2:
                     //Apellidos de todos -- 1800-1900
@@ -156,25 +185,29 @@ public class bbddObjetos {
         System.out.println("Indica el numero de empleado que quiere modificar:");
         int nEM = leer.nextInt();
         bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), BDEmpl);
-        Empleado emp = new Empleado(nEM, null, null, 0, null, 0, 0, 0);
-        
-        System.out.print("Introduce número de empleado: ");
-        emp.setnEM(leer.nextInt());
-        System.out.print("Introduce apellido de empleado: ");
-        emp.setApell(leer.next());
-        System.out.print("Introduce oficio de empleado: ");
-        emp.setOficio(leer.next());
-        System.out.println("Introduce dir de empleado: ");
-        emp.setDir(leer.nextInt());
-        System.out.println("Introduce fecha de alta de empleado (aaaa-mm-dd): ");
-        emp.setFecha(leer.next());
-        System.out.println("Introduce salario de empleado");
-        emp.setSalario(leer.nextFloat());
-        System.out.println("Introduce comision de empleado: ");
-        emp.setComision(leer.nextFloat());
-        System.out.println("Introduce número de departamento de empleado: ");
-        emp.setnDep(leer.nextInt());
+        Empleado emp = new Empleado(nEM, null, null, 0, null, 0f, 0f, 0);
+        ObjectSet objeto=bd.queryByExample(emp);
+        Empleado modificar = (Empleado) objeto.next();
+               
 
+        System.out.print("Introduce número de empleado: ");
+        modificar.setnEM(leer.nextInt());
+        System.out.print("Introduce apellido de empleado: ");
+        modificar.setApell(leer.next());
+        System.out.print("Introduce oficio de empleado: ");
+        modificar.setOficio(leer.next());
+        System.out.println("Introduce dir de empleado: ");
+        modificar.setDir(leer.nextInt());
+        System.out.println("Introduce fecha de alta de empleado (aaaa-mm-dd): ");
+        modificar.setFecha(leer.next());
+        System.out.println("Introduce salario de empleado");
+        modificar.setSalario(leer.nextFloat());
+        System.out.println("Introduce comision de empleado: ");
+        modificar.setComision(leer.nextFloat());
+        System.out.println("Introduce número de departamento de empleado: ");
+        modificar.setnDep(leer.nextInt());
+
+        bd.store(modificar);
         bd.close();
     }
 
