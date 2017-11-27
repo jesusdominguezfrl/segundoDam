@@ -6,6 +6,8 @@
 package ejercicio_conectoresv3.pkg6;
 
 import com.db4o.*;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Scanner;
 
 /**
@@ -36,18 +38,18 @@ public class bbddObjetos {
         bd.store(dpto3);
         bd.store(dpto4);
 
-        Empleado p1 = new Empleado(1, "López", "contable", 345, "1987-10-23", 23400.32f, 5.34f, 10);
-        Empleado p2 = new Empleado(2, "Santana", "contable", 345, "1980-09-23", 33670.20f, 8.84f, 10);
-        Empleado p3 = new Empleado(3, "Santana", "contable", 345, "1980-09-23", 33670.20f, 8.84f, 10);
-        Empleado p4 = new Empleado(4, "Gil", "investigad", 245, "1987-01-23", 23400.32f, 5.34f, 20);
-        Empleado p5 = new Empleado(5, "Lorenzo", "investigad", 246, "1992-12-23", 20400.32f, 3.34f, 20);
-        Empleado p6 = new Empleado(6, "Manteca", "investigad", 245, "2000-10-23", 33670.20f, 8.84f, 20);
-        Empleado p7 = new Empleado(7, "Tocino", "vendedor", 445, "2003-05-23", 23400.32f, 5.34f, 30);
-        Empleado p8 = new Empleado(8, "Malo", "vendedor", 446, "1994-06-23", 20400.32f, 3.34f, 30);
-        Empleado p9 = new Empleado(9, "Salamanca", "vendedor", 445, "2004-08-23", 33670.20f, 8.84f, 30);
-        Empleado p10 = new Empleado(10, "Iglesias", "productor", 145, "1987-01-23", 33400.32f, 15.34f, 40);
-        Empleado p11 = new Empleado(11, "Martín", "productor", 146, "2004-12-23", 28400.32f, 13.34f, 40);
-        Empleado p12 = new Empleado(12, "Soroya", "productor", 145, "1980-10-23", 43670.20f, 18.84f, 40);
+        Empleado p1 = new Empleado(1, "López", "contable", 345, LocalDate.of(1987, 10, 23), 23400.32f, 5.34f, 10);
+        Empleado p2 = new Empleado(2, "Santana", "contable", 345,LocalDate.of(1980,9,23), 33670.20f, 8.84f, 10);
+        Empleado p3 = new Empleado(3, "Santana", "contable", 345,LocalDate.of(1980,9,23), 33670.20f, 8.84f, 10);
+        Empleado p4 = new Empleado(4, "Gil", "investigad", 245, LocalDate.of(1987,1,23), 23400.32f, 5.34f, 20);
+        Empleado p5 = new Empleado(5, "Lorenzo", "investigad", 246, LocalDate.of(1992,12,23), 20400.32f, 3.34f, 20);
+        Empleado p6 = new Empleado(6, "Manteca", "investigad", 245, LocalDate.of(2000,10,23), 33670.20f, 8.84f, 20);
+        Empleado p7 = new Empleado(7, "Tocino", "vendedor", 445, LocalDate.of(2003,5,23), 23400.32f, 5.34f, 30);
+        Empleado p8 = new Empleado(8, "Malo", "vendedor", 446, LocalDate.of(1994,6,23), 20400.32f, 3.34f, 30);
+        Empleado p9 = new Empleado(9, "Salamanca", "vendedor", 445, LocalDate.of(2004,8,23), 33670.20f, 8.84f, 30);
+        Empleado p10 = new Empleado(10, "Iglesias", "productor", 145, LocalDate.of(1987,01,23), 33400.32f, 15.34f, 40);
+        Empleado p11 = new Empleado(11, "Martín", "productor", 146, LocalDate.of(2004,12,23), 28400.32f, 13.34f, 40);
+        Empleado p12 = new Empleado(12, "Soroya", "productor", 145, LocalDate.of(1980,10,23), 43670.20f, 18.84f, 40);
 
         bd.store(p1);
         bd.store(p2);
@@ -95,25 +97,26 @@ public class bbddObjetos {
     
 
     public void nuevoEmpleado() {
-        int nEM, dir, nDep;
+        int nEM, dir, nDep, año, mes, dia;
         float salario, comision;
-        String apellido, oficio, fecha;
+        String apellido, oficio;
+        LocalDate fecha;
         System.out.print("Introduce número de empleado: ");
-        nEM = leer.nextInt();
+        nEM = Integer.parseInt(leer.nextLine());
         System.out.print("Introduce apellido de empleado: ");
-        apellido = leer.next();
+        apellido = leer.nextLine();
         System.out.print("Introduce oficio de empleado: ");
-        oficio = leer.next();
+        oficio = leer.nextLine();
         System.out.println("Introduce dir de empleado: ");
-        dir = leer.nextInt();
-        System.out.println("Introduce fecha de alta de empleado (aaaa-mm-dd): ");
-        fecha = leer.next();
+        dir =Integer.parseInt(leer.nextLine());
+        System.out.println("Introduce fecha de alta de empleado ");
+        fecha=leerFecha();
         System.out.println("Introduce salario de empleado");
-        salario = leer.nextFloat();
+        salario = Float.parseFloat(leer.nextLine());
         System.out.println("Introduce comision de empleado: ");
-        comision = leer.nextFloat();
+        comision = Float.parseFloat(leer.nextLine());
         System.out.println("Introduce número de departamento de empleado: ");
-        nDep = leer.nextInt();
+        nDep = Integer.parseInt(leer.nextLine());
 
         bd = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), BDEmpl);
         Empleado e =new Empleado(nEM, null, null, 0, null, 0, 0, 0);
@@ -125,6 +128,19 @@ public class bbddObjetos {
             bd.store(nuevo);
         }
         bd.close();
+    }
+
+    private LocalDate leerFecha() throws NumberFormatException {
+        int año;
+        int mes;
+        int dia;
+        System.out.println("Introduce año: ");
+        año=Integer.parseInt(leer.nextLine());
+        System.out.println("Introduce mes: ");
+        mes=Integer.parseInt(leer.nextLine());
+        System.out.println("Introduce dia: ");
+        dia=Integer.parseInt(leer.nextLine());
+        return LocalDate.of(año, mes, dia);
     }
 
     public void mostrarDepartamentos() {
@@ -165,15 +181,35 @@ public class bbddObjetos {
                         Empleado e = todosEmpleados.next();
                         System.out.println(e.getApell());
                     }
-//mostrarEmpleadoConFormato(todosEmpleados);
+                    //mostrarEmpleadoConFormato(todosEmpleados);
                     break;
                 case 2:
                     //Apellidos de todos -- 1800-1900
-                    
+                    emp= new Empleado(0, null, null, 0, null, 0, 0, 0);
+                    todosEmpleados= bd.queryByExample(emp);
+                    while(todosEmpleados.hasNext()){
+                        Empleado e = todosEmpleados.next();
+                        if(e.getFecha().getYear()>1980&&e.getFecha().getYear()<1990){
+                            System.out.println(e.getApell());
+                        }
+                        
+                    }
                     break;
                 case 3:
-                    //Nombre dpto y suma de salario 
-                    
+                    dpto = new Departamento(0, null , null);
+                    todosDepartamentos = bd.queryByExample(dpto); 
+                    while (todosDepartamentos.hasNext()){
+                        Departamento dp=todosDepartamentos.next();
+                        float sumadpt=0;
+                        emp= new Empleado(0, null, null, 0, null, 0, 0, 0);
+                        todosEmpleados= bd.queryByExample(emp);
+                        while (todosEmpleados.hasNext()){
+                            Empleado e = todosEmpleados.next();
+                            if (e.getnDep()==dp.getDept_no())
+                                sumadpt+=e.getSalario();
+                        }
+                        System.out.println("Dpto_No: "+dp.getDept_no()+ " suma de los salarios: " + sumadpt);
+                    }
                     break;
             }
         } while (opcion!=0);
@@ -191,21 +227,21 @@ public class bbddObjetos {
                
 
         System.out.print("Introduce número de empleado: ");
-        modificar.setnEM(leer.nextInt());
+        modificar.setnEM(Integer.parseInt(leer.nextLine()));
         System.out.print("Introduce apellido de empleado: ");
-        modificar.setApell(leer.next());
+        modificar.setApell(leer.nextLine());
         System.out.print("Introduce oficio de empleado: ");
-        modificar.setOficio(leer.next());
+        modificar.setOficio(leer.nextLine());
         System.out.println("Introduce dir de empleado: ");
-        modificar.setDir(leer.nextInt());
+        modificar.setDir(Integer.parseInt(leer.nextLine()));
         System.out.println("Introduce fecha de alta de empleado (aaaa-mm-dd): ");
-        modificar.setFecha(leer.next());
+        modificar.setFecha(leerFecha());
         System.out.println("Introduce salario de empleado");
-        modificar.setSalario(leer.nextFloat());
+        modificar.setSalario(Float.parseFloat(leer.nextLine()));
         System.out.println("Introduce comision de empleado: ");
-        modificar.setComision(leer.nextFloat());
+        modificar.setComision(Float.parseFloat(leer.nextLine()));
         System.out.println("Introduce número de departamento de empleado: ");
-        modificar.setnDep(leer.nextInt());
+        modificar.setnDep(Integer.parseInt(leer.nextLine()));
 
         bd.store(modificar);
         bd.close();

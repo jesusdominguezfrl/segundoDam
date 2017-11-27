@@ -5,6 +5,9 @@
  */
 package ejercicio_conectoresv3.pkg6;
 
+import java.time.LocalDate;
+
+
 /**
  *
  * @author usuario
@@ -15,13 +18,13 @@ public class Empleado {
     private String apell;
     private String oficio;
     private int dir;
-    private String fecha;
+    private LocalDate fecha;
     private float salario;
     private float comision;
     private int nDep;
 
 
-    Empleado(int nEM, String apell, String oficio, int dir, String fecha, float salario, float comision, int nDep) {
+    Empleado(int nEM, String apell, String oficio, int dir, LocalDate fecha, float salario, float comision, int nDep) {
         this.nEM = nEM;
         this.apell = apell;
         this.oficio = oficio;
@@ -31,6 +34,9 @@ public class Empleado {
         this.comision = comision;
         this.nDep = nDep;
     }
+    
+    
+   
 
     public int getnEM() {
         return nEM;
@@ -64,11 +70,11 @@ public class Empleado {
         this.dir = dir;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

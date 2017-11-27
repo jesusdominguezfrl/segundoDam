@@ -31,7 +31,7 @@ public class Ejercicio_Conectoresv36 {
                     bd.crearBaseDatos();
                     break;
                 case 2:
-                    bd.mostrarDepartamentos();//
+                    bd.mostrarDepartamentos();//1
                     break;
                 case 3:
                     bd.mostrarEmpleados();//
