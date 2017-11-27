@@ -23,8 +23,8 @@ public class Ejercicio_Conectoresv36 {
          Scanner leer = new Scanner(System.in);
         int opcion;
         do {
-            System.out.print("\t0- Salir\n\t1- Crear BBDD.\n\t2- Mostrar departamentos.\n\t3- Mostrar datos empleados.\n\t4- Mostrar resultado de Ejercicio 1.\n\t5- Insertar un nuevo empleado.\n\t6- Modificar un empleado.\n\t7- Borrar un empleado.\nIndique una opcion del menu:");
-            opcion = leer.nextInt();
+            System.out.print("\n\n\n\t0- Salir\n\t1- Crear BBDD.\n\t2- Mostrar departamentos.\n\t3- Mostrar datos empleados.\n\t4- Mostrar resultado de Ejercicio 1.\n\t5- Insertar un nuevo empleado.\n\t6- Modificar un empleado.\n\t7- Borrar un empleado.\nIndique una opcion del menu:");
+            opcion = Integer.parseInt(leer.nextLine());
             System.out.println();
             switch (opcion) {
                 case 1:

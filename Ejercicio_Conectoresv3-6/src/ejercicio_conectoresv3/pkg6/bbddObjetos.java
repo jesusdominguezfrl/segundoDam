@@ -189,7 +189,7 @@ public class bbddObjetos {
                     todosEmpleados= bd.queryByExample(emp);
                     while(todosEmpleados.hasNext()){
                         Empleado e = todosEmpleados.next();
-                        if(e.getFecha().getYear()>1980&&e.getFecha().getYear()<1990){
+                        if(e.getFecha().getYear()>=1980&&e.getFecha().getYear()<1990){
                             System.out.println(e.getApell());
                         }
                         
