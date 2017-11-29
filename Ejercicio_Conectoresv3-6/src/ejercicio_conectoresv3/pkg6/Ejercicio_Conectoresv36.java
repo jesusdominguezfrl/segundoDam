@@ -31,22 +31,22 @@ public class Ejercicio_Conectoresv36 {
                     bd.crearBaseDatos();
                     break;
                 case 2:
-                    bd.mostrarDepartamentos();//1
+                    bd.mostrarDepartamentos();
                     break;
                 case 3:
-                    bd.mostrarEmpleados();//
+                    bd.mostrarEmpleados();
                     break;
                 case 4:
                     bd.consultas();
                     break;
                 case 5:
-                    bd.nuevoEmpleado();//
+                    bd.nuevoEmpleado();
                     break;
                 case 6:
                     bd.modificarEmpleado();
                     break;
                 case 7:
-                    bd.borrarEmpleado();//
+                    bd.borrarEmpleado();
                     break;
                 case 0:
                     System.exit(0);
