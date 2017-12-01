@@ -32,7 +32,12 @@ public class GestEmpl {
      */
     public static void main(String[] args) throws ParseException, IOException, ParserConfigurationException, SAXException, FileNotFoundException, TransformerException, JAXBException {
         Modelo m = new Modelo();
-        Vista v = new Vista(m);
+        tratamientoDom td= new tratamientoDom();
+        tratamientoSax ts = new tratamientoSax();
+        tratamientoXStreams tXS = new tratamientoXStreams();
+        tratamientoJAXB tJAXB = new tratamientoJAXB();
+        tratamientoEstilosXSL teXSL = new tratamientoEstilosXSL();
+        Vista v = new Vista(m, td,ts,tXS,teXSL,tJAXB);
         boolean salir = false;
         Scanner sc = new Scanner(System.in);
         String menu = "\nInicio: \n\t01 Mostrar empleados\n\t02 Generar aleatorios\n\t03 Alta de empleado\n"
@@ -95,6 +100,43 @@ public class GestEmpl {
                 case "importar objeto":
                     v.importarObjeto();
                     break;
+                     case "19":
+                case "importar DOM":
+                    v.importarDOM();
+                    break;
+                case "20":
+                case "importar SAX":
+                    v.importarSAX();
+                    break;
+                case "21":
+                case "importar XStream":
+                    v.importarXStream();
+                    break;
+                case "22":
+                case "importar JAXB":
+                    v.importarJAXB();
+                    break;
+                case "23":
+                case "exportar DOM":
+                    v.exportarDOM();
+                    break;
+                case "24":
+                case "exportar SAX":
+                    v.exportarSAX();
+                    break;
+                case "25":
+                case "exportar XStream":
+                    v.exportarXStream();
+                    break;
+                case "26":
+                case "exportar JAXB":
+                    v.exportarJAXB();
+                    break;
+                case "27":
+                case "Crear HTML":
+                    v.crearFHTML();
+                    break;
+                
                 case "salir":
                 case "q":
                     salir = true;
