@@ -9,6 +9,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -80,10 +81,9 @@ public class Ejemplo2GroupLayout extends javax.swing.JFrame {
                 .addGap(85, 85, 85)
                 .addGroup(jPanelEstaticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jRadioButtonJProyecto, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                    .addGroup(jPanelEstaticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jRadioButtonTMontador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButtonTComision, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                        .addComponent(jRadioButtonTHoras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jRadioButtonTMontador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jRadioButtonTComision, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                    .addComponent(jRadioButtonTHoras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -114,7 +114,7 @@ public class Ejemplo2GroupLayout extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jPanelEstatico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanelDinamico, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelDinamico, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -185,15 +185,37 @@ public class Ejemplo2GroupLayout extends javax.swing.JFrame {
         layoutCopia.setAutoCreateGaps(true);
         
         layoutCopia.setHorizontalGroup(layoutCopia.createParallelGroup()
-            .addGroup(layoutCopia.createParallelGroup()
+            .addGroup(layoutCopia.createSequentialGroup()
+                .addGap(0,0,1000)
+                .addGroup(layoutCopia.createParallelGroup()
                 .addComponent(jRadioButtonJProyecto1)
                 .addComponent(jRadioButtonTComision1)
-                .addComponent(jRadioButtonTMontador)
+                .addComponent(jRadioButtonTMontador1)
                 .addComponent(jRadioButtonTHoras1)
+                )
+                .addGap(0,0,1000)
             )
+                    
             .addGroup(layoutCopia.createSequentialGroup()
                 .addComponent(jButtonAñadir1)
-                .addGap(5/*cambiar tamaño gap*/)
+                .addGap(0,0,1000)
+                .addComponent(jButtonBorrarDatos1)
+            )
+        );
+        
+        layoutCopia.linkSize(SwingConstants.HORIZONTAL, jRadioButtonJProyecto1,jRadioButtonTComision1,jRadioButtonTHoras1,jRadioButtonTMontador1);
+        layoutCopia.linkSize(SwingConstants.HORIZONTAL, jButtonBorrarDatos1,jButtonAñadir1);
+        
+        layoutCopia.setVerticalGroup(layoutCopia.createSequentialGroup()
+            
+            .addGroup(layoutCopia.createParallelGroup()
+                .addComponent(jRadioButtonJProyecto1,-1,-1,1000)
+                .addComponent(jRadioButtonTComision1,-1,-1,1000)
+                .addComponent(jRadioButtonTMontador1,-1,-1,1000)
+                .addComponent(jRadioButtonTHoras1,-1,-1,1000)
+            )
+            .addGroup(layoutCopia.createParallelGroup()
+                .addComponent(jButtonAñadir1)
                 .addComponent(jButtonBorrarDatos1)
             )
         );
