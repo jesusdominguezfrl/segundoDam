@@ -5,6 +5,7 @@
  */
 package vista;
 
+import ConectorBBDDMySQL.ConectorBBDD;
 import entidades.Empleado;
 import java.io.IOException;
 import java.util.Scanner;
@@ -20,20 +21,45 @@ import org.xml.sax.SAXException;
 public class Vista {
 
     Modelo m;
+    ConectorBBDD conBBDD;
 
     //<editor-fold defaultstate="collapsed" desc="Constructor">
     /**
      * Constructor que inicializa los objetos necesarios para acceder a las diferentes clases del proyecto.
      * @param m (Modelo) Objeto que permitira la conexion con la clase que contiene la coleccion de datos
+     * @param conBBDD (ConectorBBDD) Objeto que permite la conexion con la clase que se encargara de exportar e importar los datos.
      */
-    public Vista(Modelo m) {
+    public Vista(Modelo m, ConectorBBDD conBBDD) {
         this.m = m;
+        this.conBBDD=conBBDD;
     }
 
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Metodos de conexion con la claseCorrespondiente ">
    
+    
+    public void exportarBBDD(){
+         if (!m.getEmpleados().isEmpty()) {
+            conBBDD.exportarDatosBBDD(m);
+        } else {
+            System.out.println("No hay empleados para escribir en el fichero");
+        }
+    }
+    
+    
+    
+    public void importarBBDD(){
+        conBBDD.importarDatosBBDD(m);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * Pide el numero de empleados que se quieren generar aleatoriamente y hace la llamada al metodo de la clase modelo que loss genera.
      */
@@ -135,6 +161,8 @@ public class Vista {
     public void importarObjeto() {
         m.readAEmpleadosAsObject(m.getEmpleadosObjeto());
     }
+    
+    
 
 
     //</editor-fold>

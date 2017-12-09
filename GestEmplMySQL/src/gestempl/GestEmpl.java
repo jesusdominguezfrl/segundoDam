@@ -5,6 +5,7 @@
  */
 package gestempl;
 
+import ConectorBBDDMySQL.ConectorBBDD;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -27,14 +28,14 @@ public class GestEmpl {
      */
     public static void main(String[] args) throws ParseException, IOException, ParserConfigurationException, SAXException, FileNotFoundException, TransformerException, JAXBException {
         Modelo m = new Modelo();
-        Vista v = new Vista(m);
+        ConectorBBDD conBBDD= new ConectorBBDD();
+        Vista v = new Vista(m,conBBDD);
         boolean salir = false;
         Scanner sc = new Scanner(System.in);
         String menu = "\nInicio: \n\t01 Mostrar empleados\n\t02 Generar aleatorios\n\t03 Alta de empleado\n"
                 + "Ficheros texto: \n\t11 Escribir delimitado\n\t12 Escribir encolumnado\n\t13 Leer delimitado\n \t14 Leer encolumnado\n"
-                + "Ficheros binarios: \n\t15 Exportar binario\n\t16 Importar binario\n\t17 Exportar objeto\n\t18 Importar objeto\n"
-                 + "Ficheros XML: \n\t19 Importar DOM.\n\t20 Importar SAX\n\t21 Importar XStream\n\t22 Importar JAXB\n\t23 Exportar DOM\n\t24 Exportar SAX\n\t25 Esportar XStream\n\t26 Exportar JAXB "
-                +"\nFichero HTML5: \n\t27 Crear fichero HTML."
+                + "Ficheros binarios: \n\t15 Exportar binario\n\t16 Importar binario\n\t17 Exportar objeto\n\t18 Importar objeto"
+                + "\n********BBDD********\n\t19 Exportar a BBDD\n\t20 Importar de BBDD"
                 + "\nSalir\n\n"
                 + "Escriba una opción: ";
         String opcion;
@@ -89,6 +90,14 @@ public class GestEmpl {
                 case "18":
                 case "importar objeto":
                     v.importarObjeto();
+                    break;
+                case "19":
+                case "exportar BBDD":
+                    v.exportarBBDD();
+                    break;
+                case "20":
+                case "importar BBDD":
+                    v.importarBBDD();
                     break;
                 
                 case "salir":
