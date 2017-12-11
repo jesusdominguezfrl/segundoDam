@@ -35,7 +35,7 @@ public class GestEmpl {
         String menu = "\nInicio: \n\t01 Mostrar empleados\n\t02 Generar aleatorios\n\t03 Alta de empleado\n"
                 + "Ficheros texto: \n\t11 Escribir delimitado\n\t12 Escribir encolumnado\n\t13 Leer delimitado\n \t14 Leer encolumnado\n"
                 + "Ficheros binarios: \n\t15 Exportar binario\n\t16 Importar binario\n\t17 Exportar objeto\n\t18 Importar objeto"
-                + "\n********BBDD********\n\t19 Exportar a BBDD\n\t20 Importar de BBDD"
+                + "\n********BBDD********\n\t19 Exportar a BBDD\n\t20 Importar de BBDD\n\t21 Realizar Consulta"
                 + "\nSalir\n\n"
                 + "Escriba una opción: ";
         String opcion;
@@ -98,6 +98,10 @@ public class GestEmpl {
                 case "20":
                 case "importar BBDD":
                     v.importarBBDD();
+                    break;
+                case "21":
+                case "realizar Consulta":
+                    v.realizarConsultaSQL();
                     break;
                 
                 case "salir":

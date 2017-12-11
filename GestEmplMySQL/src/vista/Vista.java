@@ -53,6 +53,12 @@ public class Vista {
         conBBDD.importarDatosBBDD(m);
     }
     
+    public void realizarConsultaSQL() {
+        System.out.println("Introduce una consulta SQL valida:");
+        Scanner leer =new Scanner(System.in);
+        String consulta = leer.nextLine();
+        conBBDD.realizarConsulta(consulta);
+    }
     
     
     
@@ -166,6 +172,7 @@ public class Vista {
 
 
     //</editor-fold>
+
     
 } // fin clase Vista
 
