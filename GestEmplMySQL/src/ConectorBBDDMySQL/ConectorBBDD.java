@@ -66,7 +66,7 @@ public class ConectorBBDD {
                 ResultSet resul=sentencia.executeQuery(consulta);
                 ResultSetMetaData rSMD= resul.getMetaData();
                 for (int i = 0; i < rSMD.getColumnCount(); i++) {
-                    
+                    rSMD.getColumnTypeName(i);
                 }
                 while(resul.next()){
                     //System.out.println(resul.getInt(1)+","+ resul.getString(2)+","+ resul.getString(3)+","+ resul.getString(4)+","+ resul.getFloat(5));
