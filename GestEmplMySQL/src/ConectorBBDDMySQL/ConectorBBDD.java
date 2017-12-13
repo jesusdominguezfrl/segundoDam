@@ -65,12 +65,16 @@ public class ConectorBBDD {
                 Statement sentencia = conexion.createStatement();
                 ResultSet resul=sentencia.executeQuery(consulta);
                 ResultSetMetaData rSMD= resul.getMetaData();
-                for (int i = 0; i < rSMD.getColumnCount(); i++) {
-                    rSMD.getColumnTypeName(i);
+                String tipoColumna[]= new String[rSMD.getColumnCount()];
+                for (int i = 0; i < tipoColumna.length; i++) {
+                    System.out.println(rSMD.getColumnTypeName(i));
+//                    tipoColumna[i]=rSMD.getColumnTypeName(i);
                 }
-                while(resul.next()){
-                    //System.out.println(resul.getInt(1)+","+ resul.getString(2)+","+ resul.getString(3)+","+ resul.getString(4)+","+ resul.getFloat(5));
-                }
+                
+//                while(resul.next()){
+//                    //System.out.println(resul.getInt(1)+","+ resul.getString(2)+","+ resul.getString(3)+","+ resul.getString(4)+","+ resul.getFloat(5));
+//                    
+//                }
             }
         }catch(ClassNotFoundException | SQLException e){
             System.out.println(e.getMessage());

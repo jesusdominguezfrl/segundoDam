@@ -7,12 +7,9 @@ package vista;
 
 import ConectorBBDDMySQL.ConectorBBDD;
 import entidades.Empleado;
-import java.io.IOException;
 import java.util.Scanner;
-import javax.xml.parsers.ParserConfigurationException;
 
 import modelo.Modelo;
-import org.xml.sax.SAXException;
 
 /**
  * Clase intermedia entre datos y usuario (modelo-VISTA-controlador)
