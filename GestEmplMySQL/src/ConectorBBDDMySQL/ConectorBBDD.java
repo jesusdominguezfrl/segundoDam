@@ -68,7 +68,6 @@ public class ConectorBBDD {
                 String tipoColumna[]= new String[rSMD.getColumnCount()];
                 for (int i = 1; i < tipoColumna.length+1; i++) {
                     System.out.println(rSMD.getColumnTypeName(i));
-//                    tipoColumna[i]=rSMD.getColumnTypeName(i);
                 }
                 
                 while(resul.next()){
