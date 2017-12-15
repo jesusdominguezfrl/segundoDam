@@ -18,7 +18,7 @@ public class JMetronomo implements ActionListener{ //En lugar de crear una clase
     
     private int pulsosPorMinuto=60;
     private int totalPulsos=10;
-    private Timer temporizador;
+    private Timer temporizador=new Timer(60000/pulsosPorMinuto, this);;
     
     public int getPulsosPorMinuto() {
         return pulsosPorMinuto;
@@ -37,7 +37,6 @@ public class JMetronomo implements ActionListener{ //En lugar de crear una clase
     }
     
     public void iniciar(){
-        temporizador= new Timer(60000/pulsosPorMinuto, this);
         if(temporizador.isRunning())return;
         contadorPulsos=0;
         temporizador.start();
