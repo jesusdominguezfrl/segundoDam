@@ -30,10 +30,10 @@ public class ServiciosEj2SocketsServidor {
             Socket Clienteconectado = Servidor.accept(); 
             InputStream entrada = Clienteconectado.getInputStream();
             DataInputStream flujoEntrada = new DataInputStream(entrada);
-            System.out.println("Recibiendo del CLIENTE:\n\t" + flujoEntrada.readUTF());
             OutputStream salida = Clienteconectado.getOutputStream();
             DataOutputStream flujoSalida = new DataOutputStream(salida);
-            flujoSalida.writeUTF("Saludos al cliente del servidor ");
+            flujoSalida.writeUTF("Mesaje de envio al cliente");
+           // System.out.println("Recibiendo del CLIENTE:\n\t" + flujoEntrada.readUTF());
 
             entrada.close();
             flujoEntrada.close();
