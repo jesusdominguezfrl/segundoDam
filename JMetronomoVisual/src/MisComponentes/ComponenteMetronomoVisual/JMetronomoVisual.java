@@ -7,42 +7,76 @@ package MisComponentes.ComponenteMetronomoVisual;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 /**
  *
  * @author usuario
  */
-public class JMetronomoVisual extends javax.swing.JPanel {
+public class JMetronomoVisual extends javax.swing.JPanel{
 
-    private int pulsos;
-    private int maximoPulsos=600;
-    private int pulsosPorMinuto;
-    private int maximoPulsosMinuto;
+    
+    private int pulsos=15;
+    private int maximoPulsos=5000;
+    private int pulsosPorMinuto=60;
+    private int maximoPulsosMinuto=600;
     private int pulsoActual;
     private boolean cuentaAtras;
+    private Timer temporizador;
+
     
     /**
      * Creates new form JMetronomoVisual
      */
     
     public JMetronomoVisual(){
-        
+        initComponents();
+        setPulsos(pulsos);
+        cuentaAtras=jCheckBoxCuentaAtras.isSelected();
+        jSliderNumeroPulsos.setMaximum(maximoPulsos);
+        jSliderPulsosMinuto.setMaximum(maximoPulsosMinuto);
+        jButtonIniciar.addActionListener(new gestorIniciar());
+//        consistencia();
+    }
+  
+    public void setPulsos(int pulsos) {
+        if (pulsos>maximoPulsos){
+            this.pulsos = pulsos;
+            pulsoActual=this.pulsos;
+            jLabelVisorPulsos.setText(String.valueOf(cuentaAtras?this.pulsos:0));
+        }
+    }
+
+    public void setPulsosPorMinuto(int pulsosPorMinuto) {
+        if(pulsosPorMinuto>maximoPulsosMinuto){
+            this.pulsosPorMinuto = pulsosPorMinuto;
+            
+        }
+    }
+
+    public int getPulsoActual() {
+        return pulsoActual;
     }
     
     private void consistencia(){
         System.out.println("Hacer consistencia...........");
     }
-    
-    
-    
-    
 
+    
+    public void iniciar(){
+        if(!temporizador.isRunning()){
+            temporizador.start();
+            jLabelVisorPulsos.setText(String.valueOf(pulsoActual));
+        }else{
+            temporizador.stop();
+        }
+    }
     
     private class gestorIniciar implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            
+            iniciar();
         }
         
     }
@@ -86,6 +120,7 @@ public class JMetronomoVisual extends javax.swing.JPanel {
         jTextFieldNumeroPulsos.setBackground(new java.awt.Color(0, 51, 51));
         jTextFieldNumeroPulsos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTextFieldNumeroPulsos.setForeground(new java.awt.Color(0, 204, 0));
+        jTextFieldNumeroPulsos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jSliderNumeroPulsos, org.jdesktop.beansbinding.ELProperty.create("${value}"), jTextFieldNumeroPulsos, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
@@ -93,6 +128,7 @@ public class JMetronomoVisual extends javax.swing.JPanel {
         jTextFieldPulsosMinuto.setBackground(new java.awt.Color(0, 51, 51));
         jTextFieldPulsosMinuto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTextFieldPulsosMinuto.setForeground(new java.awt.Color(0, 204, 0));
+        jTextFieldPulsosMinuto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jSliderPulsosMinuto, org.jdesktop.beansbinding.ELProperty.create("${value}"), jTextFieldPulsosMinuto, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
