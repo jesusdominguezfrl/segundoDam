@@ -1,0 +1,24 @@
+2017-12-18 10:24:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "DEPARTAMENTOS" no encontrada
+Table "DEPARTAMENTOS" not found; SQL statement:
+DROP TABLE departamentos [42102-196]
+2017-12-18 10:24:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "DEPARTAMENTOS" ya existe
+Table "DEPARTAMENTOS" already exists; SQL statement:
+CREATE TABLE departamentos (
+	dept_no TINYINT(2) NOT NULL PRIMARY KEY,
+	dnombre VARCHAR(15),
+	loc VARCHAR(15)
+) [42101-196]
+2017-12-18 10:24:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "DEPARTAMENTOS" ya existe
+Table "DEPARTAMENTOS" already exists; SQL statement:
+CREATE TABLE departamentos (
+	dept_no TINYINT(2) NOT NULL PRIMARY KEY,
+	dnombre VARCHAR(15),
+	loc VARCHAR(15)
+) [42101-196]
+2017-12-18 10:29:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Error de Sintaxis en sentencia SQL "SELEC[*] * FROM EMPLEADOS "; se esperaba "SELECT, SET, SAVEPOINT, SCRIPT, SHUTDOWN, SHOW, {"
+Syntax error in SQL statement "SELEC[*] * FROM EMPLEADOS "; expected "SELECT, SET, SAVEPOINT, SCRIPT, SHUTDOWN, SHOW, {"; SQL statement:
+selec * from empleados [42001-196]
