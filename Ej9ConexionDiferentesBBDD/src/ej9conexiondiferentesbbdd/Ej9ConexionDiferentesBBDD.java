@@ -39,50 +39,49 @@ public class Ej9ConexionDiferentesBBDD {
                     try {
                         Class.forName("org.sqlite.JDBC");
                         conexion = DriverManager.getConnection("jdbc:sqlite:ejemplo.db");
+                        do {
+                            opcionSubMenu = subMenuOpciones();
+                            bbddDatos(opcionSubMenu, conexion);
+                        } while (!"0".equals(opcionSubMenu));
                     } catch (Exception e) {
                         System.out.println("Se produjo una excepcion: " + e.getMessage());
                     }
-                    do {
-                        opcionSubMenu = subMenuOpciones();
-                        bbddDatos(opcionSubMenu, conexion);
-                    } while (!"0".equals(opcionSubMenu));
-
                     break;
                 case "2":       
                     try {
                         Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
                         conexion =DriverManager.getConnection("jdbc:derby:ejemplo");
+                        do {
+                            opcionSubMenu = subMenuOpciones();
+                            bbddDatos(opcionSubMenu, conexion);
+                        } while (!"0".equals(opcionSubMenu));
                     } catch (Exception e) {
                         System.out.println("Se produjo una excepcion: " + e.getMessage());
                     }
-                    do {
-                        opcionSubMenu = subMenuOpciones();
-                        bbddDatos(opcionSubMenu, conexion);
-                    } while (!"0".equals(opcionSubMenu));
                     break;
                 case "3":
                     try {
                         Class.forName("org.hsqldb.jdbcDriver");
                         conexion =DriverManager.getConnection("jdbc:hsqldb:file:ejemploHSQL");
+                        do {
+                            opcionSubMenu = subMenuOpciones();
+                            bbddDatos(opcionSubMenu, conexion);
+                        } while (!"0".equals(opcionSubMenu));
                     } catch (Exception e) {
                         System.out.println("Se produjo una excepcion: " + e.getMessage());
                     }
-                    do {
-                        opcionSubMenu = subMenuOpciones();
-                        bbddDatos(opcionSubMenu, conexion);
-                    } while (!"0".equals(opcionSubMenu));
                     break;
                 case "4":
                     try {
                         Class.forName("org.h2.Driver");
                         conexion =DriverManager.getConnection("jdbc:h2:ejemploH2");
+                        do {
+                            opcionSubMenu = subMenuOpciones();
+                            bbddDatos(opcionSubMenu, conexion);
+                        } while (!"0".equals(opcionSubMenu));
                     } catch (Exception e) {
                         System.out.println("Se produjo una excepcion: " + e.getMessage());
                     }
-                    do {
-                        opcionSubMenu = subMenuOpciones();
-                        bbddDatos(opcionSubMenu, conexion);
-                    } while (!"0".equals(opcionSubMenu));
                     break;                    
             }
             try {
