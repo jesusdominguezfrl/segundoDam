@@ -29,6 +29,7 @@ public class JFrameTestMetronomoVisual extends javax.swing.JFrame {
     private void initComponents() {
 
         jMetronomoVisual1 = new MisComponentes.ComponenteMetronomoVisual.JMetronomoVisual();
+        jMetronomoVisual3 = new MisComponentes.ComponenteMetronomoVisual.JMetronomoVisual();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -37,16 +38,16 @@ public class JFrameTestMetronomoVisual extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(jMetronomoVisual1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(373, Short.MAX_VALUE))
+                .addGap(47, 47, 47)
+                .addComponent(jMetronomoVisual3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(396, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(194, Short.MAX_VALUE)
-                .addComponent(jMetronomoVisual1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addComponent(jMetronomoVisual3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         pack();
@@ -89,5 +90,6 @@ public class JFrameTestMetronomoVisual extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private MisComponentes.ComponenteMetronomoVisual.JMetronomoVisual jMetronomoVisual1;
+    private MisComponentes.ComponenteMetronomoVisual.JMetronomoVisual jMetronomoVisual3;
     // End of variables declaration//GEN-END:variables
 }

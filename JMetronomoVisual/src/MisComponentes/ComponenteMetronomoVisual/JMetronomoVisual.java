@@ -7,82 +7,141 @@ package MisComponentes.ComponenteMetronomoVisual;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.Timer;
 
 /**
  *
  * @author usuario
  */
-public class JMetronomoVisual extends javax.swing.JPanel{
+public class JMetronomoVisual extends javax.swing.JPanel implements ActionListener {
 
-    
-    private int pulsos=15;
-    private int maximoPulsos=5000;
-    private int pulsosPorMinuto=60;
-    private int maximoPulsosMinuto=600;
+    private int pulsos = 15;
+    private int maximoPulsos = 5000;
+    private int pulsosPorMinuto = 60;
+    private int maximoPulsosMinuto = 600;
     private int pulsoActual;
     private boolean cuentaAtras;
     private Timer temporizador;
 
-    
     /**
      * Creates new form JMetronomoVisual
      */
-    
-    public JMetronomoVisual(){
+    public JMetronomoVisual() {
         initComponents();
         setPulsos(pulsos);
-        cuentaAtras=jCheckBoxCuentaAtras.isSelected();
+        cuentaAtras = jCheckBoxCuentaAtras.isSelected();
         jSliderNumeroPulsos.setMaximum(maximoPulsos);
         jSliderPulsosMinuto.setMaximum(maximoPulsosMinuto);
+        pulsos=jSliderNumeroPulsos.getValue();
+        pulsosPorMinuto=jSliderPulsosMinuto.getValue();
         jButtonIniciar.addActionListener(new gestorIniciar());
+        jCheckBoxCuentaAtras.addActionListener(new gestorCuentaAtras());
 //        consistencia();
     }
-  
+
     public void setPulsos(int pulsos) {
-        if (pulsos>maximoPulsos){
+        if (pulsos > maximoPulsos) {
             this.pulsos = pulsos;
-            pulsoActual=this.pulsos;
-            jLabelVisorPulsos.setText(String.valueOf(cuentaAtras?this.pulsos:0));
+            pulsoActual = this.pulsos;
+            jLabelVisorPulsos.setText(String.valueOf(pulsoActual));
         }
     }
 
     public void setPulsosPorMinuto(int pulsosPorMinuto) {
-        if(pulsosPorMinuto>maximoPulsosMinuto){
+        if (pulsosPorMinuto > maximoPulsosMinuto) {
             this.pulsosPorMinuto = pulsosPorMinuto;
-            
         }
     }
 
     public int getPulsoActual() {
         return pulsoActual;
     }
-    
-    private void consistencia(){
+
+    private void consistencia() {
         System.out.println("Hacer consistencia...........");
     }
 
-    
-    public void iniciar(){
-        if(!temporizador.isRunning()){
-            temporizador.start();
-            jLabelVisorPulsos.setText(String.valueOf(pulsoActual));
-        }else{
+    public void iniciar() {
+        if (temporizador != null && jButtonIniciar.getText().equals("DETENER")&& temporizador.isRunning()) {
             temporizador.stop();
         }
+        if (temporizador == null) {
+            temporizador = new Timer(60000 / pulsosPorMinuto, this);
+            temporizador.start();
+        }
     }
-    
-    private class gestorIniciar implements ActionListener{
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!cuentaAtras) {
+            pulsoActual++;
+            fireMetronomoPulso();
+            if (pulsoActual == pulsos) {
+                temporizador.stop();
+                fireMetronomoFin();
+            }
+        } else {
+            pulsoActual = pulsos - pulsoActual;
+            if (pulsoActual == pulsos) {
+                temporizador.stop();
+                fireMetronomoFin();
+            }
+        }
+
+    }
+
+    protected void fireMetronomoPulso() {
+        System.out.println("Pulso");
+        JMetronomoVisualEvent e = new JMetronomoVisualEvent(this);
+        jLabelVisorPulsos.setText(String.valueOf(pulsoActual));
+        for (JMetronomoVisualListener l : listeners) {
+            l.metronomoPulso(e);
+        }
+    }
+
+    protected void fireMetronomoFin() {
+
+        JMetronomoVisualEvent e = new JMetronomoVisualEvent(this);
+        jLabelVisorPulsos.setText(String.valueOf(pulsoActual));
+        for (JMetronomoVisualListener l : listeners) {
+            l.metronomoFin(e);
+        }
+        System.out.println("FIN");
+    }
+
+    private ArrayList<JMetronomoVisualListener> listeners = new ArrayList<>();
+
+    public void addJMetronomoVisualListener(JMetronomoVisualListener l) {
+        listeners.add(l);
+    }
+
+    public void removeJMetronomoVisualListener(JMetronomoVisualListener l) {
+        listeners.remove(l);
+    }
+
+    private class gestorIniciar implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             iniciar();
+            if (jButtonIniciar.getText().equals("INICIAR")) {
+                jButtonIniciar.setText("DETENER");
+            } else {
+                jButtonIniciar.setText("INICIAR");
+            }
         }
-        
     }
-    
-    
-    
+
+    private class gestorCuentaAtras implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -114,6 +173,11 @@ public class JMetronomoVisual extends javax.swing.JPanel{
         jButtonIniciar.setText("INICIAR");
 
         jButtonPuestaCero.setText("Puesta a 0");
+        jButtonPuestaCero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPuestaCeroActionPerformed(evt);
+            }
+        });
 
         jCheckBoxCuentaAtras.setText("Cuenta Atras");
 
@@ -184,6 +248,10 @@ public class JMetronomoVisual extends javax.swing.JPanel{
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonPuestaCeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPuestaCeroActionPerformed
+        temporizador=null;
+    }//GEN-LAST:event_jButtonPuestaCeroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
