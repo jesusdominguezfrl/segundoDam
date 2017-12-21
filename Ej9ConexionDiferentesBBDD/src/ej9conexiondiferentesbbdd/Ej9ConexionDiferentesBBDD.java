@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 
@@ -74,7 +76,7 @@ public class Ej9ConexionDiferentesBBDD {
                 case "4":
                     try {
                         Class.forName("org.h2.Driver");
-                        conexion =DriverManager.getConnection("jdbc:h2:ejemploH2");
+                        conexion =DriverManager.getConnection("jdbc:h2:./ejemploH2/ejemplo");
                         do {
                             opcionSubMenu = subMenuOpciones();
                             bbddDatos(opcionSubMenu, conexion);
@@ -153,6 +155,9 @@ public class Ej9ConexionDiferentesBBDD {
 
                     break;
                 case "4":
+                    System.out.println("Introduce una consulta: ");
+                    String consulta= leer.nextLine();
+                    realizarConsulta(consulta, conexion);
                     break;
                 case "0":
                     System.out.println("saliendo...");
@@ -163,6 +168,30 @@ public class Ej9ConexionDiferentesBBDD {
             }
         }
 
+    }
+    
+    private static void realizarConsulta(String consulta, Connection conexion){
+       try {
+                Statement sentencia = conexion.createStatement();
+                ResultSet resul=sentencia.executeQuery(consulta);
+                ResultSetMetaData rSMD= resul.getMetaData();
+                String tipoColumna[]= new String[rSMD.getColumnCount()];
+                for (int i = 1; i < tipoColumna.length+1; i++) {
+                    System.out.println(rSMD.getColumnTypeName(i));
+                }
+                
+                while(resul.next()){
+                    //System.out.println(resul.getInt(1)+","+ resul.getString(2)+","+ resul.getString(3)+","+ resul.getString(4)+","+ resul.getFloat(5));
+                    for (int i = 1; i < rSMD.getColumnCount()+1; i++) {
+                        System.out.print(resul.getString(i)+",");
+                        
+                    }
+                    System.out.println("");
+                }
+            
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        } 
     }
 
 }
