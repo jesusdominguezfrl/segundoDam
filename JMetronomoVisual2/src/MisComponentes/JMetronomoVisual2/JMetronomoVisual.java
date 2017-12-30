@@ -49,6 +49,14 @@ public class JMetronomoVisual extends javax.swing.JPanel implements ActionListen
         }
     }
 
+    public void setCuentaAtras() {
+        if (temporizador == null) {
+            jCheckBoxCuentaAtras.setSelected(!jCheckBoxCuentaAtras.isSelected());
+            cuentaAtras=jCheckBoxCuentaAtras.isSelected();
+        }
+        muestraVisor();
+    }
+
     public int getPulsoActual() {
         return pulsoActual;
     }
@@ -57,6 +65,7 @@ public class JMetronomoVisual extends javax.swing.JPanel implements ActionListen
         if (temporizador != null && temporizador.isRunning()) {
             temporizador.stop();
         }
+        consistencia();
     }
 
     public void iniciar() {
@@ -64,11 +73,15 @@ public class JMetronomoVisual extends javax.swing.JPanel implements ActionListen
             temporizador = new Timer(60000 / pulsosPorMinuto, this);
         }
         temporizador.start();
+        consistencia();
     }
 
     public void puestaCero() {
-        iniciaMisComponentes();
-        muestraVisor();
+        if(temporizador!=null&&!temporizador.isRunning()){
+            iniciaMisComponentes();
+            muestraVisor();
+        }
+        consistencia();
     }
 
     private void muestraVisor() {
@@ -96,28 +109,28 @@ public class JMetronomoVisual extends javax.swing.JPanel implements ActionListen
 
         }
     }
-    
+
     private ArrayList<JMetronomoVisualListener> listeners = new ArrayList<>();
-    
-    public void addMetronomoVisualListener(JMetronomoVisualListener l){
+
+    public void addJMetronomoVisualListener(JMetronomoVisualListener l) {
         listeners.add(l);
     }
-    
-    public void removeMetronomoListener(JMetronomoVisualListener l){
+
+    public void removeJMetronomoListener(JMetronomoVisualListener l) {
         listeners.remove(l);
     }
-    
-    protected void fireMetronomoPulso(){
+
+    protected void fireMetronomoPulso() {
         JMetronomoVisualEvent evt = new JMetronomoVisualEvent(this);
-        for( JMetronomoVisualListener l : listeners){
+        for (JMetronomoVisualListener l : listeners) {
             l.metronomoPulso(evt);
         }
         System.out.println("FIRE PULSO");
     }
-    
-    protected void fireMetronomoFin(){
+
+    protected void fireMetronomoFin() {
         JMetronomoVisualEvent evt = new JMetronomoVisualEvent(this);
-        for( JMetronomoVisualListener l : listeners){
+        for (JMetronomoVisualListener l : listeners) {
             l.metronomoFin(evt);
         }
         System.out.println("FIRE FIN");

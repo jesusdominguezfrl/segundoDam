@@ -16,6 +16,19 @@ public class TestJMetronomoVisual extends javax.swing.JFrame {
      */
     public TestJMetronomoVisual() {
         initComponents();
+        jMetronomoVisual1.addJMetronomoVisualListener(new gestorMetronomo());
+    }
+    private class gestorMetronomo implements JMetronomoVisualListener{
+
+        @Override
+        public void metronomoPulso(JMetronomoVisualEvent evt) {
+            jLabelVisorPulsoActual.setText(String.valueOf(jMetronomoVisual1.getPulsoActual()));
+        }
+
+        @Override
+        public void metronomoFin(JMetronomoVisualEvent evt) {
+        }
+        
     }
 
     /**
@@ -28,8 +41,64 @@ public class TestJMetronomoVisual extends javax.swing.JFrame {
     private void initComponents() {
 
         jMetronomoVisual1 = new MisComponentes.JMetronomoVisual2.JMetronomoVisual();
+        jLabelVisorPulsoActual = new javax.swing.JLabel();
+        jButtonCuentaAtras = new javax.swing.JButton();
+        jButtonPuestaCero = new javax.swing.JButton();
+        jButtonPulsosCincuenta = new javax.swing.JButton();
+        jButtonIniciar = new javax.swing.JButton();
+        jButtonPausar = new javax.swing.JButton();
+        jButtonPulsosMinuto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabelVisorPulsoActual.setBackground(new java.awt.Color(0, 0, 255));
+        jLabelVisorPulsoActual.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelVisorPulsoActual.setForeground(new java.awt.Color(255, 255, 0));
+        jLabelVisorPulsoActual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelVisorPulsoActual.setText("0");
+        jLabelVisorPulsoActual.setOpaque(true);
+
+        jButtonCuentaAtras.setText("Cuenta Atras");
+        jButtonCuentaAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCuentaAtrasActionPerformed(evt);
+            }
+        });
+
+        jButtonPuestaCero.setText("Puesta a Cero");
+        jButtonPuestaCero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPuestaCeroActionPerformed(evt);
+            }
+        });
+
+        jButtonPulsosCincuenta.setText("Pulsos=50");
+        jButtonPulsosCincuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPulsosCincuentaActionPerformed(evt);
+            }
+        });
+
+        jButtonIniciar.setText("Iniciar");
+        jButtonIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonIniciarActionPerformed(evt);
+            }
+        });
+
+        jButtonPausar.setText("Pausar");
+        jButtonPausar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPausarActionPerformed(evt);
+            }
+        });
+
+        jButtonPulsosMinuto.setText("PulsosMinuto=1200");
+        jButtonPulsosMinuto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPulsosMinutoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -37,19 +106,77 @@ public class TestJMetronomoVisual extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jMetronomoVisual1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(329, Short.MAX_VALUE))
+                .addComponent(jMetronomoVisual1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonCuentaAtras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonPuestaCero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonPausar, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonPulsosMinuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonPulsosCincuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(186, 186, 186)
+                        .addComponent(jLabelVisorPulsoActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(180, 180, 180)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jMetronomoVisual1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(248, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jMetronomoVisual1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabelVisorPulsoActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonCuentaAtras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonPuestaCero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonPulsosCincuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonPausar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonPulsosMinuto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(9, 9, 9)))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarActionPerformed
+        jMetronomoVisual1.iniciar();
+    }//GEN-LAST:event_jButtonIniciarActionPerformed
+
+    private void jButtonPausarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPausarActionPerformed
+        jMetronomoVisual1.detener();
+    }//GEN-LAST:event_jButtonPausarActionPerformed
+
+    private void jButtonPulsosCincuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPulsosCincuentaActionPerformed
+        jMetronomoVisual1.setPulsos(50);
+    }//GEN-LAST:event_jButtonPulsosCincuentaActionPerformed
+
+    private void jButtonPulsosMinutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPulsosMinutoActionPerformed
+        jMetronomoVisual1.setPulsosPorMinuto(1200);
+    }//GEN-LAST:event_jButtonPulsosMinutoActionPerformed
+
+    private void jButtonPuestaCeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPuestaCeroActionPerformed
+        jMetronomoVisual1.puestaCero();
+    }//GEN-LAST:event_jButtonPuestaCeroActionPerformed
+
+    private void jButtonCuentaAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCuentaAtrasActionPerformed
+        jMetronomoVisual1.setCuentaAtras();
+    }//GEN-LAST:event_jButtonCuentaAtrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -87,6 +214,13 @@ public class TestJMetronomoVisual extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCuentaAtras;
+    private javax.swing.JButton jButtonIniciar;
+    private javax.swing.JButton jButtonPausar;
+    private javax.swing.JButton jButtonPuestaCero;
+    private javax.swing.JButton jButtonPulsosCincuenta;
+    private javax.swing.JButton jButtonPulsosMinuto;
+    private javax.swing.JLabel jLabelVisorPulsoActual;
     private MisComponentes.JMetronomoVisual2.JMetronomoVisual jMetronomoVisual1;
     // End of variables declaration//GEN-END:variables
 }
