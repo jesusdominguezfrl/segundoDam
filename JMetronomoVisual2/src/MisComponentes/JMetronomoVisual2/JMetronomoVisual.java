@@ -116,7 +116,7 @@ public class JMetronomoVisual extends javax.swing.JPanel implements ActionListen
         listeners.add(l);
     }
 
-    public void removeJMetronomoListener(JMetronomoVisualListener l) {
+    public void removeJMetronomoVisualListener(JMetronomoVisualListener l) {
         listeners.remove(l);
     }
 
