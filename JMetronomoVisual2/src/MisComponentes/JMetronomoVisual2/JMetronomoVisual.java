@@ -49,10 +49,14 @@ public class JMetronomoVisual extends javax.swing.JPanel implements ActionListen
         }
     }
 
-    public void setCuentaAtras() {
+    public boolean isCuentaAtras() {
+        return cuentaAtras;
+    }
+
+    public void setCuentaAtras(boolean cuentaAtras) {
         if (temporizador == null) {
-            jCheckBoxCuentaAtras.setSelected(!jCheckBoxCuentaAtras.isSelected());
-            cuentaAtras=jCheckBoxCuentaAtras.isSelected();
+            jCheckBoxCuentaAtras.setSelected(cuentaAtras/*!jCheckBoxCuentaAtras.isSelected()*/);
+            this.cuentaAtras=jCheckBoxCuentaAtras.isSelected();
         }
         muestraVisor();
     }

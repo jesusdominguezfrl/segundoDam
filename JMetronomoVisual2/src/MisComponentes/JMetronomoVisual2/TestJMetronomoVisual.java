@@ -181,7 +181,7 @@ public class TestJMetronomoVisual extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPuestaCeroActionPerformed
 
     private void jButtonCuentaAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCuentaAtrasActionPerformed
-        jMetronomoVisual1.setCuentaAtras();
+        jMetronomoVisual1.setCuentaAtras(!jMetronomoVisual1.isCuentaAtras());
     }//GEN-LAST:event_jButtonCuentaAtrasActionPerformed
 
     private void jMetronomoVisual1MetronomoFin(MisComponentes.JMetronomoVisual2.JMetronomoVisualEvent evt) {//GEN-FIRST:event_jMetronomoVisual1MetronomoFin
