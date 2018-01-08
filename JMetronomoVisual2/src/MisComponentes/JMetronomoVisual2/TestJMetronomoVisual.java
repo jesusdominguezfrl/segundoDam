@@ -22,7 +22,7 @@ public class TestJMetronomoVisual extends javax.swing.JFrame {
 
         @Override
         public void metronomoPulso(JMetronomoVisualEvent evt) {
-            jLabelVisorPulsoActual.setText(String.valueOf(jMetronomoVisual1.getPulsoActual()));
+//            jLabelVisorPulsoActual.setText(String.valueOf(jMetronomoVisual1.getPulsoActual()));
         }
 
         @Override
@@ -39,6 +39,7 @@ public class TestJMetronomoVisual extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jLabelVisorPulsoActual = new javax.swing.JLabel();
         jButtonCuentaAtras = new javax.swing.JButton();
@@ -55,8 +56,10 @@ public class TestJMetronomoVisual extends javax.swing.JFrame {
         jLabelVisorPulsoActual.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelVisorPulsoActual.setForeground(new java.awt.Color(255, 255, 0));
         jLabelVisorPulsoActual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelVisorPulsoActual.setText("0");
         jLabelVisorPulsoActual.setOpaque(true);
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jMetronomoVisual1, org.jdesktop.beansbinding.ELProperty.create("${pulsoActual}"), jLabelVisorPulsoActual, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
 
         jButtonCuentaAtras.setText("Cuenta Atras");
         jButtonCuentaAtras.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +160,8 @@ public class TestJMetronomoVisual extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -232,5 +237,6 @@ public class TestJMetronomoVisual extends javax.swing.JFrame {
     private javax.swing.JButton jButtonPulsosMinuto;
     private javax.swing.JLabel jLabelVisorPulsoActual;
     private MisComponentes.JMetronomoVisual2.JMetronomoVisual jMetronomoVisual1;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
