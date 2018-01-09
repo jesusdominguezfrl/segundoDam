@@ -27,56 +27,59 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jMetronomoVisual1" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonCuentaAtras" max="32767" attributes="0"/>
+                          <Component id="jButtonCuentaAtras" pref="98" max="32767" attributes="0"/>
                           <Component id="jButtonIniciar" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonPuestaCero" max="32767" attributes="0"/>
+                          <Component id="jButtonPuestaCero" pref="102" max="32767" attributes="0"/>
                           <Component id="jButtonPausar" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonPulsosMinuto" max="32767" attributes="0"/>
+                          <Component id="jButtonPulsosMinuto" pref="128" max="32767" attributes="0"/>
                           <Component id="jButtonPulsosCincuenta" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="186" max="-2" attributes="0"/>
-                      <Component id="jLabelVisorPulsoActual" max="32767" attributes="0"/>
-                      <EmptySpace min="180" pref="180" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
+                      <Component id="jLabelVisorPulsoActual" min="-2" pref="48" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="813" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-              <Component id="jLabelVisorPulsoActual" max="32767" attributes="0"/>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButtonCuentaAtras" alignment="3" max="32767" attributes="0"/>
-                  <Component id="jButtonPuestaCero" alignment="3" max="32767" attributes="0"/>
-                  <Component id="jButtonPulsosCincuenta" alignment="3" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButtonIniciar" alignment="3" max="32767" attributes="0"/>
-                  <Component id="jButtonPausar" alignment="3" max="32767" attributes="0"/>
-                  <Component id="jButtonPulsosMinuto" alignment="3" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jMetronomoVisual1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="jLabelVisorPulsoActual" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButtonCuentaAtras" alignment="3" max="32767" attributes="0"/>
+                          <Component id="jButtonPuestaCero" alignment="3" max="32767" attributes="0"/>
+                          <Component id="jButtonPulsosCincuenta" alignment="3" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButtonIniciar" alignment="3" max="32767" attributes="0"/>
+                          <Component id="jButtonPausar" alignment="3" max="32767" attributes="0"/>
+                          <Component id="jButtonPulsosMinuto" alignment="3" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jMetronomoVisual1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -149,9 +152,6 @@
       </Events>
     </Component>
     <Component class="MisComponentes.JMetronomoVisual2.JMetronomoVisual" name="jMetronomoVisual1">
-      <Events>
-        <EventHandler event="metronomoFin" listener="MisComponentes.JMetronomoVisual2.JMetronomoVisualListener" parameters="MisComponentes.JMetronomoVisual2.JMetronomoVisualEvent" handler="jMetronomoVisual1MetronomoFin"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

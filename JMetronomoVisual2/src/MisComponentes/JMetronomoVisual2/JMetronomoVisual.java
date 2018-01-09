@@ -7,6 +7,8 @@ package MisComponentes.JMetronomoVisual2;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import javax.swing.Timer;
 
@@ -23,6 +25,7 @@ public class JMetronomoVisual extends javax.swing.JPanel implements ActionListen
     private final int maximoPulsosMinuto = 600;
     private boolean cuentaAtras;
     private Timer temporizador;
+    private PropertyChangeSupport myPCS;
 
     /**
      * Creates new form JMetronomoVisual
@@ -34,11 +37,18 @@ public class JMetronomoVisual extends javax.swing.JPanel implements ActionListen
 
     public void setPulsos(int pulsos) {
 //        if(pulsos>maximoPulsos)  new Exception("Numero de pulsos mayor al permitido");
-
         if (temporizador == null && pulsos > 0) {
             this.pulsos = pulsos;
             jSliderNumeroPulsos.setValue(pulsos);
         }
+    }
+    
+    
+//    Solo funciona hasta detener a pesar de que el valor viejo y el nuevo son distintos
+    private void setPulsoActual(int pulsoActual){
+        System.out.println("Viejo: " + this.pulsoActual);
+        System.out.println("Nuevo: " + pulsoActual);
+        myPCS.firePropertyChange("pulsoActual",this.pulsoActual, this.pulsoActual=pulsoActual);
     }
 
     public void setPulsosPorMinuto(int pulsosPorMinuto) {
@@ -93,17 +103,23 @@ public class JMetronomoVisual extends javax.swing.JPanel implements ActionListen
     }
 
     private void iniciaMisComponentes() {
+        myPCS=new PropertyChangeSupport(this);
         jSliderNumeroPulsos.setValue(pulsos);
         jSliderPulsosMinuto.setValue(pulsosPorMinuto);
         muestraVisor();
-        pulsoActual = 0;
+        //pulsoActual=0;
+//        int old = pulsoActual;
+//        pulsoActual=0;
+//        myPCS.firePropertyChange("pulsoActual",old, pulsoActual);
+        setPulsoActual(0);
+        System.out.println("PULSO ACTUAL"+ pulsoActual);
         jSliderNumeroPulsos.setMaximum(maximoPulsos);
         jSliderPulsosMinuto.setMaximum(maximoPulsosMinuto);
         consistencia();
         temporizador = null;
     }
 
-    private void consistencia() {
+     private void consistencia() {
         if (temporizador != null) {
             jButtonIniciar.setText((temporizador.isRunning()) ? "DETENER" : "INICIAR");
             jButtonPuestaCero.setEnabled(!temporizador.isRunning());
@@ -122,6 +138,17 @@ public class JMetronomoVisual extends javax.swing.JPanel implements ActionListen
 
     public void removeJMetronomoVisualListener(JMetronomoVisualListener l) {
         listeners.remove(l);
+    }
+    
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener){
+        if(myPCS==null)return;
+        this.myPCS.addPropertyChangeListener(listener);
+    }
+    
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener){
+        this.myPCS.removePropertyChangeListener(listener);
     }
 
     protected void fireMetronomoPulso() {
@@ -312,7 +339,9 @@ public class JMetronomoVisual extends javax.swing.JPanel implements ActionListen
     @Override
     public void actionPerformed(ActionEvent e) {
         if (pulsoActual < pulsos) {
-            pulsoActual++;
+//            pulsoActual++;
+            setPulsoActual(pulsoActual+1);
+//            System.out.println(pulsoActual);
             muestraVisor();
             fireMetronomoPulso();
         } else {
