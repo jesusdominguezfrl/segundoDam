@@ -7,6 +7,7 @@ package MisComponentes.JPodometro;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -18,81 +19,108 @@ public class JPodometro extends javax.swing.JPanel {
     /**
      * Creates new form JPodometro
      */
-    
-    private enum Modo{
+    //<editor-fold defaultstate="collapsed" desc="Modo Enum">
+    private enum Modo {
         DistanciaRecorrida("Distancia Recorrida en km."),
-        DistanciaAviso ("Distancia Aviso"),
-        TiempoDesdeInicio ("Tiempo desde Inicio"),
-        TamañoPaso ("Tamaño del Paso (cm).");
-        
+        DistanciaAviso("Distancia Aviso"),
+        TiempoDesdeInicio("Tiempo desde Inicio"),
+        TamañoPaso("Tamaño del Paso (cm).");
+
         private String nombre;
-        private Modo(){
-            this.nombre=super.toString();
+
+        private Modo() {
+            this.nombre = super.toString();
         }
-        private Modo(String nombre){
-            this.nombre=nombre;
+
+        private Modo(String nombre) {
+            this.nombre = nombre;
         }
+
         @Override
-        public String toString(){
+        public String toString() {
             return this.nombre;
         }
     }
-    
-    
-    private Modo modoActivo= Modo.TamañoPaso;
-    private double tamañoPaso=0.55;
-    private double distanciaAviso;
+//</editor-fold>
+
+    private Modo modoActivo = Modo.TamañoPaso;
+    private double tamañoPaso = 0.55;
+    private double distanciaAviso = 0.5;
     private String nombreUsuario;
-    
-    private double distanciaRecorrida=0;
-    private long calendario = Calendar.getInstance().getTimeInMillis();
+    private double distanciaRecorrida = 0;
+    private double tiempoDesdeInicio;
+
+    private long tiempoInicio;
+    private static int controlModoActivo = -1;
 
     public double getTamañoPaso() {
         return tamañoPaso;
-    }
-
-    public double getDistanciaAviso() {
-        return distanciaAviso;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
     }
 
     public void setTamañoPaso(double tamañoPaso) {
         this.tamañoPaso = tamañoPaso;
     }
 
+    public double getDistanciaAviso() {
+        return distanciaAviso;
+    }
+
     public void setDistanciaAviso(double distanciaAviso) {
         this.distanciaAviso = distanciaAviso;
     }
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+        jLabelNombre.setText(nombreUsuario);
     }
-    
+
     public JPodometro() {
         initComponents();
+        iniciarPodometro();
     }
-    
-    private void inicia(){
-        distanciaRecorrida=0;
+
+    private void iniciarPodometro() {
+        distanciaRecorrida = 0;
+        modoActivo = Modo.values()[controlModoActivo = 0];
+        tiempoInicio = Calendar.getInstance().getTimeInMillis();
+        ponerHora();
+        ponerModoActivo();
+        muestraVisor();
     }
-    
-    public void paso(){
+
+    public void paso() {
         avanzaPaso(tamañoPaso);
     }
-    
-    public void paso(int numeroPasos){
-        avanzaPaso(tamañoPaso*numeroPasos);
+
+    public void paso(int numeroPasos) {
+        avanzaPaso(tamañoPaso * numeroPasos);
     }
-       
-    private void avanzaPaso(double distanciaPasos){
-        distanciaRecorrida+=distanciaPasos;
-        
+
+    private void avanzaPaso(double distanciaPasos) {
+        distanciaRecorrida += distanciaPasos / 1000;
+        tiempoDesdeInicio = (Calendar.getInstance().getTimeInMillis() - tiempoInicio) / 1000;
+        muestraVisor();
+        System.out.printf("distancia recorrida → %02.3f ", distanciaRecorrida);
+        System.out.println("tiempo desde inicio → " + tiempoDesdeInicio);
     }
-    
-    
+
+    private void ponerHora() {
+        SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
+        jLabelReloj.setText(formato.format(new Date()));
+    }
+
+    private void ponerModoActivo() {
+        jLabelModo.setText(modoActivo.toString());
+    }
+
+    private void muestraVisor() {
+        jLabelVisor.setText(String.valueOf((controlModoActivo == 0) ? String.format("%02.3f", distanciaRecorrida) : (controlModoActivo == 1) ? String.format("%02.3f", distanciaAviso) : (controlModoActivo == 2) ? tiempoDesdeInicio : tamañoPaso));
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,14 +164,29 @@ public class JPodometro extends javax.swing.JPanel {
         jLabelVisor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelVisor.setText("visor");
         jLabelVisor.setOpaque(true);
+        jLabelVisor.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                jLabelVisorComponentResized(evt);
+            }
+        });
 
         jButtonModo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonModo.setForeground(new java.awt.Color(0, 0, 102));
         jButtonModo.setText("Modo");
+        jButtonModo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModoActionPerformed(evt);
+            }
+        });
 
         jButtonReiniciar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonReiniciar.setForeground(new java.awt.Color(0, 0, 102));
         jButtonReiniciar.setText("Reiniciar");
+        jButtonReiniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReiniciarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -187,6 +230,21 @@ public class JPodometro extends javax.swing.JPanel {
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonModo, jButtonReiniciar});
 
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReiniciarActionPerformed
+        paso();
+    }//GEN-LAST:event_jButtonReiniciarActionPerformed
+
+    private void jButtonModoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModoActionPerformed
+        modoActivo = Modo.values()[(++controlModoActivo < Modo.values().length) ? controlModoActivo : (controlModoActivo = 0)];
+        System.out.println(Modo.values()[controlModoActivo]);
+        ponerModoActivo();
+    }//GEN-LAST:event_jButtonModoActionPerformed
+
+    private void jLabelVisorComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabelVisorComponentResized
+        jLabelVisor.setFont(jLabelVisor.getFont().deriveFont((float) jLabelVisor.getHeight() * 2 / 3));
+
+    }//GEN-LAST:event_jLabelVisorComponentResized
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
