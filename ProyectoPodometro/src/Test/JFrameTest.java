@@ -5,6 +5,8 @@
  */
 package Test;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author usuario
@@ -16,8 +18,14 @@ public class JFrameTest extends javax.swing.JFrame {
      */
     public JFrameTest() {
         initComponents();
+        iniciarComponentes();
     }
 
+    private void iniciarComponentes(){
+        jButtonAvanzaPasos.setText("+"+jSliderNumeroPasos.getValue()+" pasos");
+        jTextFieldTamañoPaso.setText(String.valueOf(jPodometro1.getTamañoPaso()));
+        jTextFieldDistanciaAviso.setText(String.valueOf(jPodometro1.getDistanciaAviso()));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,27 +36,160 @@ public class JFrameTest extends javax.swing.JFrame {
     private void initComponents() {
 
         jPodometro1 = new MisComponentes.JPodometro.JPodometro();
+        jPanelPruebas = new javax.swing.JPanel();
+        jButtonAvanzaPasos = new javax.swing.JButton();
+        jSliderNumeroPasos = new javax.swing.JSlider();
+        jLabelNumeroPasos = new javax.swing.JLabel();
+        jButtonAvanzaPaso = new javax.swing.JButton();
+        jLabelDistanciaPaso = new javax.swing.JLabel();
+        jTextFieldTamañoPaso = new javax.swing.JTextField();
+        jLabelDistanciaAviso = new javax.swing.JLabel();
+        jTextFieldDistanciaAviso = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanelPruebas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Pruebas"));
+
+        jButtonAvanzaPasos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAvanzaPasosActionPerformed(evt);
+            }
+        });
+
+        jSliderNumeroPasos.setValue(15);
+        jSliderNumeroPasos.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSliderNumeroPasosStateChanged(evt);
+            }
+        });
+
+        jLabelNumeroPasos.setText("Numero Pasos:");
+
+        jButtonAvanzaPaso.setText("+1 paso");
+        jButtonAvanzaPaso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAvanzaPasoActionPerformed(evt);
+            }
+        });
+
+        jLabelDistanciaPaso.setText("Distancia Paso:");
+
+        jLabelDistanciaAviso.setText("Distancia Aviso:");
+
+        jButton1.setText("Asignar distancias.");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelPruebasLayout = new javax.swing.GroupLayout(jPanelPruebas);
+        jPanelPruebas.setLayout(jPanelPruebasLayout);
+        jPanelPruebasLayout.setHorizontalGroup(
+            jPanelPruebasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPruebasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelPruebasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanelPruebasLayout.createSequentialGroup()
+                        .addGroup(jPanelPruebasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelPruebasLayout.createSequentialGroup()
+                                .addComponent(jLabelNumeroPasos)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jSliderNumeroPasos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonAvanzaPasos, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonAvanzaPaso)
+                    .addGroup(jPanelPruebasLayout.createSequentialGroup()
+                        .addComponent(jLabelDistanciaPaso)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldTamañoPaso, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabelDistanciaAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldDistanciaAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+
+        jPanelPruebasLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonAvanzaPaso, jButtonAvanzaPasos});
+
+        jPanelPruebasLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextFieldDistanciaAviso, jTextFieldTamañoPaso});
+
+        jPanelPruebasLayout.setVerticalGroup(
+            jPanelPruebasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPruebasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonAvanzaPaso, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(jLabelNumeroPasos)
+                .addGap(7, 7, 7)
+                .addGroup(jPanelPruebasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonAvanzaPasos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSliderNumeroPasos, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelPruebasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelDistanciaPaso)
+                    .addGroup(jPanelPruebasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextFieldDistanciaAviso, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                        .addComponent(jLabelDistanciaAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldTamañoPaso)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanelPruebasLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelDistanciaAviso, jLabelDistanciaPaso, jTextFieldDistanciaAviso, jTextFieldTamañoPaso});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPodometro1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPodometro1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelPruebas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jPodometro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addComponent(jPodometro1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelPruebas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jSliderNumeroPasosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSliderNumeroPasosStateChanged
+        jButtonAvanzaPasos.setText("+"+jSliderNumeroPasos.getValue()+" pasos");
+    }//GEN-LAST:event_jSliderNumeroPasosStateChanged
+
+    private void jButtonAvanzaPasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvanzaPasoActionPerformed
+        jPodometro1.paso();
+    }//GEN-LAST:event_jButtonAvanzaPasoActionPerformed
+
+    private void jButtonAvanzaPasosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvanzaPasosActionPerformed
+        jPodometro1.paso(jSliderNumeroPasos.getValue());
+    }//GEN-LAST:event_jButtonAvanzaPasosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try{
+            jPodometro1.setTamañoPaso(Double.valueOf(jTextFieldTamañoPaso.getText()));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "El valor asignado para el paso no es correcto");
+        }
+        try{
+            jPodometro1.setDistanciaAviso(Double.valueOf(jTextFieldDistanciaAviso.getText()));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "El valor asignado para la distancia de aviso no es correcto");
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,6 +227,16 @@ public class JFrameTest extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAvanzaPaso;
+    private javax.swing.JButton jButtonAvanzaPasos;
+    private javax.swing.JLabel jLabelDistanciaAviso;
+    private javax.swing.JLabel jLabelDistanciaPaso;
+    private javax.swing.JLabel jLabelNumeroPasos;
+    private javax.swing.JPanel jPanelPruebas;
     private MisComponentes.JPodometro.JPodometro jPodometro1;
+    private javax.swing.JSlider jSliderNumeroPasos;
+    private javax.swing.JTextField jTextFieldDistanciaAviso;
+    private javax.swing.JTextField jTextFieldTamañoPaso;
     // End of variables declaration//GEN-END:variables
 }
