@@ -6,9 +6,9 @@
 package MisComponentes.JPodometro;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  *
@@ -102,10 +102,12 @@ public class JPodometro extends javax.swing.JPanel {
 
     private void avanzaPaso(double distanciaPasos) {
         distanciaRecorrida += distanciaPasos / 1000;
-        tiempoDesdeInicio = (Calendar.getInstance().getTimeInMillis() - tiempoInicio) / 1000;
         muestraVisor();
         System.out.printf("distancia recorrida → %02.3f ", distanciaRecorrida);
         System.out.println("tiempo desde inicio → " + tiempoDesdeInicio);
+        if (distanciaRecorrida >= distanciaAviso) {
+            firePodometroMeta();
+        }
     }
 
     private void ponerHora() {
@@ -118,9 +120,62 @@ public class JPodometro extends javax.swing.JPanel {
     }
 
     private void muestraVisor() {
-        jLabelVisor.setText(String.valueOf((controlModoActivo == 0) ? String.format("%02.3f", distanciaRecorrida) : (controlModoActivo == 1) ? String.format("%02.3f", distanciaAviso) : (controlModoActivo == 2) ? tiempoDesdeInicio : tamañoPaso));
+//        jLabelVisor.setText(String.valueOf((controlModoActivo == 0) ? String.format("%02.3f", distanciaRecorrida) : (controlModoActivo == 1) ? String.format("%02.3f", distanciaAviso) : (controlModoActivo == 2) ? tiempoDesdeInicio : tamañoPaso));
+        tiempoDesdeInicio = (Calendar.getInstance().getTimeInMillis() - tiempoInicio) / 1000;
+        String texto = "";
+        switch (modoActivo) {
+            case DistanciaAviso:
+                texto = String.valueOf(String.format("%02.3f", distanciaAviso));
+                break;
+            case DistanciaRecorrida:
+                texto = String.valueOf(String.format("%02.3f", distanciaRecorrida));
+                break;
+            case TamañoPaso:
+                texto = String.valueOf(tamañoPaso);
+                break;
+            case TiempoDesdeInicio:
+                texto = String.valueOf(tiempoDesdeInicio);
+                break;
+        }
+        jLabelVisor.setText(texto);
     }
 
+    private ArrayList<JPodometroListener> listeners = new ArrayList();
+
+    public void addJPodometroListener(JPodometroListener l) {
+        listeners.add(l);
+    }
+
+    public void removeJPodometroListener(JPodometroListener l) {
+        listeners.remove(l);
+    }
+
+    protected void firePodometroSalida() {
+        JPodometroEvent evt = new JPodometroEvent(this);
+        for (JPodometroListener l : listeners) {
+            l.podometroSalida(evt);
+        }
+        System.out.println("Fire Salida");
+
+    }
+
+    protected void firePodometroMeta() {
+        JPodometroEvent evt = new JPodometroEvent(this);
+        for (JPodometroListener l : listeners) {
+            l.podometroMeta(evt);
+        }
+        System.out.println("Fire Meta");
+
+    }
+
+//    protected void fireCambio() {
+//        JPodometroEvent evt = new JPodometroEvent(this);
+//        for (JPodometroListener l : listeners) {
+//            l.cambio(evt);
+//        }
+//        System.out.println("Fire cambio");
+//
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -145,14 +200,14 @@ public class JPodometro extends javax.swing.JPanel {
         jLabelNombre.setText("Nombre");
 
         jLabelReloj.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelReloj.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        jLabelReloj.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabelReloj.setForeground(new java.awt.Color(0, 204, 204));
         jLabelReloj.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelReloj.setText("hora");
         jLabelReloj.setOpaque(true);
 
         jLabelModo.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelModo.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        jLabelModo.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabelModo.setForeground(new java.awt.Color(0, 204, 204));
         jLabelModo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelModo.setText("modo");
@@ -197,8 +252,8 @@ public class JPodometro extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabelNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelReloj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelReloj, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelModo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabelVisor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -217,7 +272,7 @@ public class JPodometro extends javax.swing.JPanel {
                     .addComponent(jLabelReloj, javax.swing.GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE)
                     .addComponent(jLabelModo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelVisor, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addComponent(jLabelVisor, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonModo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -232,18 +287,18 @@ public class JPodometro extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReiniciarActionPerformed
-        paso();
+        iniciarPodometro();
+        firePodometroSalida();
     }//GEN-LAST:event_jButtonReiniciarActionPerformed
 
     private void jButtonModoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModoActionPerformed
         modoActivo = Modo.values()[(++controlModoActivo < Modo.values().length) ? controlModoActivo : (controlModoActivo = 0)];
-        System.out.println(Modo.values()[controlModoActivo]);
         ponerModoActivo();
+        muestraVisor();
     }//GEN-LAST:event_jButtonModoActionPerformed
 
     private void jLabelVisorComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabelVisorComponentResized
         jLabelVisor.setFont(jLabelVisor.getFont().deriveFont((float) jLabelVisor.getHeight() * 2 / 3));
-
     }//GEN-LAST:event_jLabelVisorComponentResized
 
 
