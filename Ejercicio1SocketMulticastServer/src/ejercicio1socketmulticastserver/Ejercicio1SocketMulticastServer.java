@@ -31,11 +31,9 @@ public class Ejercicio1SocketMulticastServer {
             System.out.println("Escribe un mensaje");
             mensaje = new Scanner(System.in).nextLine();
             DatagramPacket paquete = new DatagramPacket(mensaje.getBytes(), mensaje.length(), grupo, PUERTO);
-
             ms.send(paquete);
 
         } while (!"*".equals(mensaje));
-        
         ms.close();
     
     }
