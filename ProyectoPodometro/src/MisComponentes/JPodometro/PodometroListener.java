@@ -5,15 +5,18 @@
  */
 package MisComponentes.JPodometro;
 
+import java.util.EventListener;
+
+
 /**
  *
  * @author usuario
  */
-public interface JPodometroListener {
+public interface PodometroListener extends EventListener{
     
-    public void podometroSalida(JPodometroEvent evt);
+    public void podometroSalida(PodometroEvent evt);
     
-    public void podometroMeta (JPodometroEvent evt);
+    public void podometroMeta (PodometroEvent evt);
     
-//    public void cambio(JPodometroEvent evt); 
+//    public void cambio(PodometroEvent evt); 
 }

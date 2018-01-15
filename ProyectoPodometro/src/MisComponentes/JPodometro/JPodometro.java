@@ -48,17 +48,20 @@ public class JPodometro extends javax.swing.JPanel {
     private double distanciaAviso = 0.5;
     private String nombreUsuario;
     private double distanciaRecorrida = 0;
-    private double tiempoDesdeInicio;
+    private double tiempoDesdeInicio=0;
+    
 
     private long tiempoInicio;
     private static int controlModoActivo = -1;
-
+    private boolean seLanzoFin=false;
+    
     public double getTamañoPaso() {
         return tamañoPaso;
     }
 
     public void setTamañoPaso(double tamañoPaso) {
         this.tamañoPaso = tamañoPaso;
+        muestraVisor();
     }
 
     public double getDistanciaAviso() {
@@ -66,7 +69,10 @@ public class JPodometro extends javax.swing.JPanel {
     }
 
     public void setDistanciaAviso(double distanciaAviso) {
+        if(this.distanciaAviso<distanciaAviso)
+            seLanzoFin=false;
         this.distanciaAviso = distanciaAviso;
+        muestraVisor();
     }
 
     public String getNombreUsuario() {
@@ -80,9 +86,15 @@ public class JPodometro extends javax.swing.JPanel {
 
     public JPodometro() {
         initComponents();
-        iniciarPodometro();
+        iniciarValoresPorDefecto();
     }
 
+    private void iniciarValoresPorDefecto(){
+        ponerHora();
+        ponerModoActivo();
+        muestraVisor();        
+    }
+    
     private void iniciarPodometro() {
         distanciaRecorrida = 0;
         modoActivo = Modo.values()[controlModoActivo = 0];
@@ -101,12 +113,15 @@ public class JPodometro extends javax.swing.JPanel {
     }
 
     private void avanzaPaso(double distanciaPasos) {
-        distanciaRecorrida += distanciaPasos / 1000;
-        muestraVisor();
-        System.out.printf("distancia recorrida → %02.3f ", distanciaRecorrida);
-        System.out.println("tiempo desde inicio → " + tiempoDesdeInicio);
-        if (distanciaRecorrida >= distanciaAviso) {
-            firePodometroMeta();
+        if(tiempoInicio!=0){
+            distanciaRecorrida += distanciaPasos / 1000;
+            muestraVisor();
+            System.out.printf("distancia recorrida → %02.3f ", distanciaRecorrida);
+            System.out.println("tiempo desde inicio → " + tiempoDesdeInicio);
+            if (distanciaRecorrida >= distanciaAviso && !seLanzoFin) {
+                firePodometroMeta();
+                seLanzoFin=true;
+            }
         }
     }
 
@@ -140,19 +155,19 @@ public class JPodometro extends javax.swing.JPanel {
         jLabelVisor.setText(texto);
     }
 
-    private ArrayList<JPodometroListener> listeners = new ArrayList();
+    private ArrayList<PodometroListener> listeners = new ArrayList();
 
-    public void addJPodometroListener(JPodometroListener l) {
+    public void addPodometroListener(PodometroListener l) {
         listeners.add(l);
     }
 
-    public void removeJPodometroListener(JPodometroListener l) {
+    public void removePodometroListener(PodometroListener l) {
         listeners.remove(l);
     }
 
     protected void firePodometroSalida() {
-        JPodometroEvent evt = new JPodometroEvent(this);
-        for (JPodometroListener l : listeners) {
+        PodometroEvent evt = new PodometroEvent(this);
+        for (PodometroListener l : listeners) {
             l.podometroSalida(evt);
         }
         System.out.println("Fire Salida");
@@ -160,8 +175,8 @@ public class JPodometro extends javax.swing.JPanel {
     }
 
     protected void firePodometroMeta() {
-        JPodometroEvent evt = new JPodometroEvent(this);
-        for (JPodometroListener l : listeners) {
+        PodometroEvent evt = new PodometroEvent(this,distanciaRecorrida, tiempoDesdeInicio);
+        for (PodometroListener l : listeners) {
             l.podometroMeta(evt);
         }
         System.out.println("Fire Meta");
@@ -169,8 +184,8 @@ public class JPodometro extends javax.swing.JPanel {
     }
 
 //    protected void fireCambio() {
-//        JPodometroEvent evt = new JPodometroEvent(this);
-//        for (JPodometroListener l : listeners) {
+//        PodometroEvent evt = new PodometroEvent(this);
+//        for (PodometroListener l : listeners) {
 //            l.cambio(evt);
 //        }
 //        System.out.println("Fire cambio");

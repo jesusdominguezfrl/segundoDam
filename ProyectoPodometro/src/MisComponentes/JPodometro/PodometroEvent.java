@@ -11,16 +11,16 @@ import java.util.EventObject;
  *
  * @author usuario
  */
-public class JPodometroEvent extends EventObject{
+public class PodometroEvent extends EventObject{
     
-    private double distanciaRecorrida;
-    private int tiempoTranscurrido;
+    private double distanciaRecorrida=-1;
+    private double tiempoTranscurrido=-1;
     
-    public JPodometroEvent(Object source) {
+    public PodometroEvent(Object source) {
         super(source);
     }
     
-    public JPodometroEvent(Object source, double distaciaRecorrida, int tiempoTranscurrido){
+    public PodometroEvent(Object source, double distaciaRecorrida, double tiempoTranscurrido){
         super(source);
         this.distanciaRecorrida=distaciaRecorrida;
         this.tiempoTranscurrido=tiempoTranscurrido;
@@ -31,8 +31,9 @@ public class JPodometroEvent extends EventObject{
     }
 
 
-    public int getTiempoTranscurrido() {
+    public double getTiempoTranscurrido() {
         return tiempoTranscurrido;
     }
+    
     
 }

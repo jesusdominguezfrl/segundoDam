@@ -5,7 +5,9 @@
  */
 package Test;
 
+import MisComponentes.JPodometro.PodometroEvent;
 import javax.swing.JOptionPane;
+import MisComponentes.JPodometro.PodometroListener;
 
 /**
  *
@@ -25,7 +27,27 @@ public class JFrameTest extends javax.swing.JFrame {
         jButtonAvanzaPasos.setText("+"+jSliderNumeroPasos.getValue()+" pasos");
         jTextFieldTamañoPaso.setText(String.valueOf(jPodometro1.getTamañoPaso()));
         jTextFieldDistanciaAviso.setText(String.valueOf(jPodometro1.getDistanciaAviso()));
+        jPodometro1.addPodometroListener(new gestorPodometro());
     }
+    
+    private class gestorPodometro implements PodometroListener{
+
+        @Override
+        public void podometroSalida(PodometroEvent evt) {
+            System.out.println("salida en el frame: \n\t→distancia recorrida:"+evt.getDistanciaRecorrida()+"→tiempo transcurrido: "+evt.getTiempoTranscurrido());
+        }
+
+        @Override
+        public void podometroMeta(PodometroEvent evt) {
+            System.out.println("meta en el frame: \n\t→distancia recorrida:"+evt.getDistanciaRecorrida()+"→tiempo transcurrido: "+evt.getTiempoTranscurrido());
+            jLabelDistanciaRecorrida.setText(String.format("%02.3f",evt.getDistanciaRecorrida()));
+            jLabelTiempoDesdeInicio.setText(String.valueOf(evt.getTiempoTranscurrido()));
+        }
+
+        
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,7 +57,6 @@ public class JFrameTest extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPodometro1 = new MisComponentes.JPodometro.JPodometro();
         jPanelPruebas = new javax.swing.JPanel();
         jButtonAvanzaPasos = new javax.swing.JButton();
         jSliderNumeroPasos = new javax.swing.JSlider();
@@ -46,6 +67,9 @@ public class JFrameTest extends javax.swing.JFrame {
         jLabelDistanciaAviso = new javax.swing.JLabel();
         jTextFieldDistanciaAviso = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabelTiempoDesdeInicio = new javax.swing.JLabel();
+        jLabelDistanciaRecorrida = new javax.swing.JLabel();
+        jPodometro1 = new MisComponentes.JPodometro.JPodometro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,8 +97,10 @@ public class JFrameTest extends javax.swing.JFrame {
             }
         });
 
+        jLabelDistanciaPaso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelDistanciaPaso.setText("Distancia Paso:");
 
+        jLabelDistanciaAviso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelDistanciaAviso.setText("Distancia Aviso:");
 
         jButton1.setText("Asignar distancias.");
@@ -83,6 +109,16 @@ public class JFrameTest extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jLabelTiempoDesdeInicio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelTiempoDesdeInicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTiempoDesdeInicio.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Tiempo desde inicio:"));
+        jLabelTiempoDesdeInicio.setOpaque(true);
+
+        jLabelDistanciaRecorrida.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelDistanciaRecorrida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelDistanciaRecorrida.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Distancia Recorrida:"));
+        jLabelDistanciaRecorrida.setOpaque(true);
 
         javax.swing.GroupLayout jPanelPruebasLayout = new javax.swing.GroupLayout(jPanelPruebas);
         jPanelPruebas.setLayout(jPanelPruebasLayout);
@@ -100,14 +136,20 @@ public class JFrameTest extends javax.swing.JFrame {
                             .addComponent(jSliderNumeroPasos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAvanzaPasos, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButtonAvanzaPaso)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPruebasLayout.createSequentialGroup()
+                        .addComponent(jLabelTiempoDesdeInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabelDistanciaRecorrida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelPruebasLayout.createSequentialGroup()
+                        .addComponent(jButtonAvanzaPaso)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanelPruebasLayout.createSequentialGroup()
                         .addComponent(jLabelDistanciaPaso)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldTamañoPaso, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabelDistanciaAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                        .addComponent(jLabelDistanciaAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldDistanciaAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -135,7 +177,11 @@ public class JFrameTest extends javax.swing.JFrame {
                         .addComponent(jLabelDistanciaAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextFieldTamañoPaso)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelPruebasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelDistanciaRecorrida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelTiempoDesdeInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -155,9 +201,9 @@ public class JFrameTest extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addComponent(jPodometro1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanelPruebas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -232,7 +278,9 @@ public class JFrameTest extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAvanzaPasos;
     private javax.swing.JLabel jLabelDistanciaAviso;
     private javax.swing.JLabel jLabelDistanciaPaso;
+    private javax.swing.JLabel jLabelDistanciaRecorrida;
     private javax.swing.JLabel jLabelNumeroPasos;
+    private javax.swing.JLabel jLabelTiempoDesdeInicio;
     private javax.swing.JPanel jPanelPruebas;
     private MisComponentes.JPodometro.JPodometro jPodometro1;
     private javax.swing.JSlider jSliderNumeroPasos;
