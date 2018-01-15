@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.util.Arrays;
 
 /**
  *
@@ -19,17 +18,22 @@ public class Ejercicio1SocketMulticatsCliente {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
         int PUERTO = 6000;
+        String mensajeRecibido;
         MulticastSocket ms = new MulticastSocket(PUERTO);
         InetAddress grupo = InetAddress.getByName("224.0.0.99");
-        ms.joinGroup(grupo);
-        byte[] buf = new byte[1000];
-        DatagramPacket paquete = new DatagramPacket(buf, buf.length);
-        ms.receive(paquete);
-        ms.leaveGroup(grupo);
-        System.out.println(Arrays.toString(paquete.getData()));
+        do {
+            ms.joinGroup(grupo);
+            byte[] bufered = new byte[1000];
+            DatagramPacket paquete = new DatagramPacket(bufered, bufered.length);
+            ms.receive(paquete);
+            ms.leaveGroup(grupo);
+            mensajeRecibido = new String(paquete.getData());
+            System.out.println(mensajeRecibido);
+        } while (!"*".equals(mensajeRecibido.trim()));
         ms.close();
 
     }
