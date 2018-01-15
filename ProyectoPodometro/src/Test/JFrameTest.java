@@ -187,6 +187,12 @@ public class JFrameTest extends javax.swing.JFrame {
 
         jPanelPruebasLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelDistanciaAviso, jLabelDistanciaPaso, jTextFieldDistanciaAviso, jTextFieldTamañoPaso});
 
+        jPodometro1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jPodometro1PropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -236,6 +242,10 @@ public class JFrameTest extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jPodometro1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jPodometro1PropertyChange
+        System.out.println(evt.getPropertyName()+"-----------------------------------------------------------------------------------");
+    }//GEN-LAST:event_jPodometro1PropertyChange
 
     /**
      * @param args the command line arguments

@@ -5,6 +5,8 @@
  */
 package MisComponentes.JPodometro;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,18 +50,19 @@ public class JPodometro extends javax.swing.JPanel {
     private double distanciaAviso = 0.5;
     private String nombreUsuario;
     private double distanciaRecorrida = 0;
-    private double tiempoDesdeInicio=0;
-    
+    private double tiempoDesdeInicio = 0;
 
     private long tiempoInicio;
     private static int controlModoActivo = -1;
-    private boolean seLanzoFin=false;
-    
+    private boolean seLanzoFin = false;
+    private PropertyChangeSupport myPCS;
+
     public double getTamañoPaso() {
         return tamañoPaso;
     }
 
     public void setTamañoPaso(double tamañoPaso) {
+        myPCS.firePropertyChange("tamañoPaso", this.tamañoPaso, this.tamañoPaso = tamañoPaso);
         this.tamañoPaso = tamañoPaso;
         muestraVisor();
     }
@@ -69,8 +72,7 @@ public class JPodometro extends javax.swing.JPanel {
     }
 
     public void setDistanciaAviso(double distanciaAviso) {
-        if(this.distanciaAviso<distanciaAviso)
-            seLanzoFin=false;
+        if (this.distanciaAviso < distanciaAviso) seLanzoFin = false;
         this.distanciaAviso = distanciaAviso;
         muestraVisor();
     }
@@ -87,14 +89,15 @@ public class JPodometro extends javax.swing.JPanel {
     public JPodometro() {
         initComponents();
         iniciarValoresPorDefecto();
+        myPCS = new PropertyChangeSupport(this);
     }
 
-    private void iniciarValoresPorDefecto(){
+    private void iniciarValoresPorDefecto() {
         ponerHora();
         ponerModoActivo();
-        muestraVisor();        
+        muestraVisor();
     }
-    
+
     private void iniciarPodometro() {
         distanciaRecorrida = 0;
         modoActivo = Modo.values()[controlModoActivo = 0];
@@ -113,14 +116,14 @@ public class JPodometro extends javax.swing.JPanel {
     }
 
     private void avanzaPaso(double distanciaPasos) {
-        if(tiempoInicio!=0){
+        if (tiempoInicio != 0) {
             distanciaRecorrida += distanciaPasos / 1000;
             muestraVisor();
             System.out.printf("distancia recorrida → %02.3f ", distanciaRecorrida);
             System.out.println("tiempo desde inicio → " + tiempoDesdeInicio);
             if (distanciaRecorrida >= distanciaAviso && !seLanzoFin) {
                 firePodometroMeta();
-                seLanzoFin=true;
+                seLanzoFin = true;
             }
         }
     }
@@ -175,12 +178,25 @@ public class JPodometro extends javax.swing.JPanel {
     }
 
     protected void firePodometroMeta() {
-        PodometroEvent evt = new PodometroEvent(this,distanciaRecorrida, tiempoDesdeInicio);
+        PodometroEvent evt = new PodometroEvent(this, distanciaRecorrida, tiempoDesdeInicio);
         for (PodometroListener l : listeners) {
             l.podometroMeta(evt);
         }
         System.out.println("Fire Meta");
 
+    }
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        if (myPCS == null) {
+            return;
+        }
+        this.myPCS.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        this.myPCS.removePropertyChangeListener(listener);
     }
 
 //    protected void fireCambio() {

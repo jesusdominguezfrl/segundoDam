@@ -223,6 +223,9 @@
       </SubComponents>
     </Container>
     <Component class="MisComponentes.JPodometro.JPodometro" name="jPodometro1">
+      <Events>
+        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jPodometro1PropertyChange"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
