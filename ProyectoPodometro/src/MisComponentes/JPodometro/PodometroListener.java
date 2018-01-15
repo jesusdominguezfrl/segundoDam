@@ -18,5 +18,4 @@ public interface PodometroListener extends EventListener{
     
     public void podometroMeta (PodometroEvent evt);
     
-//    public void cambio(PodometroEvent evt); 
 }

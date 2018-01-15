@@ -45,6 +45,8 @@ public class JPodometro extends javax.swing.JPanel {
     }
 //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Definicion de propiedades">
+    
     private Modo modoActivo = Modo.TamañoPaso;
     private double tamañoPaso = 0.55;
     private double distanciaAviso = 0.5;
@@ -85,6 +87,7 @@ public class JPodometro extends javax.swing.JPanel {
         this.nombreUsuario = nombreUsuario;
         jLabelNombre.setText(nombreUsuario);
     }
+//</editor-fold>
 
     public JPodometro() {
         initComponents();
@@ -92,6 +95,8 @@ public class JPodometro extends javax.swing.JPanel {
         myPCS = new PropertyChangeSupport(this);
     }
 
+    //<editor-fold defaultstate="collapsed" desc="metodos Privados">
+    
     private void iniciarValoresPorDefecto() {
         ponerHora();
         ponerModoActivo();
@@ -106,15 +111,7 @@ public class JPodometro extends javax.swing.JPanel {
         ponerModoActivo();
         muestraVisor();
     }
-
-    public void paso() {
-        avanzaPaso(tamañoPaso);
-    }
-
-    public void paso(int numeroPasos) {
-        avanzaPaso(tamañoPaso * numeroPasos);
-    }
-
+    
     private void avanzaPaso(double distanciaPasos) {
         if (tiempoInicio != 0) {
             distanciaRecorrida += distanciaPasos / 1000;
@@ -127,7 +124,7 @@ public class JPodometro extends javax.swing.JPanel {
             }
         }
     }
-
+    
     private void ponerHora() {
         SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
         jLabelReloj.setText(formato.format(new Date()));
@@ -157,6 +154,17 @@ public class JPodometro extends javax.swing.JPanel {
         }
         jLabelVisor.setText(texto);
     }
+//</editor-fold>
+
+    public void paso() {
+        avanzaPaso(tamañoPaso);
+    }
+
+    public void paso(int numeroPasos) {
+        avanzaPaso(tamañoPaso * numeroPasos);
+    }
+
+
 
     private ArrayList<PodometroListener> listeners = new ArrayList();
 
@@ -199,14 +207,6 @@ public class JPodometro extends javax.swing.JPanel {
         this.myPCS.removePropertyChangeListener(listener);
     }
 
-//    protected void fireCambio() {
-//        PodometroEvent evt = new PodometroEvent(this);
-//        for (PodometroListener l : listeners) {
-//            l.cambio(evt);
-//        }
-//        System.out.println("Fire cambio");
-//
-//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
