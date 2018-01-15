@@ -108,12 +108,46 @@ public class Funcionalidades {
 
     }
 
+    
+    private static void altas(){
+        System.out.println("*****ALTA DE REGISTROS*****");
+        String consulta="INSERT INTO";
+        System.out.println("Introduce nombre de la tabla a la que añadir registros: ");
+        String nombreTabla= leer.nextLine();
+//        Statement sentencia= conexion.createStatement("SELECT * FROM "+nombreTabla+";");
+//        ResultSet infoTabla= conexion.createStatement("SELECT * FROM "+nombreTabla+";");
+        try {
+            
+        } catch (Exception e) {
+        }
+    }
+
+    private static void bajas(){
+        
+    }
+    
     private static void modificarTabla() {
 
     }
-
+    
     public void consultasModificacionDatos() {
-
+        String opcion= leer.nextLine();
+        do {            
+            System.out.println("Elige una opcion:\n\t1-Altas\n\t2-Bajas\n\t3-Modificaciones");
+            switch(opcion){
+                case "1":
+                    altas();
+                    break;
+                case "2":
+                    bajas();
+                    break;
+                case "3":
+                    modificarTabla();
+                    break;
+                default:
+                    System.out.println("Opcion incorrexta");
+            }
+        } while (!"0".equals(opcion));
     }
 
     public void informacionBBDD() {
