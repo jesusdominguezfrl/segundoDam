@@ -114,11 +114,21 @@ public class Funcionalidades {
         String consulta="INSERT INTO";
         System.out.println("Introduce nombre de la tabla a la que añadir registros: ");
         String nombreTabla= leer.nextLine();
-//        Statement sentencia= conexion.createStatement("SELECT * FROM "+nombreTabla+";");
-//        ResultSet infoTabla= conexion.createStatement("SELECT * FROM "+nombreTabla+";");
         try {
-            
-        } catch (Exception e) {
+            Statement sentencia= conexion.createStatement();
+            ResultSet rs= sentencia.executeQuery("SELECT * FROM "+nombreTabla+";");
+            ResultSetMetaData rSMD = rs.getMetaData();
+            consulta+=nombreTabla+"VALUES (";
+            consulta+=("departamentos".equals(nombreTabla))?rSMD.getColumnCount()*10:rSMD.getColumnCount()+",";
+            for (int i = 2; i <= rSMD.getColumnCount(); i++) {
+                System.out.println("Introduce valor para "+ rSMD.getColumnName(i)+":");
+                String valor = leer.nextLine();
+                consulta+=("VARCHAR".equals(rSMD.getColumnTypeName(i)))?"'"+valor+"'":valor;
+                consulta+=(i+1< rSMD.getColumnCount())?",":");";
+            }
+            System.out.println("CONSULTA: " +consulta);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
