@@ -7,10 +7,13 @@ package ej10conexionamysql;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +27,7 @@ public class Funcionalidades {
     private static Connection conexion;
     private static DatabaseMetaData dbmd;
     static Scanner leer = new Scanner(System.in);
+    private static double SalarioMinimoInterprofesional = 1200.5;
 
     public Funcionalidades(Connection conexion) throws SQLException {
         this.conexion = conexion;
@@ -108,43 +112,142 @@ public class Funcionalidades {
 
     }
 
-    
-    private static void altas(){
+    private static void altas() {
         System.out.println("*****ALTA DE REGISTROS*****");
-        String consulta="INSERT INTO";
+        String consulta = "INSERT INTO";
         System.out.println("Introduce nombre de la tabla a la que añadir registros: ");
-        String nombreTabla= leer.nextLine();
+        String nombreTabla = leer.nextLine();
         try {
-            Statement sentencia= conexion.createStatement();
-            ResultSet rs= sentencia.executeQuery("SELECT * FROM "+nombreTabla+";");
+            Statement sentencia = conexion.createStatement();
+            ResultSet rs = sentencia.executeQuery("SELECT * FROM " + nombreTabla + ";");
             ResultSetMetaData rSMD = rs.getMetaData();
-            consulta+=nombreTabla+"VALUES (";
-            consulta+=("departamentos".equals(nombreTabla))?rSMD.getColumnCount()*10:rSMD.getColumnCount()+",";
-            for (int i = 2; i <= rSMD.getColumnCount(); i++) {
-                System.out.println("Introduce valor para "+ rSMD.getColumnName(i)+":");
-                String valor = leer.nextLine();
-                consulta+=("VARCHAR".equals(rSMD.getColumnTypeName(i)))?"'"+valor+"'":valor;
-                consulta+=(i+1< rSMD.getColumnCount())?",":");";
+            int numeroIdentificador = ("departamentos".equals(nombreTabla)) ? rSMD.getColumnCount() * 10 : rSMD.getColumnCount();
+            if ("departamento".equals(nombreTabla.toLowerCase())) {
+                consulta += nombreTabla + "VALUES (?,?,?)";
+                PreparedStatement sentenciaInsercion = conexion.prepareStatement(consulta);
+                System.out.print("Introduce un nombre de departamento: ");
+                String nombreDept = leer.nextLine();
+                System.out.print("Introduce una localidad: ");
+                String nombreLocalidad = leer.nextLine();
+                sentenciaInsercion.setInt(1, numeroIdentificador);
+                sentenciaInsercion.setString(2, nombreDept);
+                sentenciaInsercion.setString(3, nombreLocalidad);
+                int filas = sentenciaInsercion.executeUpdate();
+                System.out.println("Se han modificado " + filas + "filas");
+            } else {
+                if ("empleados".equals(nombreTabla.toLowerCase())) {
+                    consulta += nombreTabla + "VALUES (?,?,?,?,?,?,?,?)";
+                    PreparedStatement sentenciaInsercion = conexion.prepareStatement(consulta);
+                    System.out.print("Introduce un apellido de empleado: ");
+                    String apellidoEmpl = leer.nextLine();
+                    System.out.print("Introduce un oficio: ");
+                    String nombreOficio = leer.nextLine();
+                    System.out.print("Introduce un dir: ");
+                    int nombreDir = Integer.parseInt(leer.nextLine());
+                    double salario;
+                    do {
+                        System.out.print("Introduce un salario mayor que el SMI: ");
+                        salario = Double.parseDouble(leer.nextLine());
+                    } while (salario < SalarioMinimoInterprofesional);
+                    System.out.print("Introduce una comision:");
+                    float comision = Float.parseFloat(leer.nextLine());
+                    int numeroDept;
+                    ResultSet rsComprobacion;
+                    do {
+                        System.out.print("Introduce un numero de dept valido:");
+                        numeroDept = Integer.parseInt(leer.nextLine());
+                        Statement sentenciaComprobacion = conexion.createStatement();
+                        rsComprobacion = sentenciaComprobacion.executeQuery("SELECT * FROM " + nombreTabla + "WHERE dept_no=" + numeroDept + ";");
+                    } while (!rsComprobacion.first());
+                    sentenciaInsercion.setInt(1, numeroIdentificador);
+                    sentenciaInsercion.setString(2, apellidoEmpl);
+                    sentenciaInsercion.setString(3, nombreOficio);
+                    sentenciaInsercion.setInt(4, nombreDir);
+                    Date fecha = Date.valueOf(LocalDate.MAX);
+                    sentenciaInsercion.setDate(5, fecha);
+                    sentenciaInsercion.setDouble(6, salario);
+                    sentenciaInsercion.setFloat(7, comision);
+                    sentenciaInsercion.setInt(8, numeroDept);
+                    int filas = sentenciaInsercion.executeUpdate();
+                    System.out.println("Se han modificado " + filas + "filas");
+
+                } else {
+                    System.out.println("No existe la tabla");
+                }
+
             }
-            System.out.println("CONSULTA: " +consulta);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private static void bajas(){
-        
+    private static void bajas() {
+        System.out.println("*****BAJA DE REGISTROS*****");
+        String consulta = "DELETE FROM";
+        System.out.println("Introduce nombre de la tabla de la que quiere borrar registros: ");
+        String nombreTabla = leer.nextLine();
+        try {
+            Statement sentencia = conexion.createStatement();
+            ResultSet rs = sentencia.executeQuery("SELECT * FROM " + nombreTabla + ";");
+            ResultSetMetaData rSMD = rs.getMetaData();
+            if ("departamento".equals(nombreTabla.toLowerCase())) {
+                consulta += nombreTabla + "WHERE dept_no=";
+                System.out.print("Introduce el numero de departamento que quiere eliminar:");
+                int dept_no = Integer.parseInt(leer.nextLine());
+                Statement sentenciaDept = conexion.createStatement();
+                ResultSet rsDept = sentenciaDept.executeQuery("SELECT * FROM " + nombreTabla + "WHERE dept_no=" + dept_no + ";");
+                if (rsDept.first()) {
+                    consulta += dept_no;
+                    Statement sentenciaUpdateDept = conexion.createStatement();
+                    int filas = sentenciaUpdateDept.executeUpdate(consulta);
+                    System.out.println("Se han modificado " + filas + "filas");
+                } else {
+                    System.out.println("No existe el registro indicado.");
+                }
+            } else {
+                if ("empleados".equals(nombreTabla.toLowerCase())) {
+                    consulta += nombreTabla + "WHERE dept_no=";
+                    System.out.print("Introduce el numero de empleado que quiere eliminar:");
+                    int empl_no = Integer.parseInt(leer.nextLine());
+                    Statement sentenciaEmpl = conexion.createStatement();
+                    ResultSet rsDept = sentenciaEmpl.executeQuery("SELECT * FROM " + nombreTabla + "WHERE empl_no=" + empl_no + ";");
+                    if (rsDept.first()) {
+                        consulta += empl_no;
+                        Statement sentenciaUpdateEmpl = conexion.createStatement();
+                        int filas = sentenciaUpdateEmpl.executeUpdate(consulta);
+                        System.out.println("Se han modificado " + filas + "filas");
+                    } else {
+                        System.out.println("No existe el registro indicado.");
+                    }
+                } else {
+                    System.out.println("La tabla no esta en la BBDD");
+                }
+
+            }
+
+            consulta += nombreTabla + "VALUES(?,?,?);";
+            consulta += nombreTabla + "VALUES (";
+            for (int i = 2; i <= rSMD.getColumnCount(); i++) {
+                System.out.print("Introduce valor para " + rSMD.getColumnName(i) + ":");
+                String valor = leer.nextLine();
+                consulta += ("VARCHAR".equals(rSMD.getColumnTypeName(i))) ? "'" + valor + "'" : valor;
+                consulta += (i + 1 < rSMD.getColumnCount()) ? "," : ");";
+            }
+            System.out.println("CONSULTA: " + consulta);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
-    
+
     private static void modificarTabla() {
 
     }
-    
+
     public void consultasModificacionDatos() {
-        String opcion= leer.nextLine();
-        do {            
+        String opcion = leer.nextLine();
+        do {
             System.out.println("Elige una opcion:\n\t1-Altas\n\t2-Bajas\n\t3-Modificaciones");
-            switch(opcion){
+            switch (opcion) {
                 case "1":
                     altas();
                     break;
