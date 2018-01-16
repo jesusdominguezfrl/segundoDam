@@ -22,6 +22,11 @@ public class Ejercicio4SocketsTCPCliente {
     /**
      * @param args the command line arguments
      */
+    
+    
+    //Probar con Ejercicio4 Sockets TCP 
+    
+    
     public static void main(String[] args) {
 
         final String HOST = "localhost";
