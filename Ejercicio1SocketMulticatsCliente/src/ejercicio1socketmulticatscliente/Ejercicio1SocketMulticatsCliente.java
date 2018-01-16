@@ -12,7 +12,7 @@ import java.net.MulticastSocket;
 
 /**
  *
- * @author usuario
+ * @author Jesus Dominguez
  */
 public class Ejercicio1SocketMulticatsCliente {
 
@@ -32,7 +32,7 @@ public class Ejercicio1SocketMulticatsCliente {
             ms.receive(paquete);
             ms.leaveGroup(grupo);
             mensajeRecibido = new String(paquete.getData());
-            System.out.println(mensajeRecibido);
+            System.out.println(mensajeRecibido.trim());
         } while (!"*".equals(mensajeRecibido.trim()));
         ms.close();
 
