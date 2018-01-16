@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author usuario
+ * @author Jesus Dominguez
  */
 public class Ejercicio1SocketMulticastServer {
 

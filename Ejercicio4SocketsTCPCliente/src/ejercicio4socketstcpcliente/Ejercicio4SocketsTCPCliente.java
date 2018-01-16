@@ -5,7 +5,6 @@
  */
 package ejercicio4socketstcpcliente;
 
-import com.sun.org.apache.bcel.internal.util.ByteSequence;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -23,6 +22,11 @@ public class Ejercicio4SocketsTCPCliente {
     /**
      * @param args the command line arguments
      */
+    
+    
+    //Probar con Ejercicio4 Sockets TCP 
+    
+    
     public static void main(String[] args) {
 
         final String HOST = "localhost";
