@@ -5,7 +5,6 @@
  */
 package ejercicio4socketstcpcliente;
 
-import com.sun.org.apache.bcel.internal.util.ByteSequence;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
