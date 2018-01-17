@@ -26,7 +26,7 @@ public class JPodometro extends javax.swing.JPanel {
         DistanciaRecorrida("Distancia Recorrida en km."),
         DistanciaAviso("Distancia Aviso"),
         TiempoDesdeInicio("Tiempo desde Inicio"),
-        TamañoPaso("Tamaño del Paso (cm).");
+        TamañoPaso("Tamaño del Paso (m).");
 
         private String nombre;
 
