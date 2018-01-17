@@ -33,7 +33,7 @@ public class Ej10ConexionaMySQL {
             Scanner leer = new Scanner(System.in);
             do {
                 System.out.println("Elige una opcion:\n\t1-Mostrar informacion de la BBDD\n\t2-Mostrar informacion sobre las tablas\n\t3-"
-                        + "Info sobre columnas\n\t4-Consultas descripcion de datos\n\t5-Consulta definicion de datos.\n\t6-Consulta modificacion de datos\n\t0-Salir.");
+                        + "Info sobre columnas\n\t4-Consultas descripcion de datos\n\t5-Consulta definicion de datos.\n\t6-Consulta modificacion de datos\n\t7-Subir salario por departamento\n\t8-Crear infomres\n\t0-Salir.");
                 System.out.print("Introduce una opcion: ");
                 opcionMenu = leer.nextLine();
                 switch(opcionMenu){
@@ -54,6 +54,12 @@ public class Ej10ConexionaMySQL {
                         break;
                     case "6":
                         funcion.consultasModificacionDatos();
+                        break;
+                    case "7":
+                        funcion.subirSalarioProcedimiento();
+                        break;
+                    case "8":
+                        funcion.crearInformes();
                         break;
                     case "0":
                         break;
