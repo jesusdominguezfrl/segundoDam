@@ -103,7 +103,7 @@ public class Funcionalidades {
         consulta += nombreTabla + ";";
         try {
             Statement sentencia = conexion.createStatement();
-            sentencia.executeUpdate(consulta);
+            sentencia.execute(consulta);
             sentencia.close();
             System.out.println("Tabla borrada con exito");
         } catch (SQLException ex) {
@@ -134,47 +134,44 @@ public class Funcionalidades {
                 sentenciaInsercion.setString(3, nombreLocalidad);
                 int filas = sentenciaInsercion.executeUpdate();
                 System.out.println("Se han modificado " + filas + "filas");
+            } else if ("empleados".equals(nombreTabla.toLowerCase())) {
+                consulta += nombreTabla + "VALUES (?,?,?,?,?,?,?,?)";
+                PreparedStatement sentenciaInsercion = conexion.prepareStatement(consulta);
+                System.out.print("Introduce un apellido de empleado: ");
+                String apellidoEmpl = leer.nextLine();
+                System.out.print("Introduce un oficio: ");
+                String nombreOficio = leer.nextLine();
+                System.out.print("Introduce un dir: ");
+                int nombreDir = Integer.parseInt(leer.nextLine());
+                double salario;
+                do {
+                    System.out.print("Introduce un salario mayor que el SMI: ");
+                    salario = Double.parseDouble(leer.nextLine());
+                } while (salario < SalarioMinimoInterprofesional);
+                System.out.print("Introduce una comision:");
+                float comision = Float.parseFloat(leer.nextLine());
+                int numeroDept;
+                ResultSet rsComprobacion;
+                do {
+                    System.out.print("Introduce un numero de dept valido:");
+                    numeroDept = Integer.parseInt(leer.nextLine());
+                    Statement sentenciaComprobacion = conexion.createStatement();
+                    rsComprobacion = sentenciaComprobacion.executeQuery("SELECT * FROM " + nombreTabla + "WHERE dept_no=" + numeroDept + ";");
+                } while (!rsComprobacion.first());
+                sentenciaInsercion.setInt(1, numeroIdentificador);
+                sentenciaInsercion.setString(2, apellidoEmpl);
+                sentenciaInsercion.setString(3, nombreOficio);
+                sentenciaInsercion.setInt(4, nombreDir);
+                Date fecha = Date.valueOf(LocalDate.MAX);
+                sentenciaInsercion.setDate(5, fecha);
+                sentenciaInsercion.setDouble(6, salario);
+                sentenciaInsercion.setFloat(7, comision);
+                sentenciaInsercion.setInt(8, numeroDept);
+                int filas = sentenciaInsercion.executeUpdate();
+                System.out.println("Se han modificado " + filas + "filas");
+
             } else {
-                if ("empleados".equals(nombreTabla.toLowerCase())) {
-                    consulta += nombreTabla + "VALUES (?,?,?,?,?,?,?,?)";
-                    PreparedStatement sentenciaInsercion = conexion.prepareStatement(consulta);
-                    System.out.print("Introduce un apellido de empleado: ");
-                    String apellidoEmpl = leer.nextLine();
-                    System.out.print("Introduce un oficio: ");
-                    String nombreOficio = leer.nextLine();
-                    System.out.print("Introduce un dir: ");
-                    int nombreDir = Integer.parseInt(leer.nextLine());
-                    double salario;
-                    do {
-                        System.out.print("Introduce un salario mayor que el SMI: ");
-                        salario = Double.parseDouble(leer.nextLine());
-                    } while (salario < SalarioMinimoInterprofesional);
-                    System.out.print("Introduce una comision:");
-                    float comision = Float.parseFloat(leer.nextLine());
-                    int numeroDept;
-                    ResultSet rsComprobacion;
-                    do {
-                        System.out.print("Introduce un numero de dept valido:");
-                        numeroDept = Integer.parseInt(leer.nextLine());
-                        Statement sentenciaComprobacion = conexion.createStatement();
-                        rsComprobacion = sentenciaComprobacion.executeQuery("SELECT * FROM " + nombreTabla + "WHERE dept_no=" + numeroDept + ";");
-                    } while (!rsComprobacion.first());
-                    sentenciaInsercion.setInt(1, numeroIdentificador);
-                    sentenciaInsercion.setString(2, apellidoEmpl);
-                    sentenciaInsercion.setString(3, nombreOficio);
-                    sentenciaInsercion.setInt(4, nombreDir);
-                    Date fecha = Date.valueOf(LocalDate.MAX);
-                    sentenciaInsercion.setDate(5, fecha);
-                    sentenciaInsercion.setDouble(6, salario);
-                    sentenciaInsercion.setFloat(7, comision);
-                    sentenciaInsercion.setInt(8, numeroDept);
-                    int filas = sentenciaInsercion.executeUpdate();
-                    System.out.println("Se han modificado " + filas + "filas");
-
-                } else {
-                    System.out.println("No existe la tabla");
-                }
-
+                System.out.println("No existe la tabla");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -204,25 +201,22 @@ public class Funcionalidades {
                 } else {
                     System.out.println("No existe el registro indicado.");
                 }
-            } else {
-                if ("empleados".equals(nombreTabla.toLowerCase())) {
-                    consulta += nombreTabla + "WHERE dept_no=";
-                    System.out.print("Introduce el numero de empleado que quiere eliminar:");
-                    int empl_no = Integer.parseInt(leer.nextLine());
-                    Statement sentenciaEmpl = conexion.createStatement();
-                    ResultSet rsDept = sentenciaEmpl.executeQuery("SELECT * FROM " + nombreTabla + "WHERE empl_no=" + empl_no + ";");
-                    if (rsDept.first()) {
-                        consulta += empl_no;
-                        Statement sentenciaUpdateEmpl = conexion.createStatement();
-                        int filas = sentenciaUpdateEmpl.executeUpdate(consulta);
-                        System.out.println("Se han modificado " + filas + "filas");
-                    } else {
-                        System.out.println("No existe el registro indicado.");
-                    }
+            } else if ("empleados".equals(nombreTabla.toLowerCase())) {
+                consulta += nombreTabla + "WHERE dept_no=";
+                System.out.print("Introduce el numero de empleado que quiere eliminar:");
+                int empl_no = Integer.parseInt(leer.nextLine());
+                Statement sentenciaEmpl = conexion.createStatement();
+                ResultSet rsDept = sentenciaEmpl.executeQuery("SELECT * FROM " + nombreTabla + "WHERE empl_no=" + empl_no + ";");
+                if (rsDept.first()) {
+                    consulta += empl_no;
+                    Statement sentenciaUpdateEmpl = conexion.createStatement();
+                    int filas = sentenciaUpdateEmpl.executeUpdate(consulta);
+                    System.out.println("Se han modificado " + filas + "filas");
                 } else {
-                    System.out.println("La tabla no esta en la BBDD");
+                    System.out.println("No existe el registro indicado.");
                 }
-
+            } else {
+                System.out.println("La tabla no esta en la BBDD");
             }
 
             consulta += nombreTabla + "VALUES(?,?,?);";
@@ -240,7 +234,81 @@ public class Funcionalidades {
     }
 
     private static void modificarTabla() {
+        System.out.println("*****MODIFICACION DE REGISTROS*****");
+        String consulta = "UPDATE";
+        System.out.print("Introduce nombre de la tabla que quieres modificar registros: ");
+        String nombreTabla = leer.nextLine();
+        try {
+            if ("departamento".equals(nombreTabla.toLowerCase())) {
+                System.out.print("Introduce el dept_no del departamento que quieres actualizar: ");
+                int dept_no = Integer.parseInt(leer.nextLine());
+                Statement sentencia = conexion.createStatement();
+                ResultSet rs = sentencia.executeQuery("SELECT * FROM " + nombreTabla + " WHERE dept_no=" + dept_no + ";");
+//                ResultSetMetaData rSMD = rs.getMetaData();
+                if (!rs.first()) {
+                    System.out.println("No existe el registro.");
+                } else {
+                    consulta += nombreTabla + " SET dept_no=" + dept_no + ", dnombre=?, loc=? WHERE dept_no=" + dept_no + ";";
+                    PreparedStatement sentenciaInsercion = conexion.prepareStatement(consulta);
+                    System.out.print("Introduce un nombre de departamento: ");
+                    String nombreDept = leer.nextLine();
+                    System.out.print("Introduce una localidad: ");
+                    String nombreLocalidad = leer.nextLine();
+                    sentenciaInsercion.setString(1, nombreDept);
+                    sentenciaInsercion.setString(2, nombreLocalidad);
+                    int filas = sentenciaInsercion.executeUpdate();
+                    System.out.println("Se han modificado " + filas + "filas");
+                }
+            } else if ("empleados".equals(nombreTabla.toLowerCase())) {
+                System.out.print("Introduce el empl_no del empleado que quieres modificar:");
+                int empl_no = Integer.parseInt(leer.nextLine());
 
+                Statement sentencia = conexion.createStatement();
+                ResultSet rs = sentencia.executeQuery("SELECT * FROM " + nombreTabla + " WHERE empl_no=" + empl_no + ";");
+                if (!rs.first()) {
+                    System.out.println("no existe ningune empleado con el empl_no indicado en la BBDD.");
+                } else {
+
+                    consulta += nombreTabla + "SET empl_no=" + empl_no + ", apellido=?, oficio=?, dir=?, fecha_alta=" + (Date.valueOf(LocalDate.MAX) + ", salario=?, comision=?, dept_no=? WHERE empl_no=" + empl_no);
+                    PreparedStatement sentenciaInsercion = conexion.prepareStatement(consulta);
+                    System.out.print("Introduce un apellido de empleado: ");
+                    String apellidoEmpl = leer.nextLine();
+                    System.out.print("Introduce un oficio: ");
+                    String nombreOficio = leer.nextLine();
+                    System.out.print("Introduce un dir: ");
+                    int nombreDir = Integer.parseInt(leer.nextLine());
+                    double salario;
+                    do {
+                        System.out.print("Introduce un salario mayor que el SMI: ");
+                        salario = Double.parseDouble(leer.nextLine());
+                    } while (salario < SalarioMinimoInterprofesional);
+                    System.out.print("Introduce una comision:");
+                    float comision = Float.parseFloat(leer.nextLine());
+                    int numeroDept;
+                    ResultSet rsComprobacion;
+                    do {
+                        System.out.print("Introduce un numero de dept valido:");
+                        numeroDept = Integer.parseInt(leer.nextLine());
+                        Statement sentenciaComprobacion = conexion.createStatement();
+                        rsComprobacion = sentenciaComprobacion.executeQuery("SELECT * FROM " + nombreTabla + "WHERE dept_no=" + numeroDept + ";");
+                    } while (!rsComprobacion.first());
+                    sentenciaInsercion.setString(2, apellidoEmpl);
+                    sentenciaInsercion.setString(3, nombreOficio);
+                    sentenciaInsercion.setInt(4, nombreDir);
+                    Date fecha = Date.valueOf(LocalDate.MAX);
+                    sentenciaInsercion.setDate(5, fecha);
+                    sentenciaInsercion.setDouble(6, salario);
+                    sentenciaInsercion.setFloat(7, comision);
+                    sentenciaInsercion.setInt(8, numeroDept);
+                    int filas = sentenciaInsercion.executeUpdate();
+                    System.out.println("Se han modificado " + filas + "filas");
+                }
+            } else {
+                System.out.println("No existe la tabla");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void consultasModificacionDatos() {
