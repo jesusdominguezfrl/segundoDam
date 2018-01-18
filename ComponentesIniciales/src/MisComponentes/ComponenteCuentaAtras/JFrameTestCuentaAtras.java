@@ -16,7 +16,7 @@ public class JFrameTestCuentaAtras extends javax.swing.JFrame {
      */
     public JFrameTestCuentaAtras() {
         initComponents();
-        jCuentaAtras1.addCuentaAtrasListener(miGestor);
+//        jCuentaAtras1.addCuentaAtrasListener(miGestor);
 //        jButtonDetonador.setText("Detona en: "+numeroPulsaciones);
 
     }
@@ -32,7 +32,6 @@ public class JFrameTestCuentaAtras extends javax.swing.JFrame {
 
         jLabelbomba = new javax.swing.JLabel();
         jButtonDetonador = new javax.swing.JButton();
-        jCuentaAtras1 = new MisComponentes.ComponenteCuentaAtras.JCuentaAtras();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Creación de componentes: Cuenta Atrás");
@@ -53,12 +52,10 @@ public class JFrameTestCuentaAtras extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonDetonador, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCuentaAtras1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addComponent(jButtonDetonador, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jLabelbomba, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -69,9 +66,7 @@ public class JFrameTestCuentaAtras extends javax.swing.JFrame {
                         .addComponent(jLabelbomba, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(86, 86, 86)
-                        .addComponent(jButtonDetonador, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jCuentaAtras1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonDetonador, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -142,7 +137,6 @@ public class JFrameTestCuentaAtras extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDetonador;
-    private MisComponentes.ComponenteCuentaAtras.JCuentaAtras jCuentaAtras1;
     private javax.swing.JLabel jLabelbomba;
     // End of variables declaration//GEN-END:variables
 }
