@@ -41,6 +41,7 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelBombillas = new javax.swing.JPanel();
+        jBombilla1 = new MisComponentes.JBombilla.JBombilla();
         jPanelUbicaciones = new javax.swing.JPanel();
         jButtonApagar = new javax.swing.JButton();
         jButtonEncender = new javax.swing.JButton();
@@ -59,11 +60,17 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         jPanelBombillas.setLayout(jPanelBombillasLayout);
         jPanelBombillasLayout.setHorizontalGroup(
             jPanelBombillasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 822, Short.MAX_VALUE)
+            .addGroup(jPanelBombillasLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jBombilla1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(536, Short.MAX_VALUE))
         );
         jPanelBombillasLayout.setVerticalGroup(
             jPanelBombillasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(jPanelBombillasLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jBombilla1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         jPanelUbicaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Ubicaciones"));
@@ -151,9 +158,9 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonNuevaBombilla)
-                    .addComponent(jButtonReponer))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonReponer)
+                    .addComponent(jButtonNuevaBombilla))
                 .addGap(22, 22, 22))
         );
 
@@ -201,6 +208,7 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private MisComponentes.JBombilla.JBombilla jBombilla1;
     private javax.swing.JButton jButtonApagar;
     private javax.swing.JButton jButtonEncender;
     private javax.swing.JButton jButtonNuevaBombilla;

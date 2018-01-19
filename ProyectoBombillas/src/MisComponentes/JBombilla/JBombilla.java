@@ -102,7 +102,33 @@ public class JBombilla extends javax.swing.JPanel {
         jLabelReponer.setVisible(estado==Estado.FUNDIDA);
         
     }
-
+    
+    private ArrayList<JBombillaListener> listeners = new ArrayList();
+    
+    public void addJBombillaListener(JBombillaListener l){
+        listeners.add(l);
+    }
+    
+    public void removeJBombillaListener(JBombillaListener l){
+        listeners.remove(l);
+    }
+    
+    protected void fireBombillaEncendida(){
+        JBombillaEvent evt = new JBombillaEvent(this,bombilla.getNumeroEncendidos(),(int)bombilla.getTiempoEncendida());
+        for(JBombillaListener l : listeners){
+            l.bombillaEncendida(evt);
+        }
+        System.out.println("FIRE ENCENDIDA");
+    }
+    
+    protected void fireBombillaAgotada(){
+        JBombillaEvent evt = new JBombillaEvent(this);
+        for(JBombillaListener l : listeners){
+            l.bombillaEncendida(evt);
+        }
+        System.out.println("FIRE AGOTADA");
+    }
+    
     public void encender(){
         if (estado== Estado.ENCENDIDA) return;
         estado= Estado.ENCENDIDA;
