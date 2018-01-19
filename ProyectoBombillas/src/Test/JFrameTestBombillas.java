@@ -6,6 +6,8 @@
 package Test;
 
 import MisComponentes.JBombilla.JBombilla;
+import javafx.scene.control.RadioButton;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -24,6 +26,15 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
 
     private void iniciaMisComponenetes(){
         jComboBoxUbicaciones.setModel(new DefaultComboBoxModel(JBombilla.Ubicaciones.values()));
+        cargarRadioButton();
+    }
+    
+    private void cargarRadioButton(){
+//        Radion bG= new ButtonGroup();
+        for (JBombilla.Ubicaciones u : JBombilla.Ubicaciones.values()) {
+            RadioButton rb = new RadioButton(u.toString());
+            bG.add(rb);
+        }
     }
     
     private void consistencia(){
@@ -55,23 +66,7 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanelBombillas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Bombillas"));
-
-        javax.swing.GroupLayout jPanelBombillasLayout = new javax.swing.GroupLayout(jPanelBombillas);
-        jPanelBombillas.setLayout(jPanelBombillasLayout);
-        jPanelBombillasLayout.setHorizontalGroup(
-            jPanelBombillasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBombillasLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jBombilla1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(536, Short.MAX_VALUE))
-        );
-        jPanelBombillasLayout.setVerticalGroup(
-            jPanelBombillasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBombillasLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jBombilla1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(142, Short.MAX_VALUE))
-        );
+        jPanelBombillas.add(jBombilla1);
 
         jPanelUbicaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Ubicaciones"));
 
@@ -126,6 +121,9 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelBombillas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(234, 234, 234))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonNuevaBombilla, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,12 +131,10 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
                                 .addComponent(jLabelUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(522, 522, 522)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonReponer, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelBombillas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanelUbicaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButtonReponer, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jPanelUbicaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -170,6 +166,7 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
     private void jButtonNuevaBombillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaBombillaActionPerformed
         jPanelBombillas.add(new JBombilla((JBombilla.Ubicaciones)jComboBoxUbicaciones.getSelectedItem()));
         consistencia();
+        System.out.println("asdfkhaskjdj");
     }//GEN-LAST:event_jButtonNuevaBombillaActionPerformed
 
     /**
