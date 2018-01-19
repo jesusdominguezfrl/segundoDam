@@ -6,9 +6,11 @@
 package Test;
 
 import MisComponentes.JBombilla.JBombilla;
-import javafx.scene.control.RadioButton;
+import MisComponentes.JBombilla.JBombillaEvent;
+import MisComponentes.JBombilla.JBombillaListener;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -30,9 +32,9 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
     }
     
     private void cargarRadioButton(){
-//        Radion bG= new ButtonGroup();
+        ButtonGroup bG= new ButtonGroup();
         for (JBombilla.Ubicaciones u : JBombilla.Ubicaciones.values()) {
-            RadioButton rb = new RadioButton(u.toString());
+            JRadioButton rb = new JRadioButton(u.toString());
             bG.add(rb);
         }
     }
@@ -164,11 +166,25 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonNuevaBombillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaBombillaActionPerformed
-        jPanelBombillas.add(new JBombilla((JBombilla.Ubicaciones)jComboBoxUbicaciones.getSelectedItem()));
+        jPanelBombillas.add(new JBombilla((JBombilla.Ubicaciones)jComboBoxUbicaciones.getSelectedItem())/*.addJBombillaListener(new gestorJBombilla())*/);
         consistencia();
         System.out.println("asdfkhaskjdj");
     }//GEN-LAST:event_jButtonNuevaBombillaActionPerformed
 
+    private class gestorJBombilla implements JBombillaListener{
+
+        @Override
+        public void bombillaEncendida(JBombillaEvent evt) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void bombillaAgotada(JBombillaEvent evt) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    
+}
+    
     /**
      * @param args the command line arguments
      */
