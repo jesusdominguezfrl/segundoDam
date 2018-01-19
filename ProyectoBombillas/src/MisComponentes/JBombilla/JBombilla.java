@@ -5,6 +5,7 @@
  */
 package MisComponentes.JBombilla;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.ImageIcon;
 
@@ -17,7 +18,7 @@ public class JBombilla extends javax.swing.JPanel {
     /**
      * Creates new form JBombilla
      */
-    public static enum Habitaculos {
+    public static enum Ubicaciones {
         SIN_DEFINIR("SIN DEFINIR"),
         SALON,
         CUARTO_DE_BAÑO("CUARTO DE BAÑO"),
@@ -26,11 +27,11 @@ public class JBombilla extends javax.swing.JPanel {
         COCINA;
         String habitaculo;
 
-        private Habitaculos() {
+        private Ubicaciones() {
             this.habitaculo=super.toString();
         }
 
-        private Habitaculos(String habitaculo) {
+        private Ubicaciones(String habitaculo) {
             this.habitaculo = habitaculo;
         }
 
@@ -46,23 +47,54 @@ public class JBombilla extends javax.swing.JPanel {
         FUNDIDA;
     }
 
+    private static ArrayList<JBombilla> coleccionBombillas= new ArrayList();
     private Bombilla bombilla;
-    private Habitaculos habitaculo = Habitaculos.SIN_DEFINIR;
+    private int idBombilla;
+    private Ubicaciones ubicacion;
     private Estado estado = Estado.APAGADA;
     private int numeroMaximoEncendidos=5;
     private int tiempoMaximoEncendido=15;
 
     public JBombilla() {
         initComponents();
-        iniciaMisComponentes();
+        iniciaMisPropiedades();
+        setUbicacion(Ubicaciones.SIN_DEFINIR);
+    }
+    
+    public JBombilla(Ubicaciones ubicacion){
+        initComponents();
+        iniciaMisPropiedades();
+        setUbicacion(ubicacion);
+    }
+    
+    public void setUbicacion(Ubicaciones ubicacion){
+        jLabelUbicacion.setText((this.ubicacion=ubicacion).toString());
+        jLabelNumeroBombillaHabitaculo.setText(String.valueOf(idBombilla=numeroBombilla(this.ubicacion)));
+    }
+    
+    public Ubicaciones getUbicacion(){
+        return this.ubicacion;
     }
 
-    private void iniciaMisComponentes() {
+    public int getIdBombilla() {
+        return idBombilla;
+    }
+    
+    private void iniciaMisPropiedades() {
         bombilla = new Bombilla();
         jLabelReponer.setVisible(false);
+        coleccionBombillas.add(this);
         consistencia();
     }
 
+    private int numeroBombilla(Ubicaciones ubicacion){
+        int numeroBombillas=0;
+        for( JBombilla jBom: coleccionBombillas){
+            if(jBom.getUbicacion()==ubicacion)numeroBombillas++;
+        }
+        return numeroBombillas;
+    }
+    
     private void consistencia() {
         jLabelBombilla.setIcon(new ImageIcon(getClass().getResource((estado == Estado.ENCENDIDA) ? "/Recursos/encendida.png" : "/Recursos/apagada.png")));
         jButtonEncendidoApagado.setText((estado == Estado.APAGADA) ? "ON" : "OFF");
@@ -72,8 +104,10 @@ public class JBombilla extends javax.swing.JPanel {
     }
 
     public void encender(){
+        if (estado== Estado.ENCENDIDA) return;
         estado= Estado.ENCENDIDA;
         bombilla.setEncendida();
+        comprobarVidaUtil();
         System.out.println(bombilla.getNumeroEncendidos()+"------"+bombilla.getTiempoEncendida());
         consistencia();
     }
@@ -81,7 +115,6 @@ public class JBombilla extends javax.swing.JPanel {
     public void apagar(){
         estado= Estado.APAGADA;
         bombilla.setApagada();
-        comprobarVidaUtil();
         consistencia();
     }
     
@@ -92,10 +125,8 @@ public class JBombilla extends javax.swing.JPanel {
     }
     
     private void comprobarVidaUtil(){
-        if(bombilla.getNumeroEncendidos()>numeroMaximoEncendidos||bombilla.getTiempoEncendida()>tiempoMaximoEncendido)estado=Estado.FUNDIDA;
+        if(bombilla.getNumeroEncendidos()>=numeroMaximoEncendidos||bombilla.getTiempoEncendida()>tiempoMaximoEncendido)estado=Estado.FUNDIDA;
     }
-    
-    
     
     private class Bombilla {
 
@@ -132,7 +163,7 @@ public class JBombilla extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabelBombilla = new javax.swing.JLabel();
-        jLabelHabitaculo = new javax.swing.JLabel();
+        jLabelUbicacion = new javax.swing.JLabel();
         jLabelNumeroBombillaHabitaculo = new javax.swing.JLabel();
         jButtonEncendidoApagado = new javax.swing.JButton();
         jLabelReponer = new javax.swing.JLabel();
@@ -141,11 +172,11 @@ public class JBombilla extends javax.swing.JPanel {
 
         jLabelBombilla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/apagada.png"))); // NOI18N
 
-        jLabelHabitaculo.setBackground(new java.awt.Color(153, 255, 153));
-        jLabelHabitaculo.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
-        jLabelHabitaculo.setForeground(new java.awt.Color(255, 255, 0));
-        jLabelHabitaculo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelHabitaculo.setText("jLabel1");
+        jLabelUbicacion.setBackground(new java.awt.Color(153, 255, 153));
+        jLabelUbicacion.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        jLabelUbicacion.setForeground(new java.awt.Color(255, 255, 0));
+        jLabelUbicacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelUbicacion.setText("SIN_DEFINIR");
 
         jLabelNumeroBombillaHabitaculo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabelNumeroBombillaHabitaculo.setForeground(new java.awt.Color(255, 0, 51));
@@ -175,34 +206,37 @@ public class JBombilla extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelBombilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelBombilla)
+                        .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelNumeroBombillaHabitaculo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonEncendidoApagado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelReponer, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)))
-                    .addComponent(jLabelHabitaculo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabelNumeroBombillaHabitaculo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonEncendidoApagado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                            .addComponent(jLabelReponer, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelHabitaculo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelBombilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
                         .addComponent(jLabelNumeroBombillaHabitaculo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonEncendidoApagado, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelReponer, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEncendidoApagado, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelReponer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelBombilla, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -220,8 +254,8 @@ public class JBombilla extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEncendidoApagado;
     private javax.swing.JLabel jLabelBombilla;
-    private javax.swing.JLabel jLabelHabitaculo;
     private javax.swing.JLabel jLabelNumeroBombillaHabitaculo;
     private javax.swing.JLabel jLabelReponer;
+    private javax.swing.JLabel jLabelUbicacion;
     // End of variables declaration//GEN-END:variables
 }

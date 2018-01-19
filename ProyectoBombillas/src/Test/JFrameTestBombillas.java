@@ -5,6 +5,9 @@
  */
 package Test;
 
+import MisComponentes.JBombilla.JBombilla;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author usuario
@@ -16,8 +19,18 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
      */
     public JFrameTestBombillas() {
         initComponents();
+        iniciaMisComponenetes();
     }
 
+    private void iniciaMisComponenetes(){
+        jComboBoxUbicaciones.setModel(new DefaultComboBoxModel(JBombilla.Ubicaciones.values()));
+    }
+    
+    private void consistencia(){
+        jPanelBombillas.repaint();
+        jPanelUbicaciones.revalidate();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,10 +41,15 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelBombillas = new javax.swing.JPanel();
-        jBombilla2 = new MisComponentes.JBombilla.JBombilla();
         jPanelUbicaciones = new javax.swing.JPanel();
         jButtonApagar = new javax.swing.JButton();
         jButtonEncender = new javax.swing.JButton();
+        jComboBoxUbicaciones = new javax.swing.JComboBox<>();
+        jButtonNuevaBombilla = new javax.swing.JButton();
+        jLabelUbicacion = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListBombillasReponer = new javax.swing.JList<>();
+        jButtonReponer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -41,17 +59,11 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         jPanelBombillas.setLayout(jPanelBombillasLayout);
         jPanelBombillasLayout.setHorizontalGroup(
             jPanelBombillasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBombillasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jBombilla2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(360, Short.MAX_VALUE))
+            .addGap(0, 822, Short.MAX_VALUE)
         );
         jPanelBombillasLayout.setVerticalGroup(
             jPanelBombillasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBombillasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jBombilla2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+            .addGap(0, 394, Short.MAX_VALUE)
         );
 
         jPanelUbicaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Ubicaciones"));
@@ -67,7 +79,7 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelUbicacionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonEncender)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(jButtonApagar)
                 .addContainerGap())
         );
@@ -81,29 +93,77 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jComboBoxUbicaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jButtonNuevaBombilla.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonNuevaBombilla.setText("Nueva Bombilla");
+        jButtonNuevaBombilla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevaBombillaActionPerformed(evt);
+            }
+        });
+
+        jLabelUbicacion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelUbicacion.setText("Ubicación:");
+
+        jScrollPane1.setViewportView(jListBombillasReponer);
+
+        jButtonReponer.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonReponer.setText("REPONER");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelBombillas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanelUbicaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonNuevaBombilla, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jComboBoxUbicaciones, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(522, 522, 522)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonReponer, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelBombillas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanelUbicaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelUbicaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelBombillas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxUbicaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonNuevaBombilla)
+                    .addComponent(jButtonReponer))
+                .addGap(22, 22, 22))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonNuevaBombillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaBombillaActionPerformed
+        jPanelBombillas.add(new JBombilla((JBombilla.Ubicaciones)jComboBoxUbicaciones.getSelectedItem()));
+        consistencia();
+    }//GEN-LAST:event_jButtonNuevaBombillaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,10 +201,15 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private MisComponentes.JBombilla.JBombilla jBombilla2;
     private javax.swing.JButton jButtonApagar;
     private javax.swing.JButton jButtonEncender;
+    private javax.swing.JButton jButtonNuevaBombilla;
+    private javax.swing.JButton jButtonReponer;
+    private javax.swing.JComboBox<String> jComboBoxUbicaciones;
+    private javax.swing.JLabel jLabelUbicacion;
+    private javax.swing.JList<String> jListBombillasReponer;
     private javax.swing.JPanel jPanelBombillas;
     private javax.swing.JPanel jPanelUbicaciones;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
