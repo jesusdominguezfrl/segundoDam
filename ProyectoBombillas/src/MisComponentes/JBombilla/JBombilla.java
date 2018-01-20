@@ -7,6 +7,8 @@ package MisComponentes.JBombilla;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -24,11 +26,12 @@ public class JBombilla extends javax.swing.JPanel {
         CUARTO_DE_BAÑO("CUARTO DE BAÑO"),
         DORMITORIO_PRINCIPAL("DORMITORIO PRINCIPAL"),
         DORMITORI_INFANTIL("DORMITORIO INFANTIL"),
+        //        asdsad,weqweqew,kmkl,
         COCINA;
         String habitaculo;
 
         private Ubicaciones() {
-            this.habitaculo=super.toString();
+            this.habitaculo = super.toString();
         }
 
         private Ubicaciones(String habitaculo) {
@@ -47,39 +50,44 @@ public class JBombilla extends javax.swing.JPanel {
         FUNDIDA;
     }
 
-    private static ArrayList<JBombilla> coleccionBombillas= new ArrayList();
+    private static ArrayList<JBombilla> coleccionBombillas = new ArrayList();
+
+    public static ArrayList<JBombilla> getColeccionBombillas() {
+        return (ArrayList< JBombilla>) coleccionBombillas.clone();
+    }
+
     private Bombilla bombilla;
     private int idBombilla;
     private Ubicaciones ubicacion;
     private Estado estado = Estado.APAGADA;
-    private int numeroMaximoEncendidos=5;
-    private int tiempoMaximoEncendido=15;
+    private int numeroMaximoEncendidos = 5;
+    private int tiempoMaximoEncendido = 15;
 
     public JBombilla() {
         initComponents();
         iniciaMisPropiedades();
         setUbicacion(Ubicaciones.SIN_DEFINIR);
     }
-    
-    public JBombilla(Ubicaciones ubicacion){
+
+    public JBombilla(Ubicaciones ubicacion) {
         initComponents();
         iniciaMisPropiedades();
         setUbicacion(ubicacion);
     }
-    
-    public void setUbicacion(Ubicaciones ubicacion){
-        jLabelUbicacion.setText((this.ubicacion=ubicacion).toString());
-        jLabelNumeroBombillaHabitaculo.setText(String.valueOf(idBombilla=numeroBombilla(this.ubicacion)));
+
+    public void setUbicacion(Ubicaciones ubicacion) {
+        jLabelUbicacion.setText((this.ubicacion = ubicacion).toString());
+        jLabelNumeroBombillaHabitaculo.setText(String.valueOf(idBombilla = numeroBombilla(this.ubicacion)));
     }
-    
-    public Ubicaciones getUbicacion(){
+
+    public Ubicaciones getUbicacion() {
         return this.ubicacion;
     }
 
     public int getIdBombilla() {
         return idBombilla;
     }
-    
+
     private void iniciaMisPropiedades() {
         bombilla = new Bombilla();
         jLabelReponer.setVisible(false);
@@ -87,96 +95,158 @@ public class JBombilla extends javax.swing.JPanel {
         consistencia();
     }
 
-    private int numeroBombilla(Ubicaciones ubicacion){
-        int numeroBombillas=0;
-        for( JBombilla jBom: coleccionBombillas){
-            if(jBom.getUbicacion()==ubicacion)numeroBombillas++;
+    private int numeroBombilla(Ubicaciones ubicacion) {
+        int numeroBombillas = 0;
+        for (JBombilla jBom : coleccionBombillas) {
+            if (jBom.getUbicacion() == ubicacion) {
+                numeroBombillas++;
+            }
         }
         return numeroBombillas;
     }
-    
+
+    private void controlBombilla() {
+        System.out.println("ESTADO→ " + estado);
+        switch (estado) {
+//            case APAGADA:
+//                bombilla.setApagada();
+//                break;
+            case ENCENDIDA:
+                bombilla.setEncendida();
+                fireBombillaEncendida();
+                break;
+            case FUNDIDA:
+                fireBombillaAgotada();
+                break;
+        }
+        consistencia();
+    }
+
     private void consistencia() {
         jLabelBombilla.setIcon(new ImageIcon(getClass().getResource((estado == Estado.ENCENDIDA) ? "/Recursos/encendida.png" : "/Recursos/apagada.png")));
-        jButtonEncendidoApagado.setText((estado == Estado.APAGADA) ? "ON" : "OFF");
+        jButtonEncendidoApagado.setText((estado == Estado.APAGADA || estado == Estado.FUNDIDA) ? "ON" : "OFF");
         jButtonEncendidoApagado.setEnabled(estado != Estado.FUNDIDA);
-        jLabelReponer.setVisible(estado==Estado.FUNDIDA);
-        
+        jLabelReponer.setVisible(estado == Estado.FUNDIDA);
     }
-    
+
+    public void encender() {
+        if (estado == Estado.ENCENDIDA || estado == Estado.FUNDIDA) {
+            return;
+        }
+        estado = Estado.ENCENDIDA;
+        System.out.println(bombilla.getNumeroEncendidos() + " →→→→→→→→→ " + bombilla.getTiempoEncendida());
+        comprobarVidaUtil();
+    }
+
+    public void apagar() {
+        if (estado == Estado.APAGADA || estado == Estado.FUNDIDA) {
+            return;
+        }
+        estado = Estado.APAGADA;
+        comprobarVidaUtil();
+    }
+
+    public void reponer() {
+        bombilla = new Bombilla();
+        estado = Estado.APAGADA;
+        fireBombillaRepuesta();
+        consistencia();
+    }
+
+    @Override
+    public String toString() {
+        return "Bombilla " + this.getIdBombilla() + " en " + this.getUbicacion().toString() + " agotada.";
+    }
+
+    private void comprobarVidaUtil() {
+        if (bombilla.getNumeroEncendidos() >= numeroMaximoEncendidos || (int) bombilla.getTiempoEncendida() > tiempoMaximoEncendido) {
+            estado = Estado.FUNDIDA;
+        }
+        controlBombilla();
+    }
+
     private ArrayList<JBombillaListener> listeners = new ArrayList();
-    
-    public void addJBombillaListener(JBombillaListener l){
+
+    public void addJBombillaListener(JBombillaListener l) {
         listeners.add(l);
     }
-    
-    public void removeJBombillaListener(JBombillaListener l){
+
+    public void removeJBombillaListener(JBombillaListener l) {
         listeners.remove(l);
     }
-    
-    protected void fireBombillaEncendida(){
-        JBombillaEvent evt = new JBombillaEvent(this,bombilla.getNumeroEncendidos(),(int)bombilla.getTiempoEncendida());
-        for(JBombillaListener l : listeners){
-            l.bombillaEncendida(evt);
-        }
+
+    protected void fireBombillaEncendida() {
         System.out.println("FIRE ENCENDIDA");
-    }
-    
-    protected void fireBombillaAgotada(){
-        JBombillaEvent evt = new JBombillaEvent(this);
-        for(JBombillaListener l : listeners){
+        JBombillaEvent evt = new JBombillaEvent(this, bombilla.getNumeroEncendidos(), (int) bombilla.getTiempoEncendida());
+        for (JBombillaListener l : listeners) {
             l.bombillaEncendida(evt);
         }
+    }
+
+    protected void fireBombillaAgotada() {
         System.out.println("FIRE AGOTADA");
+        JBombillaEvent evt = new JBombillaEvent(this);
+        for (JBombillaListener l : listeners) {
+            l.bombillaAgotada(evt);
+        }
     }
-    
-    public void encender(){
-        if (estado== Estado.ENCENDIDA) return;
-        estado= Estado.ENCENDIDA;
-        bombilla.setEncendida();
-        comprobarVidaUtil();
-        System.out.println(bombilla.getNumeroEncendidos()+"------"+bombilla.getTiempoEncendida());
-        consistencia();
+
+    protected void fireBombillaRepuesta() {
+        JBombillaEvent evt = new JBombillaEvent(this, 0, 0);
+        for (JBombillaListener l : listeners) {
+            l.bombillaRepuesta(evt);
+        }
     }
-   
-    public void apagar(){
-        estado= Estado.APAGADA;
-        bombilla.setApagada();
-        consistencia();
-    }
-    
-    public void reponer(){
-        bombilla=new Bombilla();
-        estado= Estado.APAGADA;
-        consistencia();
-    }
-    
-    private void comprobarVidaUtil(){
-        if(bombilla.getNumeroEncendidos()>=numeroMaximoEncendidos||bombilla.getTiempoEncendida()>tiempoMaximoEncendido)estado=Estado.FUNDIDA;
-    }
-    
+
     private class Bombilla {
 
-        private int numeroEncendidos = 0;
-        private long tiempoEncendida = 0;
-        private long inicioTiempoEncendida;
+        private int numeroEncendidos;
+        private int tiempoEncendida;
+//        private long inicioTiempoEncendida;
+        private hiloTemporizador hilo = new hiloTemporizador();
+
+        public Bombilla() {
+            numeroEncendidos = 0;
+            tiempoEncendida = 0;
+//            inicioTiempoEncendida = 0;
+        }
 
         public void setEncendida() {
-            inicioTiempoEncendida = Calendar.getInstance().getTimeInMillis();
-        }
-
-        public void setApagada() {
             this.numeroEncendidos++;
-            tiempoEncendida += Calendar.getInstance().getTimeInMillis() - inicioTiempoEncendida;
+            new hiloTemporizador().start();
+//            inicioTiempoEncendida = Calendar.getInstance().getTimeInMillis();
         }
 
+//        public void setApagada() {
+//            tiempoEncendida += Calendar.getInstance().getTimeInMillis() - inicioTiempoEncendida;
+//        }
         public int getNumeroEncendidos() {
             return numeroEncendidos;
         }
 
-        public long getTiempoEncendida() {
-            return tiempoEncendida/1000;
+        public int getTiempoEncendida() {
+            return tiempoEncendida;
         }
 
+        private class hiloTemporizador extends Thread {
+
+            @Override
+            public void run() {
+                while (estado == Estado.ENCENDIDA) {
+                    System.out.println("HILO" + ubicacion);
+                    tiempoEncendida++;
+                    System.out.println(bombilla.getTiempoEncendida());
+                    if (bombilla.getTiempoEncendida() >= tiempoMaximoEncendido) {
+                        estado = Estado.FUNDIDA;
+                        controlBombilla();
+                    }
+                    try {
+                        this.sleep(1000);
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -267,9 +337,11 @@ public class JBombilla extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEncendidoApagadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEncendidoApagadoActionPerformed
-        if(estado==Estado.APAGADA)encender();
-        else apagar();
-        System.out.println(estado);
+        if (estado == Estado.APAGADA) {
+            encender();
+        } else {
+            apagar();
+        }
     }//GEN-LAST:event_jButtonEncendidoApagadoActionPerformed
 
     private void jLabelReponerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelReponerMouseClicked
