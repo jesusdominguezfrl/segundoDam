@@ -9,7 +9,6 @@ import MisComponentes.JBombilla.JBombilla;
 import MisComponentes.JBombilla.JBombillaEvent;
 import MisComponentes.JBombilla.JBombillaListener;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -33,6 +32,9 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         iniciaMisComponenetes();
     }
 
+    /**
+     * Inicia los componentes del Frame.
+     */
     private void iniciaMisComponenetes() {
         jPanelBombillas.setLayout(new OwnLayoutManager());
         jPanelBombillas.setMaximumSize(new Dimension(255*4,HEIGHT));
@@ -41,6 +43,10 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
     }
 
     ButtonGroup bG = new ButtonGroup();
+    /**
+     * Carga los RadioButtons en la pantalla en funcion de los valores que haya
+     * en el tipo enumerado Ubicaciones del componente JBombilla.
+     */
     private void cargarRadioButtons() {
         for (JBombilla.Ubicaciones u : JBombilla.Ubicaciones.values()) {
             JRadioButton rBT = new JRadioButton(u.toString());
@@ -54,6 +60,9 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         consistencia();
     }
 
+    /**
+     * Gestiona la consistencia del Frame
+     */
     private void consistencia() {
         jListBombillasReponer.setModel(listadoFundidas);
         jPanelBombillas.repaint();
@@ -62,6 +71,9 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
     
     private DefaultListModel listadoFundidas = new DefaultListModel();
     
+    /**
+     * Listener del componente JBombilla.
+     */
     private class gestorBombillas implements JBombillaListener{
         
         @Override
@@ -197,6 +209,10 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Gestion del boton añadir nueva bombilla al panel de bombillas.
+     * @param evt 
+     */
     private void jButtonNuevaBombillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaBombillaActionPerformed
         JBombilla bombilla=new JBombilla((JBombilla.Ubicaciones) jComboBoxUbicaciones.getSelectedItem());
         bombilla.addJBombillaListener(new gestorBombillas());
@@ -204,6 +220,11 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         consistencia();
     }//GEN-LAST:event_jButtonNuevaBombillaActionPerformed
 
+    /**
+     * Gestion de los botones Apagar y Encender del Frame para gestionar el 
+     * encendido apagado de las bombillas de una misma ubicacion.
+     * @param evt 
+     */
     private void jButtonApagarEncenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApagarEncenderActionPerformed
         try{
             for (JBombilla jBM: JBombilla.getColeccionBombillas()){
@@ -216,6 +237,11 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         }catch(Exception e){}
     }//GEN-LAST:event_jButtonApagarEncenderActionPerformed
 
+    /**
+     * Gestion del boton reponer, actua solo sobre los componentes seleccionados 
+     * en el Jlist
+     * @param evt 
+     */
     private void jButtonReponerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReponerActionPerformed
         if(jListBombillasReponer.getSelectedIndex()==-1)return;
         for( Object o : jListBombillasReponer.getSelectedValues()){

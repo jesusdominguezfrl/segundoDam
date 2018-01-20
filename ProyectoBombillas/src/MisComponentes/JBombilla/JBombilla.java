@@ -20,6 +20,7 @@ public class JBombilla extends javax.swing.JPanel {
     /**
      * Creates new form JBombilla
      */
+    //<editor-fold defaultstate="collapsed" desc="Tipo Enumerado Ubicaciones">
     public static enum Ubicaciones {
         SIN_DEFINIR("SIN DEFINIR"),
         SALON,
@@ -34,28 +35,38 @@ public class JBombilla extends javax.swing.JPanel {
             this.habitaculo = super.toString();
         }
 
+        /**
+         * Sobrecarga del constructor.
+         *
+         * @param habitaculo (String) Nombre del habitaculo o Ubicacion.
+         */
         private Ubicaciones(String habitaculo) {
             this.habitaculo = habitaculo;
         }
 
+        /**
+         * Sobre escritura del método toString()
+         *
+         * @return
+         */
         @Override
         public String toString() {
             return this.habitaculo;
         }
     }
 
+//</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Tipo Enumerado Estados Del Componente">
     private enum Estado {
         ENCENDIDA,
         APAGADA,
         FUNDIDA;
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Propiedades Privadas del Componente">
     private static ArrayList<JBombilla> coleccionBombillas = new ArrayList();
-
-    public static ArrayList<JBombilla> getColeccionBombillas() {
-        return (ArrayList< JBombilla>) coleccionBombillas.clone();
-    }
-
     private Bombilla bombilla;
     private int idBombilla;
     private Ubicaciones ubicacion;
@@ -63,6 +74,9 @@ public class JBombilla extends javax.swing.JPanel {
     private int numeroMaximoEncendidos = 5;
     private int tiempoMaximoEncendido = 15;
 
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Constructores">
     public JBombilla() {
         initComponents();
         iniciaMisPropiedades();
@@ -74,20 +88,77 @@ public class JBombilla extends javax.swing.JPanel {
         iniciaMisPropiedades();
         setUbicacion(ubicacion);
     }
+//</editor-fold>
 
-    public void setUbicacion(Ubicaciones ubicacion) {
-        jLabelUbicacion.setText((this.ubicacion = ubicacion).toString());
-        jLabelNumeroBombillaHabitaculo.setText(String.valueOf(idBombilla = numeroBombilla(this.ubicacion)));
+    //<editor-fold defaultstate="collapsed" desc="Miembros publicos de la clase">
+    /**
+     * Devuelve una copia de la coleccion de bombillas
+     *
+     * @return
+     */
+    public static ArrayList<JBombilla> getColeccionBombillas() {
+        return (ArrayList< JBombilla>) coleccionBombillas.clone();
     }
 
+    /**
+     * Devuelve la ubicacion de la bombilla.
+     *
+     * @return (Ubicaciones) ubicacion del componente.
+     */
     public Ubicaciones getUbicacion() {
         return this.ubicacion;
     }
 
-    public int getIdBombilla() {
-        return idBombilla;
+    /**
+     * Enciende la bombilla.
+     */
+    public void encender() {
+        if (estado == Estado.ENCENDIDA || estado == Estado.FUNDIDA) {
+            return;
+        }
+        estado = Estado.ENCENDIDA;
+        System.out.println(bombilla.getNumeroEncendidos() + " →→→→→→→→→ " + bombilla.getTiempoEncendida());
+        comprobarVidaUtil();
     }
 
+    /**
+     * Apaga la bombilla.
+     */
+    public void apagar() {
+        if (estado == Estado.APAGADA || estado == Estado.FUNDIDA) {
+            return;
+        }
+        estado = Estado.APAGADA;
+        comprobarVidaUtil();
+    }
+
+    /**
+     * Repone una bombilla Agotada/Fundida por una nueva.
+     */
+    public void reponer() {
+        bombilla = new Bombilla();
+        estado = Estado.APAGADA;
+        fireBombillaRepuesta();
+        consistencia();
+    }
+
+//</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Miembros privados de la clase">
+    /**
+     * Asigna la ubicacion al componente indicandolo en el mismo.
+     *
+     * @param ubicacion Lugar donde se encuentra el componente.
+     */
+    private void setUbicacion(Ubicaciones ubicacion) {
+        jLabelUbicacion.setText((this.ubicacion = ubicacion).toString());
+        jLabelNumeroBombillaHabitaculo.setText(String.valueOf(idBombilla = numeroBombilla(this.ubicacion)));
+    }
+
+    /**
+     * Inicia los parametros necesarios para conseguir que funcione el
+     * componente
+     */
     private void iniciaMisPropiedades() {
         bombilla = new Bombilla();
         jLabelReponer.setVisible(false);
@@ -95,6 +166,12 @@ public class JBombilla extends javax.swing.JPanel {
         consistencia();
     }
 
+    /**
+     * Contador de bombillas existente para asignar a cada bombilla un id unico.
+     *
+     * @param ubicacion Lugar donde se encuentra la bombilla
+     * @return (int) Numero id que se le asignara a la nueva bombilla.
+     */
     private int numeroBombilla(Ubicaciones ubicacion) {
         int numeroBombillas = 0;
         for (JBombilla jBom : coleccionBombillas) {
@@ -105,6 +182,10 @@ public class JBombilla extends javax.swing.JPanel {
         return numeroBombillas;
     }
 
+    /**
+     * Control de las acciones de la bombilla en funcion del estado en el que se
+     * encuentre.
+     */
     private void controlBombilla() {
         System.out.println("ESTADO→ " + estado);
         switch (estado) {
@@ -122,6 +203,9 @@ public class JBombilla extends javax.swing.JPanel {
         consistencia();
     }
 
+    /**
+     * Controla la consistencia del componente.
+     */
     private void consistencia() {
         jLabelBombilla.setIcon(new ImageIcon(getClass().getResource((estado == Estado.ENCENDIDA) ? "/Recursos/encendida.png" : "/Recursos/apagada.png")));
         jButtonEncendidoApagado.setText((estado == Estado.APAGADA || estado == Estado.FUNDIDA) ? "ON" : "OFF");
@@ -129,52 +213,52 @@ public class JBombilla extends javax.swing.JPanel {
         jLabelReponer.setVisible(estado == Estado.FUNDIDA);
     }
 
-    public void encender() {
-        if (estado == Estado.ENCENDIDA || estado == Estado.FUNDIDA) {
-            return;
-        }
-        estado = Estado.ENCENDIDA;
-        System.out.println(bombilla.getNumeroEncendidos() + " →→→→→→→→→ " + bombilla.getTiempoEncendida());
-        comprobarVidaUtil();
-    }
-
-    public void apagar() {
-        if (estado == Estado.APAGADA || estado == Estado.FUNDIDA) {
-            return;
-        }
-        estado = Estado.APAGADA;
-        comprobarVidaUtil();
-    }
-
-    public void reponer() {
-        bombilla = new Bombilla();
-        estado = Estado.APAGADA;
-        fireBombillaRepuesta();
-        consistencia();
-    }
-
-    @Override
-    public String toString() {
-        return "Bombilla " + this.getIdBombilla() + " en " + this.getUbicacion().toString() + " agotada.";
-    }
-
+    /**
+     * Comprueba los parametros de "vida" de la bombilla.
+     */
     private void comprobarVidaUtil() {
-        if (bombilla.getNumeroEncendidos() >= numeroMaximoEncendidos || (int) bombilla.getTiempoEncendida() > tiempoMaximoEncendido) {
+        if (bombilla.getNumeroEncendidos() >= numeroMaximoEncendidos/*|| (int) bombilla.getTiempoEncendida() > tiempoMaximoEncendido*/) {
             estado = Estado.FUNDIDA;
         }
         controlBombilla();
     }
 
+//</editor-fold>
+    /**
+     * Devuelve un String con informacion sobre el componente indicando su
+     * ubicacion, su identificador y su estado.
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Bombilla " + this.idBombilla + " en " + this.getUbicacion().toString() + " " + estado;
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="Gestion de Eventos">
     private ArrayList<JBombillaListener> listeners = new ArrayList();
 
+    /**
+     * Añade el listener al componente
+     *
+     * @param l Listenner que sera añadido a la lista de listeners
+     */
     public void addJBombillaListener(JBombillaListener l) {
         listeners.add(l);
     }
 
+    /**
+     * Elimina el listener al componente.
+     *
+     * @param l Listenner que sera eliminado de la lista de listeners.
+     */
     public void removeJBombillaListener(JBombillaListener l) {
         listeners.remove(l);
     }
 
+    /**
+     * Lanza el listener que indica que la bombilla ha sido encendida.
+     */
     protected void fireBombillaEncendida() {
         System.out.println("FIRE ENCENDIDA");
         JBombillaEvent evt = new JBombillaEvent(this, bombilla.getNumeroEncendidos(), (int) bombilla.getTiempoEncendida());
@@ -183,6 +267,9 @@ public class JBombilla extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Lanza el listener que indica que la bombilla se ha estropeado.
+     */
     protected void fireBombillaAgotada() {
         System.out.println("FIRE AGOTADA");
         JBombillaEvent evt = new JBombillaEvent(this);
@@ -191,19 +278,26 @@ public class JBombilla extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Lanza el listener que indica que la bombilla ha sido repuesta.
+     */
     protected void fireBombillaRepuesta() {
         JBombillaEvent evt = new JBombillaEvent(this, 0, 0);
         for (JBombillaListener l : listeners) {
             l.bombillaRepuesta(evt);
         }
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Clase Bombilla">
     private class Bombilla {
 
+        //<editor-fold defaultstate="collapsed" desc="Propiedades Privadas">
         private int numeroEncendidos;
         private int tiempoEncendida;
 //        private long inicioTiempoEncendida;
         private hiloTemporizador hilo = new hiloTemporizador();
+        //</editor-fold>
 
         public Bombilla() {
             numeroEncendidos = 0;
@@ -211,6 +305,11 @@ public class JBombilla extends javax.swing.JPanel {
 //            inicioTiempoEncendida = 0;
         }
 
+        //<editor-fold defaultstate="collapsed" desc="Acceso publico a la gestion del objeto">
+        /**
+         * Activa el hilo que cuenta el tiempo encendido de la bombilla y
+         * aumenta el contador de veces que se ha encendido.
+         */
         public void setEncendida() {
             this.numeroEncendidos++;
             new hiloTemporizador().start();
@@ -220,22 +319,32 @@ public class JBombilla extends javax.swing.JPanel {
 //        public void setApagada() {
 //            tiempoEncendida += Calendar.getInstance().getTimeInMillis() - inicioTiempoEncendida;
 //        }
+        /**
+         * Devuelve el numero de veces que se ha encendido la bombilla
+         *
+         * @return (int) Numero de encendidos.
+         */
         public int getNumeroEncendidos() {
             return numeroEncendidos;
         }
 
+        /**
+         * Devuelve el tiempo que la bombilla lleva encendida en segundos.
+         *
+         * @return (int) Total segundos que ha estado la bombilla encendida
+         */
         public int getTiempoEncendida() {
             return tiempoEncendida;
         }
+//</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Hilo">
         private class hiloTemporizador extends Thread {
 
             @Override
             public void run() {
                 while (estado == Estado.ENCENDIDA) {
-                    System.out.println("HILO" + ubicacion);
                     tiempoEncendida++;
-                    System.out.println(bombilla.getTiempoEncendida());
                     if (bombilla.getTiempoEncendida() >= tiempoMaximoEncendido) {
                         estado = Estado.FUNDIDA;
                         controlBombilla();
@@ -247,7 +356,10 @@ public class JBombilla extends javax.swing.JPanel {
                 }
             }
         }
+//</editor-fold>
+
     }
+//</editor-fold>
 
     /**
      * This method is called from within the constructor to initialize the form.
