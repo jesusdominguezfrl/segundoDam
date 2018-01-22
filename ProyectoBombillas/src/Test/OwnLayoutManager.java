@@ -81,7 +81,7 @@ public class OwnLayoutManager implements LayoutManager{
     public void colocarTodos(){
         inicializaLayout();
         for (Component c: contenedor.getComponents()){
-            if(c instanceof JButton)return;
+//            if(c instanceof JButton)return;
             colocarUno(c);
         }
     }

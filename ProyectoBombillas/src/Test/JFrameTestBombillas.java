@@ -78,6 +78,7 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         
         @Override
         public void bombillaEncendida(JBombillaEvent evt) {
+            System.out.println("********Info Bombilla********");
             System.out.println("Tiempo encendida → "+evt.getSegundosEncendida());
             System.out.println("Numero encendidos → "+evt.getNumeroEncendidos());
         }
@@ -106,6 +107,7 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
 
         jPanelBombillas = new javax.swing.JPanel();
         jPanelUbicaciones = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jButtonApagar = new javax.swing.JButton();
         jButtonEncender = new javax.swing.JButton();
         jComboBoxUbicaciones = new javax.swing.JComboBox<>();
@@ -122,22 +124,44 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         jPanelBombillas.setLayout(null);
 
         jPanelUbicaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Ubicaciones"));
+        jPanelUbicaciones.setLayout(new java.awt.GridLayout(0, 1));
 
         jButtonApagar.setText("Apagar");
+        jButtonApagar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonApagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonApagarEncenderActionPerformed(evt);
             }
         });
-        jPanelUbicaciones.add(jButtonApagar);
 
         jButtonEncender.setText("Encender");
+        jButtonEncender.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonEncender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonApagarEncenderActionPerformed(evt);
             }
         });
-        jPanelUbicaciones.add(jButtonEncender);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jButtonApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(jButtonEncender, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonApagar, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                    .addComponent(jButtonEncender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jPanelUbicaciones.add(jPanel1);
 
         jComboBoxUbicaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -172,9 +196,8 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonNuevaBombilla, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jComboBoxUbicaciones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabelUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxUbicaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 897, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
@@ -191,19 +214,19 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelBombillas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelUbicaciones, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
+                    .addComponent(jPanelUbicaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxUbicaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBoxUbicaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonReponer)
-                    .addComponent(jButtonNuevaBombilla))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonNuevaBombilla)
+                    .addComponent(jButtonReponer))
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -229,10 +252,8 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         try{
             for (JBombilla jBM: JBombilla.getColeccionBombillas()){
                 if(jBM.getUbicacion().toString().equals(bG.getSelection().getActionCommand()))
-                    if((JButton)evt.getSource()==jButtonApagar)
-                        jBM.apagar();
-                    else
-                        jBM.encender();
+                    if((JButton)evt.getSource()==jButtonApagar)jBM.apagar();
+                    else jBM.encender();
             }
         }catch(Exception e){}
     }//GEN-LAST:event_jButtonApagarEncenderActionPerformed
@@ -246,6 +267,7 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         if(jListBombillasReponer.getSelectedIndex()==-1)return;
         for( Object o : jListBombillasReponer.getSelectedValues()){
             ((JBombilla) o).reponer();
+//            listadoFundidas.removeElement((JBombilla) evt.getSource());
         }
         consistencia();
     }//GEN-LAST:event_jButtonReponerActionPerformed
@@ -293,6 +315,7 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxUbicaciones;
     private javax.swing.JLabel jLabelUbicacion;
     private javax.swing.JList<String> jListBombillasReponer;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBombillas;
     private javax.swing.JPanel jPanelUbicaciones;
     private javax.swing.JScrollPane jScrollPane1;

@@ -6,9 +6,6 @@
 package MisComponentes.JBombilla;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -27,7 +24,7 @@ public class JBombilla extends javax.swing.JPanel {
         CUARTO_DE_BAÑO("CUARTO DE BAÑO"),
         DORMITORIO_PRINCIPAL("DORMITORIO PRINCIPAL"),
         DORMITORI_INFANTIL("DORMITORIO INFANTIL"),
-        //        asdsad,weqweqew,kmkl,
+//                asdsad,weqweqew,kmkl,
         COCINA;
         String habitaculo;
 
@@ -117,7 +114,7 @@ public class JBombilla extends javax.swing.JPanel {
             return;
         }
         estado = Estado.ENCENDIDA;
-        System.out.println(bombilla.getNumeroEncendidos() + " →→→→→→→→→ " + bombilla.getTiempoEncendida());
+//        System.out.println(bombilla.getNumeroEncendidos() + " →→→→→→→→→ " + bombilla.getTiempoEncendida());
         comprobarVidaUtil();
     }
 
@@ -150,7 +147,7 @@ public class JBombilla extends javax.swing.JPanel {
      *
      * @param ubicacion Lugar donde se encuentra el componente.
      */
-    private void setUbicacion(Ubicaciones ubicacion) {
+    public void setUbicacion(Ubicaciones ubicacion) {
         jLabelUbicacion.setText((this.ubicacion = ubicacion).toString());
         jLabelNumeroBombillaHabitaculo.setText(String.valueOf(idBombilla = numeroBombilla(this.ubicacion)));
     }
@@ -187,7 +184,7 @@ public class JBombilla extends javax.swing.JPanel {
      * encuentre.
      */
     private void controlBombilla() {
-        System.out.println("ESTADO→ " + estado);
+//        System.out.println("ESTADO→ " + estado);
         switch (estado) {
 //            case APAGADA:
 //                bombilla.setApagada();
@@ -224,6 +221,7 @@ public class JBombilla extends javax.swing.JPanel {
     }
 
 //</editor-fold>
+    
     /**
      * Devuelve un String con informacion sobre el componente indicando su
      * ubicacion, su identificador y su estado.
