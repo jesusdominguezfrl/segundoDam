@@ -80,7 +80,8 @@ public class JBombilla extends javax.swing.JPanel {
         setUbicacion(Ubicaciones.SIN_DEFINIR);
     }
 
-    public JBombilla(Ubicaciones ubicacion) {
+    public JBombilla(/*Listener*/Ubicaciones ubicacion) {
+       // addJBombillaListener(listener); //Correccion
         initComponents();
         iniciaMisPropiedades();
         setUbicacion(ubicacion);
@@ -133,6 +134,8 @@ public class JBombilla extends javax.swing.JPanel {
      * Repone una bombilla Agotada/Fundida por una nueva.
      */
     public void reponer() {
+//        if(estado==Estado.ENCENDIDA)throw IllegalStateException("No se pude reponer una bombilla encendida.");
+        //TODO Lanzar excepcion IllegalException
         bombilla = new Bombilla();
         estado = Estado.APAGADA;
         fireBombillaRepuesta();
