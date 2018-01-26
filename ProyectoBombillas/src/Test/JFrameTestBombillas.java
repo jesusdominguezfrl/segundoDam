@@ -88,12 +88,12 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
             listadoFundidas.addElement((JBombilla) evt.getSource());
             consistencia();
         }
-
-        @Override
-        public void bombillaRepuesta(JBombillaEvent evt) {
-            listadoFundidas.removeElement((JBombilla) evt.getSource());
-            consistencia();
-        }
+//***********************Hecho para cuando se puede reponer la bombilla desde la etiqueta del componente****************//
+//        @Override
+//        public void bombillaRepuesta(JBombillaEvent evt) {
+//            listadoFundidas.removeElement((JBombilla) evt.getSource());
+//            consistencia();
+//        }
     }
 
     /**
@@ -267,7 +267,7 @@ public class JFrameTestBombillas extends javax.swing.JFrame {
         if(jListBombillasReponer.getSelectedIndex()==-1)return;
         for( Object o : jListBombillasReponer.getSelectedValues()){
             ((JBombilla) o).reponer();
-//            listadoFundidas.removeElement((JBombilla) evt.getSource());
+            listadoFundidas.removeElement((JBombilla) o);
         }
         consistencia();
     }//GEN-LAST:event_jButtonReponerActionPerformed

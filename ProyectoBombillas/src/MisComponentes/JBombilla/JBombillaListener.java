@@ -21,6 +21,6 @@ public interface JBombillaListener extends EventListener{
     Añadido para que al hacer click en reponer del componente poder controlar la lista de bombillas
     fundidas del frame
     */
-    public void bombillaRepuesta(JBombillaEvent evt);
+   // public void bombillaRepuesta(JBombillaEvent evt);
     
 }

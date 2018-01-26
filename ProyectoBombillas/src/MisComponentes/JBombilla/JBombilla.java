@@ -138,7 +138,7 @@ public class JBombilla extends javax.swing.JPanel {
         //TODO Lanzar excepcion IllegalException
         bombilla = new Bombilla();
         estado = Estado.APAGADA;
-        fireBombillaRepuesta();
+//        fireBombillaRepuesta();
         consistencia();
     }
 
@@ -278,16 +278,18 @@ public class JBombilla extends javax.swing.JPanel {
             l.bombillaAgotada(evt);
         }
     }
-
+//***********************************************************************************//
     /**
      * Lanza el listener que indica que la bombilla ha sido repuesta.
      */
-    protected void fireBombillaRepuesta() {
-        JBombillaEvent evt = new JBombillaEvent(this, 0, 0);
-        for (JBombillaListener l : listeners) {
-            l.bombillaRepuesta(evt);
-        }
-    }
+//    protected void fireBombillaRepuesta() {
+//        JBombillaEvent evt = new JBombillaEvent(this, 0, 0);
+//        for (JBombillaListener l : listeners) {
+//            l.bombillaRepuesta(evt);
+//        }
+//    }
+    
+//**********************************************************************************//
 //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Clase Bombilla">
@@ -458,7 +460,7 @@ public class JBombilla extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonEncendidoApagadoActionPerformed
 
     private void jLabelReponerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelReponerMouseClicked
-        reponer();
+        //reponer();  //permite reponer la bombilla desde el componente
     }//GEN-LAST:event_jLabelReponerMouseClicked
 
 

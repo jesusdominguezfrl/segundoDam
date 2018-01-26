@@ -28,7 +28,7 @@ public class JBombillaEvent extends EventObject{
     
     /**
      * Numero de veces que la bombilla ha sido encendida
-     * @return -1 cuando se lanza el evento Agotada 0 cuando se lanza el evento Repuesta
+     * @return -1 cuando se lanza el evento Agotada 
      */
     public int getNumeroEncendidos() {
         return numeroEncendidos;
@@ -36,7 +36,7 @@ public class JBombillaEvent extends EventObject{
 
     /**
      * Valor de segundos que la bombilla lleva encendida
-     * @return -1 cuando se lanza el evento Agotada 0 cuando se lanza el evento Repuesta
+     * @return -1 cuando se lanza el evento Agotada 
      */
     public int getSegundosEncendida() {
         return segundosEncendida;
