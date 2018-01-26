@@ -25,11 +25,12 @@ public class Ej1ServidorFTPConexion {
 //        String servFTP = "ftp.cdrom.com"; 
 //        String servFTP = "ftp.unavarra.com"; 
 //        String servFTP = "ftp.jcyl.es"; 
-        String servFTP = "ftp..es"; 
+        String servFTP = "10.1.4.208"; 
         FTPClient cliente = new FTPClient();
         try {
             cliente.connect(servFTP);
             System.out.print(cliente.getReplyString());
+            System.out.println("");
             respuesta = cliente.getReplyCode();
             if (!FTPReply.isPositiveCompletion(respuesta)) {
                 cliente.disconnect();
