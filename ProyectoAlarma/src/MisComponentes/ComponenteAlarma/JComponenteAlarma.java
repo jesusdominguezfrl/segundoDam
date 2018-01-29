@@ -137,6 +137,11 @@ public class JComponenteAlarma extends javax.swing.JPanel {
         jButtonA.setForeground(new java.awt.Color(0, 153, 0));
         jButtonA.setText("A");
         jButtonA.setOpaque(false);
+        jButtonA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JButtonActionPerformedLetras(evt);
+            }
+        });
 
         jButtonB.setBackground(new java.awt.Color(255, 255, 255));
         jButtonB.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -224,6 +229,12 @@ public class JComponenteAlarma extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void JButtonActionPerformedLetras(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonActionPerformedLetras
+        if(jButtonA == evt.getSource()){
+            
+        }
+    }//GEN-LAST:event_JButtonActionPerformedLetras
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
