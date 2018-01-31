@@ -14,9 +14,75 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     /**
      * Creates new form JComponenteAlarma
      */
+    //<editor-fold defaultstate="collapsed" desc="Enum→Modo; Enum→Estados">
+        private enum Modos{
+            ALARMA_TOTAL("ALARMA TOTAL"),
+            ALARMA_ZONA1("ALARMA ZONA1"),
+            ALARMA_ZONA2("ALARMA ZONA2"),
+            ESTABLECER_CODIGO("ESTABLECER CODIGO");
+            
+            private String texto;
+            Modos(){
+                this.texto=super.toString();
+            }
+            Modos (String texto){
+                this.texto=texto;
+            }
+            @Override
+            public String toString(){
+                return this.texto;
+            }
+        }
+        
+        private enum Estados{
+            HABILITADA,
+            BLOQUEADA,
+            ACTIVADA,
+            DESACTIVADA,
+            DISPARADA;
+        }
+    //</editor-fold>
+        
+    //<editor-fold defaultstate="collapsed" desc="Propiedades Privadas">
+        private int controlModo=0;
+        
+        private Modos modo;
+    //</editor-fold>
+    
     public JComponenteAlarma() {
         initComponents();
+        iniciaPropiedades();
+        int asda ="aaaaa".length();
+        System.out.println("asda");
+        
     }
+    
+    //<editor-fold defaultstate="collapsed" desc="Metodos Privados">
+    
+        private void iniciaPropiedades(){
+            setModo(Modos.ALARMA_TOTAL);
+            
+        }
+    
+        private void setModo(Modos modo){
+            switch(modo){
+                case ALARMA_TOTAL:
+                    
+                    break;
+                case ALARMA_ZONA1:
+                    
+                    break;
+                case ALARMA_ZONA2:
+                    
+                    break;
+                case ESTABLECER_CODIGO:
+                    
+                    break;
+            }
+            this.modo=modo;
+            jLabelVisorModo.setText(modo.toString());
+        }
+    //</editor-fold>
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -175,6 +241,11 @@ public class JComponenteAlarma extends javax.swing.JPanel {
 
         jButtonModo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonModo.setText("Modo");
+        jButtonModo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -231,10 +302,11 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JButtonActionPerformedLetras(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonActionPerformedLetras
-        if(jButtonA == evt.getSource()){
-            
-        }
     }//GEN-LAST:event_JButtonActionPerformedLetras
+
+    private void jButtonModoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModoActionPerformed
+        setModo(Modos.values()[(++controlModo<Modos.values().length)?controlModo:(controlModo=0)]);
+    }//GEN-LAST:event_jButtonModoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
