@@ -37,6 +37,7 @@ public class Ej1Hibernate {
                     + "\n\t1-Introducir datos."
                     + "\n\t2-Modificar datos."
                     + "\n\t3-Borrar datos."
+                    + "\n\t4-Listados."
                     + "\n\t0-Salir.");
             System.out.print("Introduce: ");
             opcion = leer.nextLine();
@@ -49,6 +50,9 @@ public class Ej1Hibernate {
                     break;
                 case "3":
                     v.borraDatos(subMenuEmplDept());
+                    break;
+                case "4":
+                    v.listarDatos(subMenuListados());
                     break;
                 case "0":
 //                    System.exit(0);
@@ -73,6 +77,33 @@ public class Ej1Hibernate {
                     return "empleados";
                 case "2":
                     return "departamentos";
+                case "0":
+                    return null;
+                default:
+                    System.out.println("Opcion incorrecta.");
+
+            }
+        } while (!"0".equals(opcion));
+        return null;
+    }
+    
+    private static String subMenuListados() {
+        String opcion;
+        do {
+            System.out.println("Introduce una opcion:"
+                    + "\n\t1-Empleados de un departamento."
+                    + "\n\t2-Departamentos."
+                    + "\n\t3-Empleados."
+                    + "\n\t0-Salir.");
+            System.out.print("Introduce: ");
+            opcion = leer.nextLine();
+            switch (opcion) {
+                case "1":
+                    return "empleadosDeDepartamento";
+                case "2":
+                    return "departamentos";
+                case "3":
+                    return "empleados";
                 case "0":
                     return null;
                 default:

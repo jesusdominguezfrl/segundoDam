@@ -5,7 +5,11 @@
  */
 package Modelo;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -193,7 +197,51 @@ public class ModeloHibernate {
         } while (!"1".equals(opcion) || !"2".equals(opcion));
         return false;
     }
-    
-    
+
+    public void listaEmpleados() {
+
+    }
+
+    public void listaDepartamentos() {
+
+        SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
+        Session session = sesion.openSession();
+        Transaction tx = session.beginTransaction();
+        Departamentos dep = new Departamentos();
+        Query q = session.createQuery("from Departamentos");
+        List<Departamentos> lista = q.list();
+        Iterator<Departamentos> iter = lista.iterator();
+        while (iter.hasNext()) {
+            dep = (Departamentos) iter.next();
+            System.out.println(dep.toString());
+        }
+        tx.commit();
+        session.close();
+        sesion.close();
+    }
+
+    public void listaEmpleadosDepto(String numDept) {
+        SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
+        Session session = sesion.openSession();
+        Transaction tx = session.beginTransaction();
+        Departamentos dep = new Departamentos();
+        byte depto = Byte.parseByte(numDept);
+        dep = (Departamentos) session.get(Departamentos.class, depto);
+        if (dep == null) {
+            System.out.println("Ese departamento NO existe...");
+        } else {
+            System.out.println("Empleados del Departamento → " + numDept);
+            Set<Empleados> listaempleados = dep.getEmpleadoses();
+            Iterator<Empleados> it = listaempleados.iterator();
+            while (it.hasNext()) {
+                Empleados empl = new Empleados();
+                empl = it.next();
+                System.out.println(empl.toString());
+            }
+        }
+        tx.commit();
+        session.close();
+        sesion.close();
+    }
 
 }

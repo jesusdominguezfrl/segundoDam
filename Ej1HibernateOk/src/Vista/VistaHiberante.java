@@ -5,6 +5,7 @@
  */
 package Vista;
 import Modelo.ModeloHibernate;
+import java.util.Scanner;
 
 /**
  *
@@ -33,13 +34,19 @@ public class VistaHiberante {
     
     public void borraDatos(String tabla){
         if (tabla == null) return;
-        if ("empleados".equals(tabla)) {
-            m.borrarEmpleado();
-        } else {
-            m.borrarDepartamento();
-        }
+        if ("empleados".equals(tabla))m.borrarEmpleado();
+        else m.borrarDepartamento();
+        
     }
     
-    
+    public void listarDatos(String tabla){
+        if(tabla==null)return;
+        if("empleados".equals(tabla)) m.listaEmpleados();
+        else if("departamentos".equals(tabla)) m.listaDepartamentos();
+        else{
+            System.out.print("Indique el numero del departamento del cual quiere listar los empleados: ");
+            m.listaEmpleadosDepto((new Scanner (System.in)).nextLine());
+        }
+    }
     
 }
