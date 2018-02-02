@@ -6,7 +6,9 @@
 package ej1servidorftpconexion;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Scanner;
 import org.apache.commons.net.ftp.FTP;
@@ -47,17 +49,27 @@ public class Ej1ServidorFTPConexion {
             BufferedInputStream buffIn = null;
             buffIn = new BufferedInputStream(new FileInputStream("C:/prueba/hola.txt"));//Ruta del archivo para enviar
             cliente.enterLocalActiveMode();
-            cliente.makeDirectory("Subir2");
-            cliente.changeWorkingDirectory("Subir2");
-            System.out.println(cliente.printWorkingDirectory());
-            cliente.storeFile(cliente.printWorkingDirectory()+"/hola.txt", buffIn);//Ruta completa de alojamiento en el FTP
+//            cliente.makeDirectory("Subir2");
+//            cliente.changeWorkingDirectory("Subir2");
+//            System.out.println(cliente.printWorkingDirectory());
+//            cliente.storeFile(cliente.printWorkingDirectory()+"/hola.txt", buffIn);//Ruta completa de alojamiento en el FTP
 //            cliente.completePendingCommand();
-            System.out.print("presione una tecla para continuar: ");
-            (new Scanner (System.in)).nextLine();
-            cliente.rename("hola.txt", "HolaCambiado.txt");
-            System.out.print("presione una tecla para borrar: ");
-            (new Scanner (System.in)).nextLine();
-            cliente.dele("HolaCambiado.txt");
+//            System.out.print("presione una tecla para continuar: ");
+//            (new Scanner (System.in)).nextLine();
+//            cliente.rename("hola.txt", "HolaCambiado.txt");
+//            System.out.print("presione una tecla para borrar: ");
+//            (new Scanner (System.in)).nextLine();
+//            cliente.dele("HolaCambiado.txt");
+
+            cliente.changeWorkingDirectory("bajar");
+            BufferedOutputStream buffOut= new BufferedOutputStream(new FileOutputStream("C:/prueba/hola.txt"));
+            if( cliente.retrieveFile("hola.txt",buffOut)){
+                System.out.println("Descarga con exito");
+                buffOut.close();
+            }
+ 
+//            success = ftpClient.completePendingCommand();
+
             buffIn.close(); //Cerrar envio de arcivos al FTP
             cliente.logout(); //Cerrar sesión
             respuesta = cliente.getReplyCode();
