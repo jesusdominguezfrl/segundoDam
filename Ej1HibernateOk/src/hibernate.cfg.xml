@@ -9,5 +9,7 @@
     <property name="hibernate.connection.password">123456</property>
     <mapping resource="primero/Empleados.hbm.xml"/>
     <mapping resource="primero/Departamentos.hbm.xml"/>
+    <!--<mapping resource="primero/Auxdept.hbm.xml"/>-->
+    <!--<mapping resource="primero/Auxempl.hbm.xml"/>-->
   </session-factory>
 </hibernate-configuration>

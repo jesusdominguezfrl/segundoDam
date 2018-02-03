@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="primero.Auxempl" table="auxempl" catalog="ejemplo" optimistic-lock="version"/>
+        <id name="empNo" type="short">
+            <column name="emp_no" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="departamentos" class="primero.Auxdept" fetch="select">
+            <column name="dept_no" />
+        </many-to-one>
+        <property name="apellido" type="string">
+            <column name="apellido" length="10" />
+        </property>
+        <property name="oficio" type="string">
+            <column name="oficio" length="10" />
+        </property>
+        <property name="dir" type="java.lang.Integer">
+            <column name="dir" />
+        </property>
+        <property name="fechaAlta" type="date">
+            <column name="fecha_alta" length="10" />
+        </property>
+        <property name="salario" type="java.lang.Float">
+            <column name="salario" precision="12" scale="0" />
+        </property>
+        <property name="comision" type="java.lang.Float">
+            <column name="comision" precision="12" scale="0" />
+        </property>
+</hibernate-mapping>
