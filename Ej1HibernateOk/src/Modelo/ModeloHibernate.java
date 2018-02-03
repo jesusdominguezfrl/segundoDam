@@ -199,6 +199,20 @@ public class ModeloHibernate {
     }
 
     public void listaEmpleados() {
+        SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
+        Session session = sesion.openSession();
+        Transaction tx = session.beginTransaction();
+        Empleados empl = new Empleados();
+        Query q = session.createQuery("from Empleados");
+        List<Empleados> lista = q.list();
+        Iterator<Empleados> iter = lista.iterator();
+        while (iter.hasNext()) {
+            empl = (Empleados) iter.next();
+            System.out.println(empl.toString());
+        }
+        tx.commit();
+        session.close();
+        sesion.close();
 
     }
 
@@ -239,6 +253,63 @@ public class ModeloHibernate {
                 System.out.println(empl.toString());
             }
         }
+        tx.commit();
+        session.close();
+        sesion.close();
+    }
+
+    public void consultaInfoDepartamento(String numDept) {
+        SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
+        Session session = sesion.openSession();
+        Transaction tx = session.beginTransaction();
+        Departamentos dep = new Departamentos();
+        byte depto = Byte.parseByte(numDept);
+        dep = (Departamentos) session.get(Departamentos.class, depto);
+        if (dep == null) {
+            System.out.println("Ese departamento NO existe...");
+        } else {
+            System.out.println("Informacion del Departamento → " + numDept);
+            Set<Empleados> listaempleados = dep.getEmpleadoses();
+            Iterator<Empleados> it = listaempleados.iterator();
+            float numEmpleados = 0;
+            float salarioMaximo = 0;
+            float sumaSalarios = 0;
+            while (it.hasNext()) {
+                Empleados empl = new Empleados();
+                numEmpleados++;
+                sumaSalarios += empl.getSalario();
+                if (salarioMaximo < empl.getSalario())salarioMaximo = empl.getSalario();
+            }
+            System.out.print("Media salarios → " + (sumaSalarios / numEmpleados));
+            System.out.println("Suma maximo → " + salarioMaximo);
+            System.out.println("Suma salarios → " + sumaSalarios);
+        }
+        tx.commit();
+        session.close();
+        sesion.close();
+    }
+
+    public void consultaInfoEmpresa() {
+        SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
+        Session session = sesion.openSession();
+        Transaction tx = session.beginTransaction();
+        Empleados empl = new Empleados();
+        Query q = session.createQuery("from Empleados");
+        List<Empleados> lista = q.list();
+        Iterator<Empleados> iter = lista.iterator();
+        System.out.println("Informacion de la empresa");
+        float numEmpleados = 0;
+        float salarioMaximo = 0;
+        float sumaSalarios = 0;
+        while (iter.hasNext()) {
+            empl = (Empleados) iter.next();
+            numEmpleados++;
+            sumaSalarios+=empl.getSalario();
+            if (salarioMaximo < empl.getSalario())salarioMaximo = empl.getSalario();
+        }
+        System.out.print("Media salarios → " + (sumaSalarios / numEmpleados));
+        System.out.println("Suma maximo → " + salarioMaximo);
+        System.out.println("Suma salarios → " + sumaSalarios);
         tx.commit();
         session.close();
         sesion.close();

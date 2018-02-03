@@ -19,6 +19,10 @@ public class Departamentos  implements java.io.Serializable {
     public Departamentos() {
     }
 
+     @Override
+    public String toString(){
+        return String.format("%-4d%-30s%-30s",this.deptNo, this.dnombre,this.loc);
+    }
 	
     public Departamentos(byte deptNo) {
         this.deptNo = deptNo;
@@ -59,10 +63,7 @@ public class Departamentos  implements java.io.Serializable {
         this.empleadoses = empleadoses;
     }
 
-     @Override
-    public String toString(){
-        return "Nº dept: "+this.deptNo+" → Nombre: "+this.dnombre+" → Localizacion: "+this.loc;
-    }
+    
 
 }
 

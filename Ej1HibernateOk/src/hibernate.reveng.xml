@@ -4,4 +4,6 @@
   <schema-selection match-catalog="ejemplo"/>
   <table-filter match-name="empleados"/>
   <table-filter match-name="departamentos"/>
+  <table-filter match-name="auxdept"/>
+  <table-filter match-name="auxempl"/>
 </hibernate-reverse-engineering>

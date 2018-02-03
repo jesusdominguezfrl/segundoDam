@@ -49,4 +49,13 @@ public class VistaHiberante {
         }
     }
     
+    public void consultarDatos(String info){
+        if(info==null)return;
+        if("infoDepartamentos".equals(info)){
+            System.out.print("Introduzca el numero de departamento del que quieres consultar la informacion: ");
+            m.consultaInfoDepartamento((new Scanner (System.in)).nextLine());
+        }else
+            m.consultaInfoEmpresa();
+    }
+    
 }

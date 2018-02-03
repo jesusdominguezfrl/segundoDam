@@ -38,6 +38,8 @@ public class Ej1Hibernate {
                     + "\n\t2-Modificar datos."
                     + "\n\t3-Borrar datos."
                     + "\n\t4-Listados."
+                    + "\n\t5-Consultas."
+                    + "\n\t6-Cargar Datos."
                     + "\n\t0-Salir.");
             System.out.print("Introduce: ");
             opcion = leer.nextLine();
@@ -53,6 +55,12 @@ public class Ej1Hibernate {
                     break;
                 case "4":
                     v.listarDatos(subMenuListados());
+                    break;
+                case "5":
+                    v.consultarDatos(subMenuConsultas());
+                    break;
+                case "6":
+//                    v.cargarDatos(subMenuCargaDatos());
                     break;
                 case "0":
 //                    System.exit(0);
@@ -104,6 +112,30 @@ public class Ej1Hibernate {
                     return "departamentos";
                 case "3":
                     return "empleados";
+                case "0":
+                    return null;
+                default:
+                    System.out.println("Opcion incorrecta.");
+
+            }
+        } while (!"0".equals(opcion));
+        return null;
+    }
+    
+    private static String subMenuConsultas() {
+        String opcion;
+        do {
+            System.out.println("Introduce una opcion:"
+                    + "\n\t1-Informacion de un departamento\n\tMedia Salario\n\tSalario Maximo\n\tSuma Salarios"
+                    + "\n\t2-Informacion de la empresa.\n\tMedia Salario\n\tSalario Maximo\n\tSuma Salarios"
+                    + "\n\t0-Salir.");
+            System.out.print("Introduce: ");
+            opcion = leer.nextLine();
+            switch (opcion) {
+                case "1":
+                    return "infoDepartamentos";
+                case "2":
+                    return "infoEmpresa";
                 case "0":
                     return null;
                 default:
