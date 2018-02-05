@@ -57,5 +57,14 @@ public class VistaHiberante {
         }else
             m.consultaInfoEmpresa();
     }
+
+    public void cargarDatos(String tabla) {
+        if (tabla == null) return;
+        if ("empleados".equals(tabla)) {
+            m.cargarEmpleados();
+        } else {
+            m.cargarDepartamentos();
+        }
+    }
     
 }

@@ -60,7 +60,7 @@ public class Ej1Hibernate {
                     v.consultarDatos(subMenuConsultas());
                     break;
                 case "6":
-//                    v.cargarDatos(subMenuCargaDatos());
+                    v.cargarDatos(subMenuEmplDept());
                     break;
                 case "0":
 //                    System.exit(0);

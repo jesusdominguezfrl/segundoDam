@@ -216,23 +216,6 @@ public class ModeloHibernate {
         sesion.close();
 
     }
-//    public void listaEmpleados() {
-//        SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
-//        Session session = sesion.openSession();
-//        Transaction tx = session.beginTransaction();
-//        Auxempl empl = new Auxempl();
-//        Query q = session.createQuery("from Auxempl");
-//        List<Auxempl> lista = q.list();
-//        Iterator<Auxempl> iter = lista.iterator();
-//        while (iter.hasNext()) {
-//            empl = (Auxempl) iter.next();
-//            System.out.println(empl.toString());
-//        }
-//        tx.commit();
-//        session.close();
-//        sesion.close();
-//
-//    }
 
     public void listaDepartamentos() {
 
@@ -332,5 +315,32 @@ public class ModeloHibernate {
         session.close();
         sesion.close();
     }
-
+    
+    public void cargarEmpleados(){
+        SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
+        Session session = sesion.openSession();
+        Transaction tx = session.beginTransaction();
+        String hqlInsert= "insert into Empleados (empNo, apellido, oficio, dir, fechaAlta, salario, comision, departamentos) "
+                + "select e.empNo, e.apellido, e.oficio, e.dir, e.fechaAlta, e.salario, e.comision, e.auxdept.deptNo from Auxempl e";
+        int filasIns= session.createQuery(hqlInsert).executeUpdate();
+        System.out.println("Filas insertadas: "+filasIns);
+        tx.commit();
+        session.close();
+        sesion.close();
+    }
+    
+    public void cargarDepartamentos(){
+        SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
+        Session session = sesion.openSession();
+        Transaction tx = session.beginTransaction();
+        String hqlInsert= "insert into Departamentos (deptNo, dnombre,loc) select n.deptNo, n.dnombre, n.loc from Auxdept n";
+        int filasIns= session.createQuery(hqlInsert).executeUpdate();
+        System.out.println("Filas insertadas: "+filasIns);
+//        String hqlDelete= "DELETE FROM Auxdept Where (Auxdept.deptNo='deptNo') select n.deptNo FROM Auxdept n";
+//        int filasDel= session.createQuery(hqlDelete).executeUpdate();
+//        System.out.println("Filas del: "+filasDel);
+        tx.commit();
+        session.close();
+        sesion.close();
+    }
 }
