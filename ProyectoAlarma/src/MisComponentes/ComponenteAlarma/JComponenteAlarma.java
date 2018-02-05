@@ -18,75 +18,65 @@ public class JComponenteAlarma extends javax.swing.JPanel {
      * Creates new form JComponenteAlarma
      */
     //<editor-fold defaultstate="collapsed" desc="Enum→Modo; Enum→Estados">
-        private enum Modos{
-            ALARMA_TOTAL("ALARMA TOTAL"),
-            ALARMA_ZONA1("ALARMA ZONA1"),
-            ALARMA_ZONA2("ALARMA ZONA2"),
-            ESTABLECER_CODIGO("ESTABLECER CODIGO");
-            
-            private String texto;
-            Modos(){
-                this.texto=super.toString();
-            }
-            Modos (String texto){
-                this.texto=texto;
-            }
-            @Override
-            public String toString(){
-                return this.texto;
-            }
+    private enum Modos {
+        ALARMA_TOTAL("ALARMA TOTAL"),
+        ALARMA_ZONA1("ALARMA ZONA1"),
+        ALARMA_ZONA2("ALARMA ZONA2"),
+        ESTABLECER_CODIGO("ESTABLECER CODIGO");
+
+        private String texto;
+
+        Modos() {
+            this.texto = super.toString();
         }
-        
-        private enum Estados{
-            HABILITADA,
-            BLOQUEADA,
-            ACTIVADA,
-            DESACTIVADA,
-            DISPARADA;
+
+        Modos(String texto) {
+            this.texto = texto;
         }
+
+        @Override
+        public String toString() {
+            return this.texto;
+        }
+    }
+
+    private enum Estados {
+        HABILITADA,
+        BLOQUEADA,
+        ACTIVADA,
+        DESACTIVADA,
+        DISPARADA;
+    }
+
     //</editor-fold>
-        
     //<editor-fold defaultstate="collapsed" desc="Propiedades Privadas">
-        private int controlModo=0;
-        
-        private Modos modo;
-        
+    private int controlModo = 0;
+
+    private Modos modo;
+    private Estados estado;
+    
+    private String contraseña="AAAAA";
+
     //</editor-fold>
     
     public JComponenteAlarma() {
         initComponents();
         iniciaPropiedades();
-        
-        
-    }
-    
-    //<editor-fold defaultstate="collapsed" desc="Metodos Privados">
-    
-        private void iniciaPropiedades(){
-            setModo(Modos.ALARMA_TOTAL);
-            
-        }
-    
-        private void setModo(Modos modo){
-            switch(modo){
-                case ALARMA_TOTAL:
-                    
-                    break;
-                case ALARMA_ZONA1:
-                    
-                    break;
-                case ALARMA_ZONA2:
-                    
-                    break;
-                case ESTABLECER_CODIGO:
-                    
-                    break;
-            }
-            this.modo=modo;
-            jLabelVisorModo.setText(modo.toString());
-        }
-    //</editor-fold>
 
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="Metodos Privados">
+    private void iniciaPropiedades() {
+        setModo(Modos.ALARMA_TOTAL);
+    }
+
+    private void setModo(Modos modo) {
+        jLabelVisor.setText("");
+        this.modo = modo;
+        jLabelVisorModo.setText(modo.toString());
+    }
+
+    //</editor-fold>
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -201,6 +191,11 @@ public class JComponenteAlarma extends javax.swing.JPanel {
 
         jButtonValidar.setFont(new java.awt.Font("Tempus Sans ITC", 1, 24)); // NOI18N
         jButtonValidar.setText("OK");
+        jButtonValidar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonValidarActionPerformed(evt);
+            }
+        });
 
         jLabelVisorModo.setBackground(new java.awt.Color(0, 102, 102));
         jLabelVisorModo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -319,18 +314,39 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JButtonActionPerformedLetras(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonActionPerformedLetras
-        if(modo==)
-        for (Component c: jPanelTeclado.getComponents()) {
-            if(((JButton)c) instanceof JButton && ((JButton)c)==evt.getSource()){
-                if(jLabelVisor.getText().length()>9)return;
-                jLabelVisor.setText(jLabelVisor.getText()+((JButton)evt.getSource()).getText());
+
+        for (Component c : jPanelTeclado.getComponents()) {
+            if (((JButton) c) instanceof JButton && ((JButton) c) == evt.getSource()) {
+                if (jLabelVisor.getText().length() > 9) {
+                    return;
+                }
+                jLabelVisor.setText(jLabelVisor.getText() + ((JButton) evt.getSource()).getText());
             }
         }
     }//GEN-LAST:event_JButtonActionPerformedLetras
 
     private void jButtonModoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModoActionPerformed
-        setModo(Modos.values()[(++controlModo<Modos.values().length)?controlModo:(controlModo=0)]);
+        setModo(Modos.values()[(++controlModo < Modos.values().length) ? controlModo : (controlModo = 0)]);
     }//GEN-LAST:event_jButtonModoActionPerformed
+
+    private void jButtonValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValidarActionPerformed
+        switch (modo) {
+            case ALARMA_TOTAL:
+
+                break;
+            case ALARMA_ZONA1:
+
+                break;
+            case ALARMA_ZONA2:
+
+                break;
+            case ESTABLECER_CODIGO:
+                if(contraseña.equals(jLabelVisor.getText())){
+                    jButtonValidar.setText("(NEW) OK");
+                }
+                break;
+        }
+    }//GEN-LAST:event_jButtonValidarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
