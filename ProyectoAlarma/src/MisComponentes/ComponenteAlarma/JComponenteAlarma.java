@@ -5,6 +5,9 @@
  */
 package MisComponentes.ComponenteAlarma;
 
+import java.awt.Component;
+import javax.swing.JButton;
+
 /**
  *
  * @author usuario
@@ -47,13 +50,13 @@ public class JComponenteAlarma extends javax.swing.JPanel {
         private int controlModo=0;
         
         private Modos modo;
+        
     //</editor-fold>
     
     public JComponenteAlarma() {
         initComponents();
         iniciaPropiedades();
-        int asda ="aaaaa".length();
-        System.out.println("asda");
+        
         
     }
     
@@ -95,20 +98,21 @@ public class JComponenteAlarma extends javax.swing.JPanel {
 
         jPanelZonas = new javax.swing.JPanel();
         jPanelZona1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelZona1 = new javax.swing.JLabel();
         jLabelImgAlarmaZona1 = new javax.swing.JLabel();
         jLabelImgAlarmaZona2 = new javax.swing.JLabel();
         jLabelZona2 = new javax.swing.JLabel();
         jPanelZona2 = new javax.swing.JPanel();
         jLabelVisor = new javax.swing.JLabel();
         jButtonValidar = new javax.swing.JButton();
+        jLabelVisorModo = new javax.swing.JLabel();
+        jButtonModo = new javax.swing.JButton();
+        jPanelTeclado = new javax.swing.JPanel();
         jButtonA = new javax.swing.JButton();
         jButtonB = new javax.swing.JButton();
         jButtonC = new javax.swing.JButton();
         jButtonD = new javax.swing.JButton();
         jButtonE = new javax.swing.JButton();
-        jLabelVisorModo = new javax.swing.JLabel();
-        jButtonModo = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
 
@@ -129,8 +133,8 @@ public class JComponenteAlarma extends javax.swing.JPanel {
             .addGap(0, 69, Short.MAX_VALUE)
         );
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        jLabel1.setText("Zona 1");
+        jLabelZona1.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        jLabelZona1.setText("Zona 1");
 
         jLabelImgAlarmaZona1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Alarma.gif"))); // NOI18N
 
@@ -160,7 +164,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
             .addGroup(jPanelZonasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelZonasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelZona1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelImgAlarmaZona1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelZona1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -183,7 +187,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
                     .addComponent(jPanelZona2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelZona1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelZonasLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jLabelZona1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelImgAlarmaZona1)))
                 .addContainerGap())
@@ -197,6 +201,22 @@ public class JComponenteAlarma extends javax.swing.JPanel {
 
         jButtonValidar.setFont(new java.awt.Font("Tempus Sans ITC", 1, 24)); // NOI18N
         jButtonValidar.setText("OK");
+
+        jLabelVisorModo.setBackground(new java.awt.Color(0, 102, 102));
+        jLabelVisorModo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelVisorModo.setForeground(new java.awt.Color(204, 204, 0));
+        jLabelVisorModo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelVisorModo.setOpaque(true);
+
+        jButtonModo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonModo.setText("Modo");
+        jButtonModo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModoActionPerformed(evt);
+            }
+        });
+
+        jPanelTeclado.setOpaque(false);
 
         jButtonA.setBackground(new java.awt.Color(255, 255, 255));
         jButtonA.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -233,19 +253,32 @@ public class JComponenteAlarma extends javax.swing.JPanel {
         jButtonE.setText("E");
         jButtonE.setOpaque(false);
 
-        jLabelVisorModo.setBackground(new java.awt.Color(0, 102, 102));
-        jLabelVisorModo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabelVisorModo.setForeground(new java.awt.Color(204, 204, 0));
-        jLabelVisorModo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelVisorModo.setOpaque(true);
-
-        jButtonModo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButtonModo.setText("Modo");
-        jButtonModo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonModoActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanelTecladoLayout = new javax.swing.GroupLayout(jPanelTeclado);
+        jPanelTeclado.setLayout(jPanelTecladoLayout);
+        jPanelTecladoLayout.setHorizontalGroup(
+            jPanelTecladoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTecladoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonA, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonB, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonC, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonD, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonE, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanelTecladoLayout.setVerticalGroup(
+            jPanelTecladoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTecladoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jButtonA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -254,27 +287,16 @@ public class JComponenteAlarma extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelTeclado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelZonas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelVisorModo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelVisor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jButtonA, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonB, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonC, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                                .addGap(1, 1, 1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonD, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonE, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                                .addGap(1, 1, 1))
-                            .addComponent(jButtonValidar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonModo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jLabelVisor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonValidar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelVisorModo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonModo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -282,26 +304,28 @@ public class JComponenteAlarma extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelZonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelVisor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonValidar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(11, 11, 11)
+                .addComponent(jPanelTeclado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelVisorModo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonModo, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jButtonModo, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void JButtonActionPerformedLetras(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonActionPerformedLetras
+        if(modo==)
+        for (Component c: jPanelTeclado.getComponents()) {
+            if(((JButton)c) instanceof JButton && ((JButton)c)==evt.getSource()){
+                if(jLabelVisor.getText().length()>9)return;
+                jLabelVisor.setText(jLabelVisor.getText()+((JButton)evt.getSource()).getText());
+            }
+        }
     }//GEN-LAST:event_JButtonActionPerformedLetras
 
     private void jButtonModoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModoActionPerformed
@@ -317,12 +341,13 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     private javax.swing.JButton jButtonE;
     private javax.swing.JButton jButtonModo;
     private javax.swing.JButton jButtonValidar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelImgAlarmaZona1;
     private javax.swing.JLabel jLabelImgAlarmaZona2;
     private javax.swing.JLabel jLabelVisor;
     private javax.swing.JLabel jLabelVisorModo;
+    private javax.swing.JLabel jLabelZona1;
     private javax.swing.JLabel jLabelZona2;
+    private javax.swing.JPanel jPanelTeclado;
     private javax.swing.JPanel jPanelZona1;
     private javax.swing.JPanel jPanelZona2;
     private javax.swing.JPanel jPanelZonas;

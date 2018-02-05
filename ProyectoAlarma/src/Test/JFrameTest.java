@@ -14,6 +14,9 @@ public class JFrameTest extends javax.swing.JFrame {
     /**
      * Creates new form JFrameTest
      */
+    
+   
+    
     public JFrameTest() {
         initComponents();
     }
