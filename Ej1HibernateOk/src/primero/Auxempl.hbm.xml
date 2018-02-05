@@ -1,13 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05-feb-2018 11:48:53 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class name="primero.Auxempl" table="auxempl" catalog="ejemplo" optimistic-lock="version"/>
+    <class name="primero.Auxempl" table="auxempl" catalog="ejemplo" optimistic-lock="version">
         <id name="empNo" type="short">
             <column name="emp_no" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="departamentos" class="primero.Auxdept" fetch="select">
+        <many-to-one name="auxdept" class="primero.Auxdept" fetch="select">
             <column name="dept_no" />
         </many-to-one>
         <property name="apellido" type="string">
@@ -28,4 +29,5 @@
         <property name="comision" type="java.lang.Float">
             <column name="comision" precision="12" scale="0" />
         </property>
+    </class>
 </hibernate-mapping>

@@ -1,5 +1,5 @@
 package primero;
-// Generated 24-ene-2018 13:39:15 by Hibernate Tools 4.3.1
+// Generated 05-feb-2018 11:48:52 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -94,10 +94,8 @@ public class Empleados  implements java.io.Serializable {
         this.comision = comision;
     }
 
-     @Override
-    public String toString(){
-        return String.format("%-4d%-30s%-10s%-3d%-15s%-10.2f%-10.2f", this.empNo,this.apellido,this.oficio,this.dir,this.fechaAlta.toString(),this.salario,this.comision);
-    }
+
+
 
 }
 

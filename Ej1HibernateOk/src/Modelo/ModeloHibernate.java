@@ -199,33 +199,16 @@ public class ModeloHibernate {
         return false;
     }
 
-//    public void listaEmpleados() {
-//        SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
-//        Session session = sesion.openSession();
-//        Transaction tx = session.beginTransaction();
-//        Empleados empl = new Empleados();
-//        Query q = session.createQuery("from Empleados");
-//        List<Empleados> lista = q.list();
-//        Iterator<Empleados> iter = lista.iterator();
-//        while (iter.hasNext()) {
-//            empl = (Empleados) iter.next();
-//            System.out.println(empl.toString());
-//        }
-//        tx.commit();
-//        session.close();
-//        sesion.close();
-//
-//    }
     public void listaEmpleados() {
         SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
         Session session = sesion.openSession();
         Transaction tx = session.beginTransaction();
-        Auxempl empl = new Auxempl();
-        Query q = session.createQuery("from Auxempl");
-        List<Auxempl> lista = q.list();
-        Iterator<Auxempl> iter = lista.iterator();
+        Empleados empl = new Empleados();
+        Query q = session.createQuery("from Empleados");
+        List<Empleados> lista = q.list();
+        Iterator<Empleados> iter = lista.iterator();
         while (iter.hasNext()) {
-            empl = (Auxempl) iter.next();
+            empl = (Empleados) iter.next();
             System.out.println(empl.toString());
         }
         tx.commit();
@@ -233,6 +216,23 @@ public class ModeloHibernate {
         sesion.close();
 
     }
+//    public void listaEmpleados() {
+//        SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
+//        Session session = sesion.openSession();
+//        Transaction tx = session.beginTransaction();
+//        Auxempl empl = new Auxempl();
+//        Query q = session.createQuery("from Auxempl");
+//        List<Auxempl> lista = q.list();
+//        Iterator<Auxempl> iter = lista.iterator();
+//        while (iter.hasNext()) {
+//            empl = (Auxempl) iter.next();
+//            System.out.println(empl.toString());
+//        }
+//        tx.commit();
+//        session.close();
+//        sesion.close();
+//
+//    }
 
     public void listaDepartamentos() {
 

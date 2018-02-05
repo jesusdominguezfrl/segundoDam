@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05-feb-2018 11:48:53 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class name="primero.Auxdept" table="Auxdept" catalog="ejemplo" optimistic-lock="version">
+    <class name="primero.Auxdept" table="auxdept" catalog="ejemplo" optimistic-lock="version">
         <id name="deptNo" type="byte">
             <column name="dept_no" />
             <generator class="assigned" />
@@ -13,9 +14,9 @@
         <property name="loc" type="string">
             <column name="loc" length="15" />
         </property>
-        <set name="empleadoses" table="auxempl" inverse="true" lazy="true" fetch="select">
+        <set name="auxempls" table="auxempl" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="dept_no" not-null="true"/>
+                <column name="dept_no" />
             </key>
             <one-to-many class="primero.Auxempl" />
         </set>

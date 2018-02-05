@@ -1,5 +1,5 @@
 package primero;
-// Generated 24-ene-2018 13:39:15 by Hibernate Tools 4.3.1
+// Generated 05-feb-2018 11:48:52 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -19,10 +19,6 @@ public class Departamentos  implements java.io.Serializable {
     public Departamentos() {
     }
 
-     @Override
-    public String toString(){
-        return String.format("%-4d%-30s%-30s",this.deptNo, this.dnombre,this.loc);
-    }
 	
     public Departamentos(byte deptNo) {
         this.deptNo = deptNo;
@@ -63,7 +59,8 @@ public class Departamentos  implements java.io.Serializable {
         this.empleadoses = empleadoses;
     }
 
-    
+
+
 
 }
 
