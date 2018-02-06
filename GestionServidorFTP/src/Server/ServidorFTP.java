@@ -7,53 +7,67 @@ package Server;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
  *
- * @author Jesus
+ * @author Jesús Domínguez Fraile
  */
 public class ServidorFTP {
 
     String servidorFTP;
     FTPClient cliente = new FTPClient();
     Scanner leer = new Scanner(System.in);
+    Boolean conectado=false;
 
     public ServidorFTP(String servidorFTP) {
         this.servidorFTP = servidorFTP;
     }
-
     
+    /**
+     * India si el servidor esta conectado o no.
+     * @return boolean
+     */
+    public boolean isConectado(){
+        return conectado;
+    }
+
+    /**
+     * Cierra la conexion con el servidor FTP.
+     */
     public void cerrarConexion(){
         try {
             cliente.logout();
+            conectado=true;
         } catch (IOException ex) {
             System.out.println(ex.getMessage());        
         }
     }
     
+    /**
+     * Conecta al servidor de Forma Anonima.
+     */
     public void conexionAnonima() {
         try {
             cliente.connect(servidorFTP);
             cliente.setFileType(FTP.BINARY_FILE_TYPE);
             System.out.println("Conexion realizada con exito");
+            conectado=true;
         } catch (Exception e) {
             System.out.println("No se pudo establecer una conexion con el servidor");
             System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * Conecta al servidor pidiendo un Usuario y una Contraseña.
+     */
     public void conexionAutentificada() {
         try {
             System.out.print("Introduce el nombre de usuario: ");
@@ -70,22 +84,26 @@ public class ServidorFTP {
         }
     }
 
+    /**
+     * Muestra un listado con el contenido de el directorio de trabajo actual.
+     */
     public void listaDirectorio() {
         directorioActual();
         try {
             cliente.enterLocalPassiveMode();
             System.out.println("\n\t*****Contenido del directorio*****");
             System.out.printf("%-40s%-10s\n", "Nombre", "Tamaño");
-            for (FTPFile f : cliente.listFiles()) {
+            for (FTPFile f : cliente.listFiles()) 
                 System.out.printf("%-40s%-10s\n", f.getName(), f.getSize());
-            }
-
         } catch (Exception e) {
             System.out.println("No se pudo mostrar el contenido del directorio");
             System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * Cambia el directorio de trabajo actual.
+     */
     public void cambiaDirectorio() {
         try {
             cliente.enterLocalPassiveMode();
@@ -99,6 +117,9 @@ public class ServidorFTP {
         }
     }
 
+    /**
+     * Crea un directorio en la carpeta de trabajo actual.
+     */
     public void creaDirectorio() {
         try {
             directorioActual();
@@ -111,6 +132,9 @@ public class ServidorFTP {
         }
     }
 
+    /**
+     * Sube un fichero de la maquina local al servidor FTP en la carpeta de trabajo actual.
+     */
     public void subeFichero(){
         try {
             directorioActual();
@@ -128,6 +152,9 @@ public class ServidorFTP {
         }
     }
 
+    /**
+     * Descarga un fichero del servidor FTP a la maquina local.
+     */
     public void descargaFichero() {
         try {
             directorioActual();
@@ -146,6 +173,9 @@ public class ServidorFTP {
         }
     }
 
+    /**
+     * Renombra un fichero del servidor FTP.
+     */
     public void renombrarFichero() {
         try {
             directorioActual();
@@ -162,6 +192,9 @@ public class ServidorFTP {
         }
     }
 
+    /**
+     * Borra un fichero del servidor FTP.
+     */
     public void borrarFichero() {
         try {
             directorioActual();
@@ -175,6 +208,9 @@ public class ServidorFTP {
         }
     }
 
+    /**
+     * Muestra el directorio de trabajo actual.
+     */
     public void directorioActual() {
         try {
             System.out.println("Directorio Actual → " + cliente.printWorkingDirectory());

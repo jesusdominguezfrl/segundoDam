@@ -7,10 +7,11 @@ package gestionservidorftp;
 
 import Server.ServidorFTP;
 import java.util.Scanner;
+import javax.print.attribute.standard.Severity;
 
 /**
  *
- * @author Jesus
+ * @author Jesús Domínguez Fraile
  */
 public class GestionServidorFTP {
 
@@ -42,9 +43,11 @@ public class GestionServidorFTP {
 
             switch (opcion) {
                 case "1":
+                    if(server.isConectado())System.out.println("Ya hay una conexion.");
                     server.conexionAnonima();
                     break;
                 case "2":
+                    if(server.isConectado())System.out.println("Ya hay una conexion.");
                     server.conexionAutentificada();
                     break;
                 case "3":
