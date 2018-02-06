@@ -51,28 +51,36 @@ public class GestionServidorFTP {
                     server.conexionAutentificada();
                     break;
                 case "3":
-                    server.listaDirectorio();
+                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    else server.listaDirectorio();
                     break;
                 case "4":
-                    server.cambiaDirectorio();
+                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    else server.cambiaDirectorio();
                     break;
                 case "5":
-                    server.creaDirectorio();
+                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    else server.creaDirectorio();
                     break;
                 case "6":
-                    server.directorioActual();
+                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    else server.directorioActual();
                     break;
                 case "7":
-                    server.subeFichero();
+                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    else server.subeFichero();
                     break;
                 case "8":
-                    server.descargaFichero();
+                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    else server.descargaFichero();
                     break;
                 case "9":
-                    server.renombrarFichero();
+                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    else server.renombrarFichero();
                     break;
                 case "10":
-                    server.borrarFichero();
+                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    else server.borrarFichero();
                     break;
                 case "0":
                     break;
