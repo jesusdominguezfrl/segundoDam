@@ -49,6 +49,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Propiedades Privadas">
     private int controlModo = 0;
 
@@ -56,6 +57,8 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     private Estados estado;
     
     private String contraseña="AAAAA";
+    private boolean sensorZona1=false;
+    private boolean sensorZona2=false;
 
     //</editor-fold>
     
@@ -64,6 +67,16 @@ public class JComponenteAlarma extends javax.swing.JPanel {
         iniciaPropiedades();
 
     }
+
+    public void setSensorZona1(boolean sensorZona1) {
+        this.sensorZona1 = sensorZona1;
+    }
+
+    public void setSensorZona2(boolean sensorZona2) {
+        this.sensorZona2 = sensorZona2;
+    }
+    
+    
 
     //<editor-fold defaultstate="collapsed" desc="Metodos Privados">
     private void iniciaPropiedades() {
@@ -77,6 +90,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }
 
     //</editor-fold>
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -332,13 +346,13 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     private void jButtonValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValidarActionPerformed
         switch (modo) {
             case ALARMA_TOTAL:
-
+                
                 break;
             case ALARMA_ZONA1:
 
                 break;
             case ALARMA_ZONA2:
-
+                
                 break;
             case ESTABLECER_CODIGO:
                 if(contraseña.equals(jLabelVisor.getText())){
