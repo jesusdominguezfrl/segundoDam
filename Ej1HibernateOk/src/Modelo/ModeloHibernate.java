@@ -320,8 +320,8 @@ public class ModeloHibernate {
         SessionFactory sesion = SessionFactoryUtil.getSessionFactory();
         Session session = sesion.openSession();
         Transaction tx = session.beginTransaction();
-        String hqlInsert= "insert into Empleados (empNo, apellido, oficio, dir, fechaAlta, salario, comision, departamentos) "
-                + "select e.empNo, e.apellido, e.oficio, e.dir, e.fechaAlta, e.salario, e.comision, e.auxdept.deptNo from Auxempl e";
+        String hqlInsert= "insert into Empleados (empNo, apellido, oficio, dir, fechaAlta, salario, comision, deptNo"
+                + "select e.empNo, e.apellido, e.oficio, e.dir, e.fechaAlta, e.salario, e.comision, e.deptNo from Auxempl e";
         int filasIns= session.createQuery(hqlInsert).executeUpdate();
         System.out.println("Filas insertadas: "+filasIns);
         tx.commit();
@@ -336,9 +336,6 @@ public class ModeloHibernate {
         String hqlInsert= "insert into Departamentos (deptNo, dnombre,loc) select n.deptNo, n.dnombre, n.loc from Auxdept n";
         int filasIns= session.createQuery(hqlInsert).executeUpdate();
         System.out.println("Filas insertadas: "+filasIns);
-//        String hqlDelete= "DELETE FROM Auxdept Where (Auxdept.deptNo='deptNo') select n.deptNo FROM Auxdept n";
-//        int filasDel= session.createQuery(hqlDelete).executeUpdate();
-//        System.out.println("Filas del: "+filasDel);
         tx.commit();
         session.close();
         sesion.close();

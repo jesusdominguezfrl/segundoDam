@@ -94,7 +94,10 @@ public class Empleados  implements java.io.Serializable {
         this.comision = comision;
     }
 
-
+    @Override
+    public String toString() {
+        return String.format("%-5d%-20s%-20s%-5d%-15s%-10f-10f", empNo, apellido, oficio, dir, (fechaAlta.toString()), salario, comision);
+    }
 
 
 }

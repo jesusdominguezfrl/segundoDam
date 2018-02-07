@@ -2,6 +2,7 @@ package primero;
 // Generated 05-feb-2018 11:48:52 by Hibernate Tools 4.3.1
 
 
+import com.sun.javafx.binding.StringFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -59,6 +60,10 @@ public class Departamentos  implements java.io.Serializable {
         this.empleadoses = empleadoses;
     }
 
+     @Override
+    public String toString(){
+        return String.format("%-5d%-20s%-20s", deptNo,dnombre,loc);
+    }
 
 
 
