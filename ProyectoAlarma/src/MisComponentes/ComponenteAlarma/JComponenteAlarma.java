@@ -415,14 +415,12 @@ public class JComponenteAlarma extends javax.swing.JPanel {
                 break;
             case ESTABLECER_CODIGO:
                 if(contraseña.equals(jLabelVisor.getText())) jButtonValidar.setText("(NEW) OK");
-                else{
+                else
                     if("(NEW) OK".equals(jButtonValidar.getText())){
-                        System.out.println("else");
                         contraseña=jLabelVisor.getText();
                         jButtonValidar.setText("(OLD) OK");
                     }else
                         if(++intentosFallidos>=maximoContraseñaIncorrecta)setEstado(Estados.BLOQUEADA);
-                }
                 jLabelVisor.setText("");
                 break;
         }
