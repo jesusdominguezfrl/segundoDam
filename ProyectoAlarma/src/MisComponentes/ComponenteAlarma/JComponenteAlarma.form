@@ -228,7 +228,7 @@
     <Component class="javax.swing.JButton" name="jButtonValidar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tempus Sans ITC" size="24" style="1"/>
+          <Font name="Tempus Sans ITC" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="OK"/>
       </Properties>
@@ -330,6 +330,9 @@
             <Property name="text" type="java.lang.String" value="B"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JButtonActionPerformedLetras"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonC">
           <Properties>
@@ -345,6 +348,9 @@
             <Property name="text" type="java.lang.String" value="C"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JButtonActionPerformedLetras"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonD">
           <Properties>
@@ -360,6 +366,9 @@
             <Property name="text" type="java.lang.String" value="D"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JButtonActionPerformedLetras"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonE">
           <Properties>
@@ -375,6 +384,9 @@
             <Property name="text" type="java.lang.String" value="E"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JButtonActionPerformedLetras"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

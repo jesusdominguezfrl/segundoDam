@@ -7,6 +7,7 @@ package MisComponentes.ComponenteAlarma;
 
 import java.awt.Component;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  *
@@ -55,8 +56,11 @@ public class JComponenteAlarma extends javax.swing.JPanel {
 
     private Modos modo;
     private Estados estado;
+    private int maximoContraseñaIncorrecta=3;
     
     private String contraseña="AAAAA";
+    private int intentosFallidos;
+    
     private boolean sensorZona1=false;
     private boolean sensorZona2=false;
 
@@ -85,9 +89,46 @@ public class JComponenteAlarma extends javax.swing.JPanel {
 
     private void setModo(Modos modo) {
         jLabelVisor.setText("");
+        switch (modo) {
+            case ALARMA_TOTAL:
+            case ALARMA_ZONA1:
+            case ALARMA_ZONA2:
+                jButtonValidar.setText("Activar");
+                break;
+            case ESTABLECER_CODIGO:
+                jButtonValidar.setText("(OLD) OK");
+                break;
+        }
         this.modo = modo;
         jLabelVisorModo.setText(modo.toString());
     }
+    
+    private void setEstado(Estados estado){
+        switch(estado){
+            case ACTIVADA:
+                break;
+            case DESACTIVADA:
+                break;
+            case BLOQUEADA:
+                bloquear();
+                break;
+            case DISPARADA:
+                break;
+            case HABILITADA:
+                break;
+        }
+    }
+    
+    private void bloquear(){
+        for (Component c: this.getComponents()){
+            if(c instanceof JPanel && ((JPanel)c)!=jPanelZonas)
+                for(Component com: ((JPanel)c).getComponents())
+                    com.setEnabled(false);
+            else
+                c.setEnabled(false);
+        }
+    }
+    
 
     //</editor-fold>
     
@@ -203,7 +244,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
         jLabelVisor.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jLabelVisor.setOpaque(true);
 
-        jButtonValidar.setFont(new java.awt.Font("Tempus Sans ITC", 1, 24)); // NOI18N
+        jButtonValidar.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jButtonValidar.setText("OK");
         jButtonValidar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,24 +284,44 @@ public class JComponenteAlarma extends javax.swing.JPanel {
         jButtonB.setForeground(new java.awt.Color(0, 153, 0));
         jButtonB.setText("B");
         jButtonB.setOpaque(false);
+        jButtonB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JButtonActionPerformedLetras(evt);
+            }
+        });
 
         jButtonC.setBackground(new java.awt.Color(255, 255, 255));
         jButtonC.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButtonC.setForeground(new java.awt.Color(0, 153, 0));
         jButtonC.setText("C");
         jButtonC.setOpaque(false);
+        jButtonC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JButtonActionPerformedLetras(evt);
+            }
+        });
 
         jButtonD.setBackground(new java.awt.Color(255, 255, 255));
         jButtonD.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButtonD.setForeground(new java.awt.Color(0, 153, 0));
         jButtonD.setText("D");
         jButtonD.setOpaque(false);
+        jButtonD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JButtonActionPerformedLetras(evt);
+            }
+        });
 
         jButtonE.setBackground(new java.awt.Color(255, 255, 255));
         jButtonE.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButtonE.setForeground(new java.awt.Color(0, 153, 0));
         jButtonE.setText("E");
         jButtonE.setOpaque(false);
+        jButtonE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JButtonActionPerformedLetras(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelTecladoLayout = new javax.swing.GroupLayout(jPanelTeclado);
         jPanelTeclado.setLayout(jPanelTecladoLayout);
@@ -328,12 +389,10 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JButtonActionPerformedLetras(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonActionPerformedLetras
-
+        System.out.println(evt.getSource());
         for (Component c : jPanelTeclado.getComponents()) {
             if (((JButton) c) instanceof JButton && ((JButton) c) == evt.getSource()) {
-                if (jLabelVisor.getText().length() > 9) {
-                    return;
-                }
+                if (jLabelVisor.getText().length() > 9) return;
                 jLabelVisor.setText(jLabelVisor.getText() + ((JButton) evt.getSource()).getText());
             }
         }
@@ -355,9 +414,16 @@ public class JComponenteAlarma extends javax.swing.JPanel {
                 
                 break;
             case ESTABLECER_CODIGO:
-                if(contraseña.equals(jLabelVisor.getText())){
-                    jButtonValidar.setText("(NEW) OK");
+                if(contraseña.equals(jLabelVisor.getText())) jButtonValidar.setText("(NEW) OK");
+                else{
+                    if("(NEW) OK".equals(jButtonValidar.getText())){
+                        System.out.println("else");
+                        contraseña=jLabelVisor.getText();
+                        jButtonValidar.setText("(OLD) OK");
+                    }else
+                        if(++intentosFallidos>=maximoContraseñaIncorrecta)setEstado(Estados.BLOQUEADA);
                 }
+                jLabelVisor.setText("");
                 break;
         }
     }//GEN-LAST:event_jButtonValidarActionPerformed
