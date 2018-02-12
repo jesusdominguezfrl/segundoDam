@@ -5,7 +5,9 @@
  */
 package MisComponentes.ComponenteAlarma;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -34,7 +36,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
         Modos(String texto) {
             this.texto = texto;
         }
-
+        
         @Override
         public String toString() {
             return this.texto;
@@ -42,11 +44,11 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }
 
     private enum Estados {
-        HABILITADA,
-        BLOQUEADA,
         ACTIVADA,
-        DESACTIVADA,
-        DISPARADA;
+        BLOQUEADA,
+        DISPARADA,
+//        HABILITADA,
+        DESACTIVADA;
     }
 
     //</editor-fold>
@@ -58,7 +60,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     private Estados estado;
     private int maximoContraseñaIncorrecta=3;
     
-    private String contraseña="AAAAA";
+    private String contraseña="AAA";
     private int intentosFallidos;
     
     private boolean sensorZona1=false;
@@ -71,52 +73,129 @@ public class JComponenteAlarma extends javax.swing.JPanel {
         iniciaPropiedades();
 
     }
-
-    public void setSensorZona1(boolean sensorZona1) {
-        this.sensorZona1 = sensorZona1;
+    
+    private void activar(){
+        if(contraseña.equals(jLabelVisor.getText())){
+            setEstado(Estados.ACTIVADA);
+            fireAlarmaActivada();
+        }
+    }
+    
+    private void desactivar(){
+        if(compruebaContraseña()){
+            setEstado(Estados.DESACTIVADA);
+        }
     }
 
-    public void setSensorZona2(boolean sensorZona2) {
-        this.sensorZona2 = sensorZona2;
+    public void setIntentosFallidos(int intentosFallidos) {
+        if(estado!=Estados.DESACTIVADA)return;
+        this.intentosFallidos = intentosFallidos;
+    }
+
+    public int getIntentosFallidos() {
+        return intentosFallidos;
+    }    
+    
+    public void activarSensorZona1() {
+        if(estado==Estados.BLOQUEADA){
+            sensorZona1=true;
+            fireAlarmaDisparada();
+            jLabelImgAlarmaZona1.setVisible(true);
+            sensorZona1=false;
+            return;
+        }
+        if((modo==Modos.ALARMA_ZONA1 || modo==Modos.ALARMA_TOTAL) && (estado==Estados.ACTIVADA || estado==Estados.DISPARADA)){
+            sensorZona1=true;
+            jLabelImgAlarmaZona1.setVisible(true);
+            setEstado(Estados.DISPARADA);
+            fireAlarmaDisparada();
+        }
+        sensorZona1=false;
+    }
+
+    public void activarSensorZona2() {
+        if(estado==Estados.BLOQUEADA){
+            sensorZona2=true;
+            jLabelImgAlarmaZona2.setVisible(true);
+            fireAlarmaDisparada();
+            sensorZona2=false;
+            return;
+        }
+        if((modo==Modos.ALARMA_ZONA2 || modo==Modos.ALARMA_TOTAL) && (estado==Estados.ACTIVADA || estado==Estados.DISPARADA)){
+            sensorZona2=true;
+            jLabelImgAlarmaZona2.setVisible(true);
+            setEstado(Estados.DISPARADA);
+            fireAlarmaDisparada();
+        }
+        sensorZona2=false;
+    }
+
+    public boolean isSensorZona1() {
+        return sensorZona1;
+    }
+
+    public boolean isSensorZona2() {
+        return sensorZona2;
     }
     
     
+    
+    public boolean isAlarmaActiva(){
+        return estado!=(Estados.DESACTIVADA);
+    }
 
     //<editor-fold defaultstate="collapsed" desc="Metodos Privados">
     private void iniciaPropiedades() {
+        setEstado(Estados.DESACTIVADA);
         setModo(Modos.ALARMA_TOTAL);
+    }
+    
+    private void consistenciaAlarma(){
+        jPanelZona1.setBackground(((modo==Modos.ALARMA_TOTAL || modo==Modos.ALARMA_ZONA1) && (estado==Estados.ACTIVADA ||estado==Estados.DISPARADA||estado==Estados.BLOQUEADA))?Color.RED:Color.GREEN);
+        jPanelZona2.setBackground(((modo==Modos.ALARMA_TOTAL || modo==Modos.ALARMA_ZONA2) && (estado==Estados.ACTIVADA ||estado==Estados.DISPARADA||estado==Estados.BLOQUEADA))?Color.RED:Color.GREEN);
+        if(modo!=Modos.ESTABLECER_CODIGO)
+            jButtonValidar.setText((estado==Estados.ACTIVADA || estado== Estados.DISPARADA)?"Desactivar":"Activar");
     }
 
     private void setModo(Modos modo) {
+        if(estado!=Estados.DESACTIVADA)return;
         jLabelVisor.setText("");
+        this.modo = modo;
         switch (modo) {
             case ALARMA_TOTAL:
             case ALARMA_ZONA1:
             case ALARMA_ZONA2:
-                jButtonValidar.setText("Activar");
                 break;
             case ESTABLECER_CODIGO:
                 jButtonValidar.setText("(OLD) OK");
                 break;
         }
-        this.modo = modo;
         jLabelVisorModo.setText(modo.toString());
+        consistenciaAlarma();
     }
     
     private void setEstado(Estados estado){
+        this.estado=estado;
         switch(estado){
             case ACTIVADA:
+                jButtonValidar.setText("Desactivar");
                 break;
             case DESACTIVADA:
+                jButtonValidar.setText("Activar");
+                jLabelImgAlarmaZona1.setVisible(false);
+                jLabelImgAlarmaZona2.setVisible(false);
                 break;
             case BLOQUEADA:
                 bloquear();
+                modo=Modos.ALARMA_TOTAL;
+                activarSensorZona1();
+                activarSensorZona2();
                 break;
             case DISPARADA:
                 break;
-            case HABILITADA:
-                break;
         }
+
+        consistenciaAlarma();
     }
     
     private void bloquear(){
@@ -127,6 +206,46 @@ public class JComponenteAlarma extends javax.swing.JPanel {
             else
                 c.setEnabled(false);
         }
+    }
+    
+    private boolean compruebaContraseña(){
+        if(contraseña.equals(jLabelVisor.getText())){
+            intentosFallidos=0;
+            return true;
+        }
+//        intentosFallidos++;
+//        if(modo!=Modos.ESTABLECER_CODIGO && intentosFallidos>=maximoContraseñaIncorrecta)setEstado(Estados.BLOQUEADA);
+        return false;       
+    }
+    
+    private ArrayList<JAlarmaListener> listeners= new ArrayList<>();
+    
+    public void addJAlarmaListener(JAlarmaListener l){
+        listeners.add(l);
+    }
+    
+    public void removeJAlarmaListener(JAlarmaListener l){
+        listeners.remove(l);
+    }
+    
+    protected void fireAlarmaDisparada(){
+        JAlarmaEvent evt = new JAlarmaEvent(this, (sensorZona1)?"Zona1":"Zona2");
+        for(JAlarmaListener l : listeners)
+            l.alarmaActivada(evt);
+        
+    }
+    
+    protected void fireAlarmaActivada(){
+        JAlarmaEvent evt = new JAlarmaEvent(this, (modo==Modos.ALARMA_TOTAL)?"Alarma Total":(modo==Modos.ALARMA_ZONA1)?"Zona1":"Zona2");
+        for(JAlarmaListener l : listeners)
+            l.alarmaActivada(evt);
+        
+    }
+    
+    protected void fireAlarmaDesactivada(){
+        JAlarmaEvent evt = new JAlarmaEvent(this, (sensorZona1)?"Zona1":"Zona2",intentosFallidos);
+        for(JAlarmaListener l : listeners)
+            l.alarmaActivada(evt);
     }
     
 
@@ -399,31 +518,35 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }//GEN-LAST:event_JButtonActionPerformedLetras
 
     private void jButtonModoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModoActionPerformed
+        if(estado!=Estados.DESACTIVADA)return;
         setModo(Modos.values()[(++controlModo < Modos.values().length) ? controlModo : (controlModo = 0)]);
     }//GEN-LAST:event_jButtonModoActionPerformed
 
     private void jButtonValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValidarActionPerformed
         switch (modo) {
             case ALARMA_TOTAL:
-                
-                break;
             case ALARMA_ZONA1:
-
-                break;
             case ALARMA_ZONA2:
-                
+                if("Desactivar".equals(jButtonValidar.getText())/*||compruebaContraseña()*/){
+                    if(!compruebaContraseña())intentosFallidos++;
+                    else desactivar();
+                    fireAlarmaDesactivada();
+                    if(intentosFallidos>=maximoContraseñaIncorrecta)setEstado(Estados.BLOQUEADA);
+                }
+                else activar();
                 break;
             case ESTABLECER_CODIGO:
-                if(contraseña.equals(jLabelVisor.getText())) jButtonValidar.setText("(NEW) OK");
+                if(estado!=Estados.DESACTIVADA)return;
+                if(compruebaContraseña()) jButtonValidar.setText("(NEW) OK");
                 else
                     if("(NEW) OK".equals(jButtonValidar.getText())){
                         contraseña=jLabelVisor.getText();
                         jButtonValidar.setText("(OLD) OK");
-                    }else
-                        if(++intentosFallidos>=maximoContraseñaIncorrecta)setEstado(Estados.BLOQUEADA);
-                jLabelVisor.setText("");
+                    }
                 break;
         }
+        jLabelVisor.setText("");
+        consistenciaAlarma();
     }//GEN-LAST:event_jButtonValidarActionPerformed
 
 

@@ -5,6 +5,13 @@
  */
 package Test;
 
+import MisComponentes.ComponenteAlarma.JAlarmaEvent;
+import MisComponentes.ComponenteAlarma.JAlarmaListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author usuario
@@ -19,6 +26,29 @@ public class JFrameTest extends javax.swing.JFrame {
     
     public JFrameTest() {
         initComponents();
+        jComponenteAlarma1.addJAlarmaListener(new gestorAlarma());
+        jListSucesos.setModel(eventos);
+    }
+    
+    DefaultListModel eventos=new DefaultListModel();
+    
+    private class gestorAlarma implements JAlarmaListener{
+
+        @Override
+        public void alarmaActivada(JAlarmaEvent evt) {
+            eventos.addElement(evt);
+        }
+
+        @Override
+        public void alarmaDisparada(JAlarmaEvent evt) {
+            eventos.addElement(evt);
+        }
+
+        @Override
+        public void alarmaDesactivada(JAlarmaEvent evt) {
+            eventos.addElement(evt);
+        }
+        
     }
 
     /**
@@ -44,6 +74,11 @@ public class JFrameTest extends javax.swing.JFrame {
 
         jPanelZonaJardin.setBackground(new java.awt.Color(0, 204, 0));
         jPanelZonaJardin.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanelZonaJardin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanelZonaJardinMouseEntered(evt);
+            }
+        });
 
         jLabelJardin.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelJardin.setForeground(new java.awt.Color(255, 0, 0));
@@ -52,6 +87,11 @@ public class JFrameTest extends javax.swing.JFrame {
 
         jPanelZonaVivienda.setBackground(new java.awt.Color(255, 0, 0));
         jPanelZonaVivienda.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanelZonaVivienda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanelZonaViviendaMouseEntered(evt);
+            }
+        });
 
         jLabelVivienda.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelVivienda.setForeground(new java.awt.Color(0, 204, 0));
@@ -98,6 +138,11 @@ public class JFrameTest extends javax.swing.JFrame {
                 .addGap(58, 58, 58))
         );
 
+        jListSucesos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListSucesosValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListSucesos);
 
         jLabelRegistroSucesos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -128,9 +173,9 @@ public class JFrameTest extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelZonaJardin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComponenteAlarma1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComponenteAlarma1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelZonaJardin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelErrorDesactivavion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -142,6 +187,21 @@ public class JFrameTest extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jListSucesosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListSucesosValueChanged
+        JAlarmaEvent alarmaEvento = ((JAlarmaEvent)eventos.get(jListSucesos.getSelectedIndex()));
+        JOptionPane.showMessageDialog(null, "ACCION: "+alarmaEvento.getAccionEvento()+
+                "\nFECHA: "+alarmaEvento.getFecha()+
+                "\nLugar: "+alarmaEvento.getZona());
+    }//GEN-LAST:event_jListSucesosValueChanged
+
+    private void jPanelZonaViviendaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelZonaViviendaMouseEntered
+        jComponenteAlarma1.activarSensorZona2();
+    }//GEN-LAST:event_jPanelZonaViviendaMouseEntered
+
+    private void jPanelZonaJardinMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelZonaJardinMouseEntered
+        jComponenteAlarma1.activarSensorZona1();
+    }//GEN-LAST:event_jPanelZonaJardinMouseEntered
 
     /**
      * @param args the command line arguments
