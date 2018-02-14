@@ -7,8 +7,7 @@ package Test;
 
 import MisComponentes.ComponenteAlarma.JAlarmaEvent;
 import MisComponentes.ComponenteAlarma.JAlarmaListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import MisComponentes.ComponenteAlarma.JComponenteAlarma;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -47,6 +46,10 @@ public class JFrameTest extends javax.swing.JFrame {
         @Override
         public void alarmaDesactivada(JAlarmaEvent evt) {
             eventos.addElement(evt);
+            if(evt.getIntendosDesbloqueoFallidos()!=0)
+                jLabelErrorDesactivavion.setText("Intento fallido: "+evt.getIntendosDesbloqueoFallidos()+" de: "+((JComponenteAlarma)evt.getSource()).getMaximoContraseñaIncorrecta());
+            else
+                jLabelErrorDesactivavion.setText("");
         }
         
     }

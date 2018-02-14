@@ -5,7 +5,6 @@
  */
 package MisComponentes.ComponenteAlarma;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.EventObject;
 
@@ -19,7 +18,8 @@ public class JAlarmaEvent extends EventObject {
         ALARMA_ACTIVADA ("¡ALARMA  ACTIVADA!"),
         ALARMA_DESACTIVADA_OK("ALARMA DESACTIVADA CON EXITO"),
         ALARMA_DESACTIVADA_ERROR("ERROR AL DESACTIVAR ALARMA"),
-        ALARMA_DISPARADA("ALARMA DISPARADA");
+        ALARMA_DISPARADA("ALARMA DISPARADA"),
+        ALARMA_BLOQUEADA("ALARMA BLOQUEADA");
         
         private String texto;
         
@@ -33,7 +33,7 @@ public class JAlarmaEvent extends EventObject {
         }
     }
     
-    private AccionesEvento accionEvento;
+    private AccionesEvento accionEvento=null;
     private String zona=null;
     private int intendosDesbloqueoFallidos=-1;
     private String fecha=null;
@@ -56,7 +56,7 @@ public class JAlarmaEvent extends EventObject {
         this.intendosDesbloqueoFallidos=intendosDesbloqueoFallidos;
         fecha= new Date().toString();
         if(this.intendosDesbloqueoFallidos==0)accionEvento=AccionesEvento.ALARMA_DESACTIVADA_OK;
-        else accionEvento=AccionesEvento.ALARMA_DESACTIVADA_ERROR;
+        else if(intendosDesbloqueoFallidos==3)accionEvento=AccionesEvento.ALARMA_BLOQUEADA; else accionEvento=AccionesEvento.ALARMA_DESACTIVADA_ERROR;
     }
 
     public AccionesEvento getAccionEvento() {
@@ -77,7 +77,7 @@ public class JAlarmaEvent extends EventObject {
     
     @Override
     public String toString(){
-        return this.accionEvento+" "+((accionEvento==AccionesEvento.ALARMA_DESACTIVADA_ERROR)?"Intento: "+this.intendosDesbloqueoFallidos+" de 3":this.zona);
+        return this.accionEvento+" "+((accionEvento==AccionesEvento.ALARMA_DESACTIVADA_ERROR || accionEvento==AccionesEvento.ALARMA_BLOQUEADA)?"Intento: "+this.intendosDesbloqueoFallidos+" de 3":this.zona);
     }
     
     

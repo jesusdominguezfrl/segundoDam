@@ -87,14 +87,14 @@ public class JComponenteAlarma extends javax.swing.JPanel {
         }
     }
 
-    public void setIntentosFallidos(int intentosFallidos) {
-        if(estado!=Estados.DESACTIVADA)return;
-        this.intentosFallidos = intentosFallidos;
+    public int getMaximoContraseñaIncorrecta() {
+        return maximoContraseñaIncorrecta;
     }
 
-    public int getIntentosFallidos() {
-        return intentosFallidos;
-    }    
+    public void setMaximoContraseñaIncorrecta(int maximoContraseñaIncorrecta) {
+        if(estado!=Estados.DESACTIVADA)return;
+        this.maximoContraseñaIncorrecta = maximoContraseñaIncorrecta;
+    }
     
     public void activarSensorZona1() {
         if(estado==Estados.BLOQUEADA){
@@ -243,7 +243,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }
     
     protected void fireAlarmaDesactivada(){
-        JAlarmaEvent evt = new JAlarmaEvent(this, (sensorZona1)?"Zona1":"Zona2",intentosFallidos);
+        JAlarmaEvent evt = new JAlarmaEvent(this, ((modo==Modos.ALARMA_TOTAL)?"Alarma Total":(modo==Modos.ALARMA_ZONA1)?"Zona1":"Zona2"),intentosFallidos);
         for(JAlarmaListener l : listeners)
             l.alarmaActivada(evt);
     }
