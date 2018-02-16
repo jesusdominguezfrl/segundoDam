@@ -51,35 +51,35 @@ public class GestionServidorFTP {
                     server.conexionAutentificada();
                     break;
                 case "3":
-                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    if(server.isConectado())System.out.println("No existe una conexion.");
                     else server.listaDirectorio();
                     break;
                 case "4":
-                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    if(server.isConectado())System.out.println("No existe una conexion.");
                     else server.cambiaDirectorio();
                     break;
                 case "5":
-                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    if(server.isConectado())System.out.println("No existe una conexion.");
                     else server.creaDirectorio();
                     break;
                 case "6":
-                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    if(server.isConectado())System.out.println("No existe una conexion.");
                     else server.directorioActual();
                     break;
                 case "7":
-                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    if(server.isConectado())System.out.println("No existe una conexion.");
                     else server.subeFichero();
                     break;
                 case "8":
-                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    if(server.isConectado())System.out.println("No existe una conexion.");
                     else server.descargaFichero();
                     break;
                 case "9":
-                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    if(server.isConectado())System.out.println("No existe una conexion.");
                     else server.renombrarFichero();
                     break;
                 case "10":
-                    if(!server.isConectado())System.out.println("No existe una conexion.");
+                    if(server.isConectado())System.out.println("No existe una conexion.");
                     else server.borrarFichero();
                     break;
                 case "0":
