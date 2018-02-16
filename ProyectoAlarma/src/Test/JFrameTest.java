@@ -21,8 +21,6 @@ public class JFrameTest extends javax.swing.JFrame {
      * Creates new form JFrameTest
      */
     
-   
-    
     public JFrameTest() {
         initComponents();
         jComponenteAlarma1.addJAlarmaListener(new gestorAlarma());
@@ -46,6 +44,7 @@ public class JFrameTest extends javax.swing.JFrame {
         @Override
         public void alarmaDesactivada(JAlarmaEvent evt) {
             eventos.addElement(evt);
+            
             if(evt.getIntendosDesbloqueoFallidos()!=0)
                 jLabelErrorDesactivavion.setText("Intento fallido: "+evt.getIntendosDesbloqueoFallidos()+" de: "+((JComponenteAlarma)evt.getSource()).getMaximoContraseñaIncorrecta());
             else
@@ -72,6 +71,11 @@ public class JFrameTest extends javax.swing.JFrame {
         jListSucesos = new javax.swing.JList<>();
         jLabelRegistroSucesos = new javax.swing.JLabel();
         jLabelErrorDesactivavion = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jButtonActivar = new javax.swing.JButton();
+        jButtonHabilitaDeshabilita = new javax.swing.JButton();
+        jButtonCambiaCodigo = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,7 +111,7 @@ public class JFrameTest extends javax.swing.JFrame {
             jPanelZonaViviendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelZonaViviendaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelVivienda, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                .addComponent(jLabelVivienda, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelZonaViviendaLayout.setVerticalGroup(
@@ -151,25 +155,85 @@ public class JFrameTest extends javax.swing.JFrame {
         jLabelRegistroSucesos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelRegistroSucesos.setText("Registro de Sucesos.");
 
-        jLabelErrorDesactivavion.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        jLabelErrorDesactivavion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelErrorDesactivavion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Gestion Componente"));
+
+        jButtonActivar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonActivar.setText("Activar/Desactivar codigo \"AAA\"");
+        jButtonActivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActivarActionPerformed(evt);
+            }
+        });
+
+        jButtonHabilitaDeshabilita.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonHabilitaDeshabilita.setText("Habilitar/Deshabilitar");
+        jButtonHabilitaDeshabilita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonHabilitaDeshabilitaActionPerformed(evt);
+            }
+        });
+
+        jButtonCambiaCodigo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonCambiaCodigo.setText("Cambiar codigo \"AAA\"- \"BBB\"");
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setText("Numero Maximo=5");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jButtonCambiaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jButtonHabilitaDeshabilita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButtonActivar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButtonCambiaCodigo});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonHabilitaDeshabilita, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonCambiaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonActivar, jButtonHabilitaDeshabilita});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButtonCambiaCodigo});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelErrorDesactivavion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComponenteAlarma1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelZonaJardin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelRegistroSucesos, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jLabelErrorDesactivavion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComponenteAlarma1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanelZonaJardin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -178,7 +242,8 @@ public class JFrameTest extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jComponenteAlarma1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelZonaJardin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelZonaJardin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelErrorDesactivavion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -205,6 +270,18 @@ public class JFrameTest extends javax.swing.JFrame {
     private void jPanelZonaJardinMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelZonaJardinMouseEntered
         jComponenteAlarma1.activarSensorZona1();
     }//GEN-LAST:event_jPanelZonaJardinMouseEntered
+
+    private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
+        jComponenteAlarma1.activar("AAA");
+    }//GEN-LAST:event_jButtonActivarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jComponenteAlarma1.setMaximoContraseñaIncorrecta(5);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButtonHabilitaDeshabilitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHabilitaDeshabilitaActionPerformed
+        jComponenteAlarma1.setEnabled(true);
+    }//GEN-LAST:event_jButtonHabilitaDeshabilitaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,12 +319,17 @@ public class JFrameTest extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonActivar;
+    private javax.swing.JButton jButtonCambiaCodigo;
+    private javax.swing.JButton jButtonHabilitaDeshabilita;
     private MisComponentes.ComponenteAlarma.JComponenteAlarma jComponenteAlarma1;
     private javax.swing.JLabel jLabelErrorDesactivavion;
     private javax.swing.JLabel jLabelJardin;
     private javax.swing.JLabel jLabelRegistroSucesos;
     private javax.swing.JLabel jLabelVivienda;
     private javax.swing.JList<String> jListSucesos;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelZonaJardin;
     private javax.swing.JPanel jPanelZonaVivienda;
     private javax.swing.JScrollPane jScrollPane1;

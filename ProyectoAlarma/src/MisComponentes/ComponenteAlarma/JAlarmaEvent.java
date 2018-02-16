@@ -56,7 +56,7 @@ public class JAlarmaEvent extends EventObject {
         this.intendosDesbloqueoFallidos=intendosDesbloqueoFallidos;
         fecha= new Date().toString();
         if(this.intendosDesbloqueoFallidos==0)accionEvento=AccionesEvento.ALARMA_DESACTIVADA_OK;
-        else if(intendosDesbloqueoFallidos==3)accionEvento=AccionesEvento.ALARMA_BLOQUEADA; else accionEvento=AccionesEvento.ALARMA_DESACTIVADA_ERROR;
+        else if(intendosDesbloqueoFallidos==((JComponenteAlarma)this.getSource()).getMaximoContraseñaIncorrecta())accionEvento=AccionesEvento.ALARMA_BLOQUEADA; else accionEvento=AccionesEvento.ALARMA_DESACTIVADA_ERROR;
     }
 
     public AccionesEvento getAccionEvento() {

@@ -74,15 +74,15 @@ public class JComponenteAlarma extends javax.swing.JPanel {
 
     }
     
-    private void activar(){
-        if(contraseña.equals(jLabelVisor.getText())){
+    public void activar(String clave){
+        if(contraseña.equals(clave)){
             setEstado(Estados.ACTIVADA);
             fireAlarmaActivada();
         }
     }
     
-    private void desactivar(){
-        if(compruebaContraseña()){
+    public void desactivar(String clave){
+        if(compruebaContraseña(clave)){
             setEstado(Estados.DESACTIVADA);
         }
     }
@@ -111,6 +111,15 @@ public class JComponenteAlarma extends javax.swing.JPanel {
             fireAlarmaDisparada();
         }
         sensorZona1=false;
+    }
+    
+    @Override
+    public void setEnabled(boolean enabled){
+        if(estado!=Estados.DESACTIVADA)return;
+        
+        bloquear(!this.isEnabled());
+        super.setEnabled(!this.isEnabled());
+        
     }
 
     public void activarSensorZona2() {
@@ -186,7 +195,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
                 jLabelImgAlarmaZona2.setVisible(false);
                 break;
             case BLOQUEADA:
-                bloquear();
+                bloquear(false);
                 modo=Modos.ALARMA_TOTAL;
                 activarSensorZona1();
                 activarSensorZona2();
@@ -198,18 +207,18 @@ public class JComponenteAlarma extends javax.swing.JPanel {
         consistenciaAlarma();
     }
     
-    private void bloquear(){
+    private void bloquear(boolean activo){
         for (Component c: this.getComponents()){
             if(c instanceof JPanel && ((JPanel)c)!=jPanelZonas)
                 for(Component com: ((JPanel)c).getComponents())
-                    com.setEnabled(false);
+                    com.setEnabled(activo);
             else
-                c.setEnabled(false);
+                c.setEnabled(activo);
         }
     }
     
-    private boolean compruebaContraseña(){
-        if(contraseña.equals(jLabelVisor.getText())){
+    private boolean compruebaContraseña(String clave){
+        if(contraseña.equals(clave)){
             intentosFallidos=0;
             return true;
         }
@@ -231,7 +240,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     protected void fireAlarmaDisparada(){
         JAlarmaEvent evt = new JAlarmaEvent(this, (sensorZona1)?"Zona1":"Zona2");
         for(JAlarmaListener l : listeners)
-            l.alarmaActivada(evt);
+            l.alarmaDisparada(evt);
         
     }
     
@@ -245,7 +254,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     protected void fireAlarmaDesactivada(){
         JAlarmaEvent evt = new JAlarmaEvent(this, ((modo==Modos.ALARMA_TOTAL)?"Alarma Total":(modo==Modos.ALARMA_ZONA1)?"Zona1":"Zona2"),intentosFallidos);
         for(JAlarmaListener l : listeners)
-            l.alarmaActivada(evt);
+            l.alarmaDesactivada(evt);
     }
     
 
@@ -528,16 +537,16 @@ public class JComponenteAlarma extends javax.swing.JPanel {
             case ALARMA_ZONA1:
             case ALARMA_ZONA2:
                 if("Desactivar".equals(jButtonValidar.getText())/*||compruebaContraseña()*/){
-                    if(!compruebaContraseña())intentosFallidos++;
-                    else desactivar();
+                    if(!compruebaContraseña(jLabelVisor.getText()))intentosFallidos++;
+                    else desactivar(jLabelVisor.getText());
                     fireAlarmaDesactivada();
                     if(intentosFallidos>=maximoContraseñaIncorrecta)setEstado(Estados.BLOQUEADA);
                 }
-                else activar();
+                else activar(jLabelVisor.getText());
                 break;
             case ESTABLECER_CODIGO:
                 if(estado!=Estados.DESACTIVADA)return;
-                if(compruebaContraseña()) jButtonValidar.setText("(NEW) OK");
+                if(compruebaContraseña(jLabelVisor.getText())) jButtonValidar.setText("(NEW) OK");
                 else
                     if("(NEW) OK".equals(jButtonValidar.getText())){
                         contraseña=jLabelVisor.getText();
