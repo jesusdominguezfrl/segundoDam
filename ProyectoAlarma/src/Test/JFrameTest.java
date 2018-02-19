@@ -178,6 +178,11 @@ public class JFrameTest extends javax.swing.JFrame {
 
         jButtonCambiaCodigo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonCambiaCodigo.setText("Cambiar codigo \"AAA\"- \"BBB\"");
+        jButtonCambiaCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCambiaCodigoActionPerformed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton1.setText("Numero Maximo=5");
@@ -272,7 +277,10 @@ public class JFrameTest extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelZonaJardinMouseEntered
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
-        jComponenteAlarma1.activar("AAA");
+        if(!jComponenteAlarma1.isAlarmaActiva())
+            jComponenteAlarma1.activar("AAA");
+        else
+            jComponenteAlarma1.desactivar("AAA");
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -282,6 +290,10 @@ public class JFrameTest extends javax.swing.JFrame {
     private void jButtonHabilitaDeshabilitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHabilitaDeshabilitaActionPerformed
         jComponenteAlarma1.setEnabled(true);
     }//GEN-LAST:event_jButtonHabilitaDeshabilitaActionPerformed
+
+    private void jButtonCambiaCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCambiaCodigoActionPerformed
+        jComponenteAlarma1.cambiarContraseña("AAA","BBB");
+    }//GEN-LAST:event_jButtonCambiaCodigoActionPerformed
 
     /**
      * @param args the command line arguments

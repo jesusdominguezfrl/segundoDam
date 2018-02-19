@@ -75,6 +75,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }
     
     public void activar(String clave){
+        if(estado==Estados.ACTIVADA || estado==Estados.BLOQUEADA)return;
         if(contraseña.equals(clave)){
             setEstado(Estados.ACTIVADA);
             fireAlarmaActivada();
@@ -82,6 +83,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }
     
     public void desactivar(String clave){
+        if(estado==Estados.DESACTIVADA || estado==Estados.BLOQUEADA)return;
         if(compruebaContraseña(clave)){
             setEstado(Estados.DESACTIVADA);
         }
@@ -147,10 +149,17 @@ public class JComponenteAlarma extends javax.swing.JPanel {
         return sensorZona2;
     }
     
-    
-    
     public boolean isAlarmaActiva(){
         return estado!=(Estados.DESACTIVADA);
+    }
+    
+    public void cambiarContraseña(String oldPass, String newPass){
+        if(estado!=Estados.DESACTIVADA)return;
+        setModo(Modos.ESTABLECER_CODIGO);
+        if(compruebaContraseña(oldPass)){
+            contraseña=newPass;
+            System.out.println("kajsdbfjabsd");
+        }
     }
 
     //<editor-fold defaultstate="collapsed" desc="Metodos Privados">
