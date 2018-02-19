@@ -10,6 +10,7 @@ import MisComponentes.ComponenteAlarma.JAlarmaListener;
 import MisComponentes.ComponenteAlarma.JComponenteAlarma;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -71,11 +72,11 @@ public class JFrameTest extends javax.swing.JFrame {
         jListSucesos = new javax.swing.JList<>();
         jLabelRegistroSucesos = new javax.swing.JLabel();
         jLabelErrorDesactivavion = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelGestComponente = new javax.swing.JPanel();
         jButtonActivar = new javax.swing.JButton();
         jButtonHabilitaDeshabilita = new javax.swing.JButton();
         jButtonCambiaCodigo = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jButtonNumeroMaximoErrores = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,7 +159,7 @@ public class JFrameTest extends javax.swing.JFrame {
         jLabelErrorDesactivavion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelErrorDesactivavion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Gestion Componente"));
+        jPanelGestComponente.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Gestion Componente"));
 
         jButtonActivar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonActivar.setText("Activar/Desactivar codigo \"AAA\"");
@@ -184,29 +185,29 @@ public class JFrameTest extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setText("Numero Maximo=5");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonNumeroMaximoErrores.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonNumeroMaximoErrores.setText("Numero Maximo=5");
+        jButtonNumeroMaximoErrores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonNumeroMaximoErroresActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanelGestComponenteLayout = new javax.swing.GroupLayout(jPanelGestComponente);
+        jPanelGestComponente.setLayout(jPanelGestComponenteLayout);
+        jPanelGestComponenteLayout.setHorizontalGroup(
+            jPanelGestComponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jButtonCambiaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jButtonHabilitaDeshabilita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonActivar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jButtonNumeroMaximoErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButtonCambiaCodigo});
+        jPanelGestComponenteLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonCambiaCodigo, jButtonNumeroMaximoErrores});
 
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanelGestComponenteLayout.setVerticalGroup(
+            jPanelGestComponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelGestComponenteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -214,13 +215,13 @@ public class JFrameTest extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonCambiaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonNumeroMaximoErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonActivar, jButtonHabilitaDeshabilita});
+        jPanelGestComponenteLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonActivar, jButtonHabilitaDeshabilita});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButtonCambiaCodigo});
+        jPanelGestComponenteLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonCambiaCodigo, jButtonNumeroMaximoErrores});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,7 +235,7 @@ public class JFrameTest extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addComponent(jLabelErrorDesactivavion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanelGestComponente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComponenteAlarma1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -248,7 +249,7 @@ public class JFrameTest extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jComponenteAlarma1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelZonaJardin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelGestComponente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelErrorDesactivavion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -276,24 +277,24 @@ public class JFrameTest extends javax.swing.JFrame {
         jComponenteAlarma1.activarSensorZona1();
     }//GEN-LAST:event_jPanelZonaJardinMouseEntered
 
-    private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
-        if(!jComponenteAlarma1.isAlarmaActiva())
-            jComponenteAlarma1.activar("AAA");
-        else
-            jComponenteAlarma1.desactivar("AAA");
-    }//GEN-LAST:event_jButtonActivarActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonNumeroMaximoErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNumeroMaximoErroresActionPerformed
         jComponenteAlarma1.setMaximoContraseñaIncorrecta(5);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonNumeroMaximoErroresActionPerformed
+
+    private void jButtonCambiaCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCambiaCodigoActionPerformed
+        jComponenteAlarma1.cambiarContraseña("AAA","BBB");
+    }//GEN-LAST:event_jButtonCambiaCodigoActionPerformed
 
     private void jButtonHabilitaDeshabilitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHabilitaDeshabilitaActionPerformed
         jComponenteAlarma1.setEnabled(true);
     }//GEN-LAST:event_jButtonHabilitaDeshabilitaActionPerformed
 
-    private void jButtonCambiaCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCambiaCodigoActionPerformed
-        jComponenteAlarma1.cambiarContraseña("AAA","BBB");
-    }//GEN-LAST:event_jButtonCambiaCodigoActionPerformed
+    private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
+        if(!jComponenteAlarma1.isAlarmaActiva())
+        jComponenteAlarma1.activar("AAA");
+        else
+        jComponenteAlarma1.desactivar("AAA");
+    }//GEN-LAST:event_jButtonActivarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,17 +332,17 @@ public class JFrameTest extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonActivar;
     private javax.swing.JButton jButtonCambiaCodigo;
     private javax.swing.JButton jButtonHabilitaDeshabilita;
+    private javax.swing.JButton jButtonNumeroMaximoErrores;
     private MisComponentes.ComponenteAlarma.JComponenteAlarma jComponenteAlarma1;
     private javax.swing.JLabel jLabelErrorDesactivavion;
     private javax.swing.JLabel jLabelJardin;
     private javax.swing.JLabel jLabelRegistroSucesos;
     private javax.swing.JLabel jLabelVivienda;
     private javax.swing.JList<String> jListSucesos;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelGestComponente;
     private javax.swing.JPanel jPanelZonaJardin;
     private javax.swing.JPanel jPanelZonaVivienda;
     private javax.swing.JScrollPane jScrollPane1;
