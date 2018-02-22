@@ -56,7 +56,10 @@ public class JAlarmaEvent extends EventObject {
         this.intendosDesbloqueoFallidos=intendosDesbloqueoFallidos;
         fecha= new Date().toString();
         if(this.intendosDesbloqueoFallidos==0)accionEvento=AccionesEvento.ALARMA_DESACTIVADA_OK;
-        else if(intendosDesbloqueoFallidos==((JComponenteAlarma)this.getSource()).getMaximoContraseñaIncorrecta())accionEvento=AccionesEvento.ALARMA_BLOQUEADA; else accionEvento=AccionesEvento.ALARMA_DESACTIVADA_ERROR;
+        else if(intendosDesbloqueoFallidos==-1){
+            accionEvento=AccionesEvento.ALARMA_BLOQUEADA;
+            this.intendosDesbloqueoFallidos=((JComponenteAlarma)this.getSource()).getMaximoContraseñaIncorrecta();
+        } else accionEvento=AccionesEvento.ALARMA_DESACTIVADA_ERROR;
     }
 
     public AccionesEvento getAccionEvento() {
@@ -77,7 +80,9 @@ public class JAlarmaEvent extends EventObject {
     
     @Override
     public String toString(){
-        return this.accionEvento+" "+((accionEvento==AccionesEvento.ALARMA_DESACTIVADA_ERROR || accionEvento==AccionesEvento.ALARMA_BLOQUEADA)?"Intento: "+this.intendosDesbloqueoFallidos+" de 3":this.zona);
+        return this.accionEvento+" "+((accionEvento==AccionesEvento.ALARMA_DESACTIVADA_ERROR /*|| accionEvento==AccionesEvento.ALARMA_BLOQUEADA*/)?
+                "Intento: "+this.intendosDesbloqueoFallidos+" de :"+((JComponenteAlarma)this.getSource()).getMaximoContraseñaIncorrecta():
+                this.zona);
     }
     
     

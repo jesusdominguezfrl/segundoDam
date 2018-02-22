@@ -156,10 +156,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     public void cambiarContraseña(String oldPass, String newPass){
         if(estado!=Estados.DESACTIVADA)return;
         setModo(Modos.ESTABLECER_CODIGO);
-        if(compruebaContraseña(oldPass)){
-            contraseña=newPass;
-            System.out.println("kajsdbfjabsd");
-        }
+        if(compruebaContraseña(oldPass)) contraseña=newPass;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Metodos Privados">
@@ -261,7 +258,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }
     
     protected void fireAlarmaDesactivada(){
-        JAlarmaEvent evt = new JAlarmaEvent(this, ((modo==Modos.ALARMA_TOTAL)?"Alarma Total":(modo==Modos.ALARMA_ZONA1)?"Zona1":"Zona2"),intentosFallidos);
+        JAlarmaEvent evt = new JAlarmaEvent(this, ((modo==Modos.ALARMA_TOTAL)?"Alarma Total":(modo==Modos.ALARMA_ZONA1)?"Zona1":"Zona2"),(estado==Estados.BLOQUEADA)?-1:intentosFallidos);
         for(JAlarmaListener l : listeners)
             l.alarmaDesactivada(evt);
     }
@@ -526,7 +523,6 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JButtonActionPerformedLetras(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonActionPerformedLetras
-        System.out.println(evt.getSource());
         for (Component c : jPanelTeclado.getComponents()) {
             if (((JButton) c) instanceof JButton && ((JButton) c) == evt.getSource()) {
                 if (jLabelVisor.getText().length() > 9) return;
@@ -549,7 +545,10 @@ public class JComponenteAlarma extends javax.swing.JPanel {
                     if(!compruebaContraseña(jLabelVisor.getText()))intentosFallidos++;
                     else desactivar(jLabelVisor.getText());
                     fireAlarmaDesactivada();
-                    if(intentosFallidos>=maximoContraseñaIncorrecta)setEstado(Estados.BLOQUEADA);
+                    if(intentosFallidos>=maximoContraseñaIncorrecta){
+                        setEstado(Estados.BLOQUEADA);
+                        fireAlarmaDesactivada();
+                    }
                 }
                 else activar(jLabelVisor.getText());
                 break;
