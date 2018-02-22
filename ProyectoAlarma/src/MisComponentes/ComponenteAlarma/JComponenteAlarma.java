@@ -75,7 +75,7 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     }
     
     public void activar(String clave){
-        if(estado==Estados.ACTIVADA || estado==Estados.BLOQUEADA)return;
+        if(estado==Estados.ACTIVADA || estado==Estados.BLOQUEADA || modo==Modos.ESTABLECER_CODIGO)return;
         if(contraseña.equals(clave)){
             setEstado(Estados.ACTIVADA);
             fireAlarmaActivada();
@@ -156,6 +156,9 @@ public class JComponenteAlarma extends javax.swing.JPanel {
     public void cambiarContraseña(String oldPass, String newPass){
         if(estado!=Estados.DESACTIVADA)return;
         setModo(Modos.ESTABLECER_CODIGO);
+        this.controlModo=modo.ordinal();
+        System.out.println(Modos.values()[controlModo]);
+        System.out.println(this.controlModo=modo.ordinal());
         if(compruebaContraseña(oldPass)) contraseña=newPass;
     }
 
